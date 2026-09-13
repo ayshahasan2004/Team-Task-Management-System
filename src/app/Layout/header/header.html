@@ -1,0 +1,26 @@
+<header class="header">
+  <h1 class="page-title">{{ pageTitle }}</h1>
+
+  <div class="header-actions">
+    <div class="search">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search..." />
+    </div>
+
+    <button class="icon-button" type="button" aria-label="Notifications">
+      🔔
+      <span class="badge">3</span>
+    </button>
+
+    <button class="user-button" type="button" (click)="toggleUserMenu()">
+      <div class="avatar">{{ user.avatarInitial }}</div>
+      <span class="user-name">{{ user.name }}</span>
+    </button>
+
+    <app-user-menu
+      [user]="user"
+      [isOpen]="isUserMenuOpen"
+      (logoutClicked)="onLogout()"
+    ></app-user-menu>
+  </div>
+</header>

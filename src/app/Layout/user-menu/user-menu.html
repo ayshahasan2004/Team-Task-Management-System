@@ -1,0 +1,20 @@
+<div class="user-menu" *ngIf="isOpen">
+  <div class="user-info">
+    <div class="avatar">{{ user.avatarInitial }}</div>
+    <div class="user-text">
+      <span class="user-name">{{ user.name }}</span>
+      <span class="user-email">{{ user.email }}</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <button class="menu-item" type="button">Profile</button>
+  <button class="menu-item" type="button">Settings</button>
+
+  <div class="divider"></div>
+
+  <button class="menu-item logout" type="button" (click)="onLogout()">
+    Logout
+  </button>
+</div>
