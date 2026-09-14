@@ -1,0 +1,33 @@
+<div class="task-details">
+
+  <div class="details-header">
+    <div>
+      <h2>{{ task.title }}</h2>
+      <app-task-status-badge [status]="task.status"></app-task-status-badge>
+    </div>
+    <button class="edit-btn" type="button">Edit Task</button>
+  </div>
+
+  <p class="description">{{ task.description }}</p>
+
+  <div class="meta-grid">
+    <div class="meta-item">
+      <span class="meta-label">Assignee</span>
+      <div class="assignee">
+        <span class="avatar">{{ task.assigneeInitial }}</span>
+        <span>{{ task.assigneeName }}</span>
+      </div>
+    </div>
+
+    <div class="meta-item">
+      <span class="meta-label">Priority</span>
+      <span class="meta-value">{{ task.priority }}</span>
+    </div>
+
+    <div class="meta-item">
+      <span class="meta-label">Due date</span>
+      <span class="meta-value">{{ task.dueDate }}</span>
+    </div>
+  </div>
+
+</div>
