@@ -1,0 +1,8 @@
+<div class="avatar-wrap" [class]="size">
+  <div class="avatar">{{ initial }}</div>
+  <span
+    class="status-dot"
+    *ngIf="status !== 'none'"
+    [class.online]="status === 'online'"
+  ></span>
+</div>

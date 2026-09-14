@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Modal } from '../../Shared/modal/modal';
+import { Loading } from '../../Shared/loading/loading';
 
 @Component({
-  imports: [CommonModule],
+  imports: [CommonModule, Modal, Loading],
   selector: 'app-create-project-dialog',
   styleUrl: './create-project-dialog.css',
   templateUrl: './create-project-dialog.html',
@@ -16,11 +18,18 @@ export class CreateProjectDialog {
   @Output() closed = new EventEmitter<void>();
   @Output() created = new EventEmitter<void>();
 
+  isCreating = false;
+
   onClose() {
     this.closed.emit();
   }
 
   onCreate() {
-    this.created.emit();
+    this.isCreating = true;
+
+    setTimeout(() => {
+      this.isCreating = false;
+      this.created.emit();
+    }, 500);
   }
 }

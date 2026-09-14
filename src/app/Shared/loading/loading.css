@@ -1,0 +1,62 @@
+:host {
+  display: block;
+}
+
+* { box-sizing: border-box; }
+
+.loading-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 30px;
+}
+
+.loading-wrap.full-page {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(2px);
+}
+
+.spinner {
+  border-radius: 50%;
+  border-style: solid;
+  border-color: #eef1ef;
+  border-top-color: #00d47e;
+
+  animation: spin 0.7s linear infinite;
+}
+
+.spinner.sm {
+  width: 18px;
+  height: 18px;
+  border-width: 2.5px;
+}
+
+.spinner.md {
+  width: 32px;
+  height: 32px;
+  border-width: 3px;
+}
+
+.spinner.lg {
+  width: 48px;
+  height: 48px;
+  border-width: 4px;
+}
+
+.label {
+  color: #7b8580;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

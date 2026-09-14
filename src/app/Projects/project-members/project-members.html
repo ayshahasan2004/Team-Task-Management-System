@@ -6,7 +6,7 @@
 
   <div class="member-list">
     <div class="member-item" *ngFor="let member of members">
-      <div class="avatar">{{ member.initial }}</div>
+      <app-avatar [initial]="member.initial" size="sm"></app-avatar>
       <div class="member-info">
         <span class="member-name">{{ member.name }}</span>
         <span class="member-role">{{ member.role }}</span>

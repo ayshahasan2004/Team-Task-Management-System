@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Avatar } from '../../Shared/avatar/avatar';
 
 export interface Member {
   name: string;
@@ -8,7 +9,7 @@ export interface Member {
 }
 
 @Component({
-  imports: [CommonModule],
+  imports: [CommonModule, Avatar],
   selector: 'app-project-members',
   styleUrl: './project-members.css',
   templateUrl: './project-members.html',

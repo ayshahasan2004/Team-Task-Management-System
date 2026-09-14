@@ -1,30 +1,32 @@
-<div class="overlay" *ngIf="isOpen" (click)="onClose()">
-  <div class="dialog" (click)="$event.stopPropagation()">
+<app-modal
+  [isOpen]="isOpen"
+  title="New Project"
+  (closed)="onClose()"
+>
+  <app-loading
+    *ngIf="isCreating"
+    size="sm"
+    label="Creating project..."
+  ></app-loading>
 
-    <div class="dialog-header">
-      <h3>New Project</h3>
-      <button class="close-btn" type="button" (click)="onClose()">✕</button>
-    </div>
-
-    <div class="field">
-      <label for="cp-name">Project name</label>
-      <input type="text" id="cp-name" placeholder="e.g. Website Redesign" />
-    </div>
-
-    <div class="field">
-      <label for="cp-description">Description</label>
-      <textarea id="cp-description" rows="3" placeholder="What is this project about?"></textarea>
-    </div>
-
-    <div class="field">
-      <label for="cp-due-date">Due date</label>
-      <input type="text" id="cp-due-date" placeholder="e.g. Oct 15" />
-    </div>
-
-    <div class="dialog-actions">
-      <button class="btn-secondary" type="button" (click)="onClose()">Cancel</button>
-      <button class="btn-primary" type="button" (click)="onCreate()">Create Project</button>
-    </div>
-
+  <div class="field" *ngIf="!isCreating">
+    <label for="cp-name">Project name</label>
+    <input type="text" id="cp-name" placeholder="e.g. Website Redesign" />
   </div>
-</div>
+
+  <div class="field" *ngIf="!isCreating">
+    <label for="cp-description">Description</label>
+    <textarea id="cp-description" rows="3" placeholder="What is this project about?"></textarea>
+  </div>
+
+  <div class="field" *ngIf="!isCreating">
+    <label for="cp-due-date">Due date</label>
+    <input type="text" id="cp-due-date" placeholder="e.g. Oct 15" />
+  </div>
+
+  <div class="dialog-actions" *ngIf="!isCreating">
+    <button class="btn-secondary" type="button" (click)="onClose()">Cancel</button>
+    <button class="btn-primary" type="button" (click)="onCreate()">Create Project</button>
+  </div>
+
+</app-modal>

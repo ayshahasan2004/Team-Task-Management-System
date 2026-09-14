@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MemberCard, Member } from '../member-card/member-card';
+import { Search } from '../../Shared/search/search';
+import { Pagination } from '../../Shared/pagination/pagination';
+import { EmptyState } from '../../Shared/empty-state/empty-state';
 
 export interface TeamGroup {
   id: string;
@@ -9,12 +12,16 @@ export interface TeamGroup {
 }
 
 @Component({
-  imports: [CommonModule, MemberCard],
+  imports: [CommonModule, MemberCard, Search, Pagination, EmptyState],
   selector: 'app-team',
   styleUrl: './team.css',
   templateUrl: './team.html',
 })
 export class Team {
+  searchTerm = '';
+  currentPage = 1;
+  readonly pageSize = 4;
+
   teamGroups: TeamGroup[] = [
     {
       id: 'product-team',
@@ -95,6 +102,47 @@ export class Team {
 
   get members(): Member[] {
     return this.teamGroups.flatMap((team) => team.members);
+  }
+
+  get filteredMembers(): Member[] {
+    const query = this.searchTerm.trim().toLowerCase();
+
+    if (!query) {
+      return this.members;
+    }
+
+    return this.members.filter((member) =>
+      [member.name, member.role, member.email].some((value) =>
+        value.toLowerCase().includes(query),
+      ),
+    );
+  }
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.filteredMembers.length / this.pageSize));
+  }
+
+  get pagedMembers(): Member[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.filteredMembers.slice(start, start + this.pageSize);
+  }
+
+  membersForTeam(teamGroup: TeamGroup): Member[] {
+    const visibleIds = new Set(this.pagedMembers.map((member) => member.id));
+    return teamGroup.members.filter((member) => visibleIds.has(member.id));
+  }
+
+  onSearchChanged(value: string) {
+    this.searchTerm = value;
+    this.currentPage = 1;
+  }
+
+  onPageChanged(page: number) {
+    this.currentPage = page;
+  }
+
+  clearSearch() {
+    this.onSearchChanged('');
   }
 
   addTeam() {
