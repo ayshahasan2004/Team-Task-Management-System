@@ -1,0 +1,74 @@
+:host {
+  display: block;
+}
+
+* { box-sizing: border-box; }
+
+.activity-list {
+  padding: 22px;
+
+  background: #ffffff;
+  border: 1px solid #edf1ef;
+  border-radius: 14px;
+
+  box-shadow: 0 4px 14px rgba(20, 40, 30, 0.04);
+}
+
+.section-header {
+  margin-bottom: 18px;
+}
+
+.section-header h3 {
+  margin: 0;
+  color: #17211d;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 12px 0;
+  border-bottom: 1px solid #f4f6f5;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: rgba(0, 212, 126, 0.12);
+  color: #00a963;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.activity-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.activity-text {
+  color: #303b36;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.activity-time {
+  color: #a3aca7;
+  font-size: 11px;
+}

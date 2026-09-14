@@ -1,0 +1,101 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+* { box-sizing: border-box; }
+
+.recent-projects {
+  height: 100%;
+  padding: 22px;
+
+  background: #ffffff;
+  border: 1px solid #edf1ef;
+  border-radius: 14px;
+
+  box-shadow: 0 4px 14px rgba(20, 40, 30, 0.04);
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.section-header h3 {
+  margin: 0;
+  color: #17211d;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.view-all {
+  color: #00a963;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.view-all:hover {
+  text-decoration: underline;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.project-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.project-name {
+  color: #17211d;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.project-meta {
+  color: #98a19c;
+  font-size: 11px;
+}
+
+.project-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 6px;
+
+  border-radius: 999px;
+  background: #eef1ef;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #00d47e;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.progress-value {
+  color: #7b8580;
+  font-size: 11px;
+  font-weight: 600;
+  min-width: 30px;
+  text-align: right;
+}

@@ -1,1 +1,22 @@
-<p>recent-projects works!</p>
+<div class="recent-projects">
+  <div class="section-header">
+    <h3>Recent Projects</h3>
+    <a href="#" class="view-all">View all</a>
+  </div>
+
+  <div class="project-list">
+    <div class="project-item" *ngFor="let project of projects">
+      <div class="project-info">
+        <span class="project-name">{{ project.name }}</span>
+        <span class="project-meta">{{ project.membersCount }} members · Due {{ project.dueDate }}</span>
+      </div>
+
+      <div class="project-progress">
+        <div class="progress-track">
+          <div class="progress-fill" [style.width.%]="project.progress"></div>
+        </div>
+        <span class="progress-value">{{ project.progress }}%</span>
+      </div>
+    </div>
+  </div>
+</div>

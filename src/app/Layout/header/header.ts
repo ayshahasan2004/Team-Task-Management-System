@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NavigationEnd, Router } from '@angular/router';
 import { UserMenu } from '../user-menu/user-menu';
 
 @Component({
@@ -9,7 +10,6 @@ import { UserMenu } from '../user-menu/user-menu';
   templateUrl: './header.html',
 })
 export class Header {
-  // Phase 1 — static mock data
   pageTitle = 'Dashboard';
 
   user = {
@@ -19,6 +19,29 @@ export class Header {
   };
 
   isUserMenuOpen = false;
+
+  constructor(private router: Router) {
+    this.updatePageTitle(this.router.url);
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.updatePageTitle(event.urlAfterRedirects);
+      }
+    });
+  }
+
+  private updatePageTitle(url: string) {
+    const routeTitles: Record<string, string> = {
+      dashboard: 'Dashboard',
+      projects: 'Projects',
+      tasks: 'Tasks',
+      kanban: 'Kanban',
+      team: 'Team',
+    };
+
+    const route = url.split('?')[0].split('/').filter(Boolean)[0] || 'dashboard';
+    this.pageTitle = routeTitles[route] || 'TaskFlow';
+  }
 
   toggleUserMenu() {
     this.isUserMenuOpen = !this.isUserMenuOpen;
