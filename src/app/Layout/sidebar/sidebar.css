@@ -6,25 +6,27 @@
 * { box-sizing: border-box; }
 
 .sidebar {
-  width: 240px;
+  width: 248px;
+  flex-shrink: 0;
   height: 100vh;
-  padding: 24px 16px;
+  padding: 24px 14px;
 
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 36px;
 
   background:
-    linear-gradient(180deg, #10231c 0%, #0d1d17 100%);
+    linear-gradient(160deg, #ffffff 0%, #f0f8f4 100%);
 
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-right: 1px solid #dfe9e4;
+  box-shadow: 10px 0 30px rgba(26, 58, 45, 0.06);
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 8px;
+  padding: 0 10px;
 }
 
 .brand-icon {
@@ -33,15 +35,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9px;
-  background: #00d47e;
+  border-radius: 10px;
+  background: #16d98a;
   color: #092219;
   font-size: 16px;
   font-weight: 800;
+  box-shadow: 0 8px 18px rgba(22, 217, 138, 0.2);
 }
 
 .brand-name {
-  color: #ffffff;
+  color: #173127;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.3px;
@@ -50,7 +53,7 @@
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .nav-item {
@@ -58,30 +61,57 @@
   align-items: center;
   gap: 12px;
 
-  padding: 10px 12px;
-  border-radius: 9px;
+  padding: 11px 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
 
-  color: rgba(255, 255, 255, 0.65);
+  color: #60736a;
   text-decoration: none;
   font-size: 13px;
   font-weight: 500;
 
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
 
 .nav-item:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
+  background: #e8f5ef;
+  border-color: #d5ebe0;
+  color: #173127;
+  transform: translateX(2px);
 }
 
 .nav-item.active {
-  background: rgba(0, 212, 126, 0.12);
-  color: #00d47e;
+  background: linear-gradient(90deg, #d7f5e8, #edf9f4);
+  border-color: #bce8d3;
+  color: #08734f;
   font-weight: 600;
+  box-shadow: inset 3px 0 0 #0bba75;
 }
 
 .nav-icon {
-  font-size: 15px;
+  font-size: 16px;
   width: 18px;
   text-align: center;
+}
+
+@media (max-width: 760px) {
+  .sidebar {
+    width: 76px;
+    padding: 20px 10px;
+  }
+
+  .brand {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .brand-name,
+  .nav-label {
+    display: none;
+  }
+
+  .nav-item {
+    justify-content: center;
+    padding: 12px 8px;
+  }
 }

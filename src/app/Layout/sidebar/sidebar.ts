@@ -22,5 +22,6 @@ export class Sidebar {
     { label: 'Tasks', icon: '✅', path: '/tasks' },
     { label: 'Kanban', icon: '📋', path: '/kanban' },
     { label: 'Team', icon: '👥', path: '/team' },
+    { label: 'Settings', icon: '⚙️', path: '/settings' },
   ];
 }

@@ -7,6 +7,8 @@ import { Projects } from './Projects/projects/projects';
 import { Tasks } from './Tasks/tasks/tasks';
 import { KanbanBoard } from './Kanban/kanban-board/kanban-board';
 import { Team } from './Team/team/team';
+import { Settings } from './Settings/settings/settings';
+import { NotFound } from './NotFound/not-found/not-found';
 
 export const routes: Routes = [
   // Root route shows the dashboard inside the main layout
@@ -26,6 +28,9 @@ export const routes: Routes = [
       { path: 'tasks', component: Tasks },
       { path: 'kanban', component: KanbanBoard },
       { path: 'team', component: Team },
+      { path: 'settings', component: Settings },
     ],
   },
+
+  { path: '**', component: NotFound },
 ];

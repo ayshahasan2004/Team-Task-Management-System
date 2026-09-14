@@ -7,7 +7,7 @@
 .tasks-page {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 22px;
 }
 
 .page-header {
@@ -19,8 +19,8 @@
 
 .page-header h2 {
   margin: 0 0 4px;
-  color: #17211d;
-  font-size: 22px;
+  color: var(--ink-strong);
+  font-size: 25px;
   font-weight: 700;
   letter-spacing: -0.4px;
 }
@@ -35,22 +35,22 @@
   padding: 11px 18px;
 
   border: none;
-  border-radius: 9px;
-  background: #00d47e;
+  border-radius: 10px;
+  background: var(--green);
 
-  color: #062217;
+  color: #ffffff;
   font-family: inherit;
   font-size: 12.5px;
   font-weight: 700;
 
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 212, 126, 0.20);
+  box-shadow: 0 8px 20px rgba(11, 117, 82, 0.18);
   transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .new-task-btn:hover {
-  background: #00b968;
-  box-shadow: 0 10px 24px rgba(0, 185, 104, 0.24);
+  background: #095e43;
+  box-shadow: 0 10px 24px rgba(11, 117, 82, 0.24);
   transform: translateY(-1px);
 }
 

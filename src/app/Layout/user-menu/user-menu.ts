@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface MockUser {
   name: string;
@@ -14,6 +15,8 @@ interface MockUser {
   templateUrl: './user-menu.html',
 })
 export class UserMenu {
+  constructor(private router: Router) {}
+
   // Passed down from Header (parent -> child communication)
   @Input() user: MockUser = {
     name: 'Aysha',
@@ -25,6 +28,10 @@ export class UserMenu {
 
   // Bubbled up to Header (child -> parent communication)
   @Output() logoutClicked = new EventEmitter<void>();
+
+  onSettings() {
+    this.router.navigate(['/settings']);
+  }
 
   onLogout() {
     this.logoutClicked.emit();

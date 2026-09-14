@@ -1,0 +1,30 @@
+<div class="settings-page">
+
+  <div class="page-header">
+    <h2>Settings</h2>
+    <span class="subtitle">Manage your account and preferences</span>
+  </div>
+
+  <div class="settings-layout">
+
+    <div class="tabs">
+      <button
+        *ngFor="let tab of tabs"
+        type="button"
+        class="tab"
+        [class.active]="tab === activeTab"
+        (click)="selectTab(tab)"
+      >
+        {{ tab }}
+      </button>
+    </div>
+
+    <div class="tab-content">
+      <app-profile-settings *ngIf="activeTab === 'Profile'" [user]="user"></app-profile-settings>
+      <app-notification-settings *ngIf="activeTab === 'Notifications'"></app-notification-settings>
+      <app-security-settings *ngIf="activeTab === 'Security'"></app-security-settings>
+    </div>
+
+  </div>
+
+</div>
