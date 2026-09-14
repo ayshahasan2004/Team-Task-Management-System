@@ -1,0 +1,16 @@
+<div class="project-members">
+  <div class="section-header">
+    <h3>Members</h3>
+    <button class="add-btn" type="button">+ Add</button>
+  </div>
+
+  <div class="member-list">
+    <div class="member-item" *ngFor="let member of members">
+      <div class="avatar">{{ member.initial }}</div>
+      <div class="member-info">
+        <span class="member-name">{{ member.name }}</span>
+        <span class="member-role">{{ member.role }}</span>
+      </div>
+    </div>
+  </div>
+</div>
