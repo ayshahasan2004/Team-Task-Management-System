@@ -1,0 +1,31 @@
+<div class="team-page">
+
+  <div class="page-header">
+    <div>
+      <h2>Team</h2>
+      <span class="subtitle">{{ members.length }} members</span>
+    </div>
+    <button class="add-team-button" type="button" (click)="addTeam()">
+      <span aria-hidden="true">+</span>
+      Add team
+    </button>
+  </div>
+
+  <div class="team-groups">
+    <section class="team-group" *ngFor="let teamGroup of teamGroups">
+      <div class="team-group-header">
+        <h3>{{ teamGroup.name }}</h3>
+        <span>{{ teamGroup.members.length }} members</span>
+      </div>
+
+      <div class="members-grid">
+        <app-member-card
+          *ngFor="let member of teamGroup.members"
+          [member]="member"
+          (cardClicked)="onCardClicked($event)"
+        ></app-member-card>
+      </div>
+    </section>
+  </div>
+
+</div>

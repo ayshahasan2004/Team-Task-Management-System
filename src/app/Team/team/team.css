@@ -1,0 +1,100 @@
+:host {
+  display: block;
+}
+
+* { box-sizing: border-box; }
+
+.team-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.add-team-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #2f806b;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.add-team-button span {
+  font-size: 18px;
+  line-height: 13px;
+}
+
+.add-team-button:hover {
+  background: #246b59;
+  transform: translateY(-1px);
+}
+
+.add-team-button:focus-visible {
+  outline: 3px solid rgba(47, 128, 107, 0.25);
+  outline-offset: 2px;
+}
+
+.team-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.team-group {
+  background: #f5f8f7;
+  border: 1px solid #e5ece9;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.team-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.team-group-header h3 {
+  margin: 0;
+  color: #17211d;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.team-group-header span {
+  color: #6f7d79;
+  font-size: 12px;
+}
+
+.page-header h2 {
+  margin: 0 0 4px;
+  color: #17211d;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.subtitle {
+  color: #7b8580;
+  font-size: 12px;
+}
+
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 18px;
+}

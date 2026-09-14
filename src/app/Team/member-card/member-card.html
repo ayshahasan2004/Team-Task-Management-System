@@ -1,0 +1,13 @@
+<div class="member-card" (click)="onCardClick()">
+  <div class="avatar-wrap">
+    <div class="avatar">{{ member.initial }}</div>
+    <span class="status-dot" [class.online]="member.status === 'Online'"></span>
+  </div>
+
+  <span class="member-name">{{ member.name }}</span>
+  <span class="member-role">{{ member.role }}</span>
+
+  <div class="card-footer">
+    <span class="projects-count">{{ member.projectsCount }} projects</span>
+  </div>
+</div>
