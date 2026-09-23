@@ -1,0 +1,25 @@
+<div class="task-filters">
+  <div class="search">
+    <span class="search-icon">⌕</span>
+    <input type="text" placeholder="Search tasks..." />
+  </div>
+
+  <div class="status-chips">
+    <button
+      *ngFor="let status of statusOptions"
+      type="button"
+      class="chip"
+      [class.active]="status === activeStatus"
+      (click)="selectStatus(status)"
+    >
+      {{ status }}
+    </button>
+  </div>
+
+  <select class="priority-select">
+    <option>All Priorities</option>
+    <option>Low</option>
+    <option>Medium</option>
+    <option>High</option>
+  </select>
+</div>

@@ -1,0 +1,33 @@
+:host {
+  display: block;
+}
+
+* { box-sizing: border-box; }
+
+.kanban-board-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  height: 100%;
+}
+
+.page-header h2 {
+  margin: 0 0 4px;
+  color: var(--ink-strong);
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.subtitle {
+  color: #7b8580;
+  font-size: 12px;
+}
+
+.board {
+  display: flex;
+  gap: 16px;
+
+  overflow-x: auto;
+  padding-bottom: 8px;
+}

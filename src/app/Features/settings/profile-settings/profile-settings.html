@@ -1,0 +1,23 @@
+<div class="panel">
+  <div class="avatar-row">
+    <div class="avatar">{{ user.initial }}</div>
+    <button class="change-avatar-btn" type="button">Change Photo</button>
+  </div>
+
+  <div class="field">
+    <label for="ps-name">Full name</label>
+    <input type="text" id="ps-name" [value]="user.name" />
+  </div>
+
+  <div class="field">
+    <label for="ps-email">Email</label>
+    <input type="email" id="ps-email" [value]="user.email" />
+  </div>
+
+  <div class="field">
+    <label for="ps-role">Role</label>
+    <input type="text" id="ps-role" [value]="user.role" disabled />
+  </div>
+
+  <button class="save-btn" type="button">Save Changes</button>
+</div>

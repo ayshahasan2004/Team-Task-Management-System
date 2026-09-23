@@ -1,0 +1,18 @@
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon">T</div>
+    <span class="brand-name">TaskFlow</span>
+  </div>
+
+  <nav class="nav">
+    <a
+      *ngFor="let item of navItems"
+      [routerLink]="item.path"
+      routerLinkActive="active"
+      class="nav-item"
+    >
+      <span class="nav-icon">{{ item.icon }}</span>
+      <span class="nav-label">{{ item.label }}</span>
+    </a>
+  </nav>
+</aside>

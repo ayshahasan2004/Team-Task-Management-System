@@ -1,0 +1,28 @@
+:host {
+  display: inline-block;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-badge.to-do {
+  background: var(--status-todo-bg);
+  color: var(--status-todo-text);
+}
+
+.status-badge.in-progress {
+  background: var(--status-in-progress-bg);
+  color: var(--status-in-progress-text);
+}
+
+.status-badge.done {
+  background: var(--status-done-bg);
+  color: var(--status-done-text);
+}

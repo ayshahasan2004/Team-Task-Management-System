@@ -1,0 +1,31 @@
+<div class="kanban-board-page">
+
+  <div class="page-header">
+    <h2>Kanban Board</h2>
+    <span class="subtitle">{{ tasks.length }} tasks total</span>
+  </div>
+
+  <div class="board">
+    <app-kanban-column
+      title="To Do"
+      accentColor="#98a19c"
+      [tasks]="todoTasks"
+      (taskClicked)="onTaskClicked($event)"
+    ></app-kanban-column>
+
+    <app-kanban-column
+      title="In Progress"
+      accentColor="#48b4ff"
+      [tasks]="inProgressTasks"
+      (taskClicked)="onTaskClicked($event)"
+    ></app-kanban-column>
+
+    <app-kanban-column
+      title="Done"
+      accentColor="#0052cc"
+      [tasks]="doneTasks"
+      (taskClicked)="onTaskClicked($event)"
+    ></app-kanban-column>
+  </div>
+
+</div>

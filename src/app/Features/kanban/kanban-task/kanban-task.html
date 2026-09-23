@@ -1,0 +1,12 @@
+<div class="kanban-task" (click)="onCardClick()">
+  <div class="task-top">
+    <span class="priority-dot" [class]="priorityClass"></span>
+    <span class="task-id">{{ task.id }}</span>
+  </div>
+
+  <p class="task-title">{{ task.title }}</p>
+
+  <div class="task-footer">
+    <span class="due-date">{{ task.dueDate }}</span>
+  </div>
+</div>

@@ -1,1 +1,592 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+	--primary: #0052cc;
+	--primary-hover: #0747a6;
+	--primary-light: #deebff;
+	--bg-page: #f4f5f7;
+	--bg-surface: #ffffff;
+	--border: #dfe1e6;
+	--text-primary: #172b4d;
+	--text-secondary: #42526e;
+	--text-muted: #6b778c;
+	--status-todo-bg: #dfe1e6;
+	--status-todo-text: #42526e;
+	--status-in-progress-bg: #deebff;
+	--status-in-progress-text: #0052cc;
+	--status-review-bg: #fff0b3;
+	--status-review-text: #974f0c;
+	--status-done-bg: #e3fcef;
+	--status-done-text: #00875a;
+	--priority-low-bg: #e3fcef;
+	--priority-low-text: #00875a;
+	--priority-medium-bg: #fff0b3;
+	--priority-medium-text: #974f0c;
+	--priority-high-bg: #ffebe6;
+	--priority-high-text: #de350b;
+	--project-active-bg: #e3fcef;
+	--project-active-text: #00875a;
+	--project-completed-bg: #deebff;
+	--project-completed-text: #0052cc;
+	--project-archived-bg: #dfe1e6;
+	--project-archived-text: #6b778c;
+	--jira-900: #172a52;
+	--jira-800: #1d4f91;
+	--jira-700: #0052cc;
+	--jira-600: #2684ff;
+	--jira-500: #4c9aff;
+	--jira-100: #deebff;
+	--jira-50: #f4f5f7;
+	--slate-900: #172a52;
+	--slate-800: #243b5a;
+	--slate-700: #42526e;
+	--slate-500: #6b778c;
+	--slate-300: #dfe1e6;
+	--slate-200: #ebecf0;
+	--slate-100: #f4f5f7;
+	--success: #36b37e;
+	--warning: #ffab00;
+	--danger: #de350b;
+	--surface: #ffffff;
+	--canvas: #f4f5f7;
+	--line: #dfe1e6;
+	--ink: #172a52;
+	--ink-soft: #42526e;
+	--ink-muted: #6b778c;
+	--ink-strong: var(--text-primary);
+	--green: var(--primary);
+	--shadow: rgba(23, 42, 82, 0.08);
+	--font-family: 'Atlassian Sans', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+	--heading-weight: 700;
+	--heading-letter-spacing: -0.02em;
+	--ui-letter-spacing: -0.01em;
+}
+
+html,
+body {
+	min-height: 100%;
+	margin: 0;
+}
+
+body {
+	background: var(--canvas);
+	color: var(--ink);
+	font-family: var(--font-family);
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1.5;
+	letter-spacing: var(--ui-letter-spacing);
+	-webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+	font-family: var(--font-family) !important;
+}
+
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}
+
+h1,
+h2,
+h3,
+.page-title,
+.section-header h3,
+.project-name,
+.task-title,
+.member-name {
+	color: var(--jira-900);
+	font-weight: var(--heading-weight);
+	letter-spacing: var(--heading-letter-spacing);
+}
+
+.sidebar,
+.header,
+.card,
+.task-card,
+.project-card,
+.member-card,
+.kanban-column,
+.task-details,
+.project-details,
+.project-members,
+.task-filters,
+.task-summary,
+.recent-projects,
+.activity-list,
+.stat-card,
+.panel,
+.team-group,
+.settings-layout,
+.dialog,
+.user-menu {
+	font-size: 13px;
+	line-height: 1.4;
+	letter-spacing: var(--ui-letter-spacing);
+}
+
+button,
+.icon-button,
+.theme-button,
+.user-button,
+.primary-button,
+.secondary-button {
+	border-radius: 8px;
+	transition: all 0.2s ease;
+}
+
+button:hover,
+.icon-button:hover,
+.theme-button:hover,
+.user-button:hover,
+.primary-button:hover,
+.secondary-button:hover {
+	transform: translateY(-1px);
+}
+
+.sidebar,
+.header,
+.card,
+.task-card,
+.project-card,
+.member-card,
+.kanban-column,
+.task-details,
+.project-details,
+.project-members,
+.task-filters,
+.task-summary,
+.recent-projects,
+.activity-list,
+.stat-card,
+.panel,
+.team-group,
+.settings-layout,
+.dialog,
+.user-menu {
+	background: var(--surface);
+	border: 1px solid var(--line);
+	box-shadow: 0 1px 2px var(--shadow);
+}
+
+.sidebar {
+	background: linear-gradient(180deg, #f8f9fb 0%, #eef3ff 100%);
+	border-right: 1px solid var(--line);
+}
+
+.nav-item {
+	color: var(--slate-700);
+	border-radius: 8px;
+}
+
+.nav-item:hover {
+	background: var(--jira-50);
+	color: var(--jira-700);
+}
+
+.nav-item.active {
+	background: var(--primary-light);
+	color: var(--jira-700);
+	box-shadow: inset 3px 0 0 var(--jira-700);
+}
+
+.page-content,
+.content,
+.main-panel {
+	background: var(--canvas);
+}
+
+input,
+textarea,
+select,
+.search-input,
+.search input {
+	background: #fff;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	color: var(--ink);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+	outline: 2px solid rgba(38, 132, 255, 0.18);
+	border-color: var(--jira-600);
+}
+
+.primary-button,
+button[type='submit'],
+.btn-primary {
+	background: var(--jira-700);
+	border: 1px solid var(--jira-700);
+	color: white;
+}
+
+.primary-button:hover,
+button[type='submit']:hover,
+.btn-primary:hover {
+	background: var(--jira-800);
+}
+
+.secondary-button,
+.btn-secondary {
+	background: var(--jira-50);
+	border: 1px solid var(--line);
+	color: var(--jira-700);
+}
+
+/* Keep older feature styles on the shared Jira palette. */
+.new-project-btn,
+.primary-button,
+.btn-primary,
+.chip.active,
+.progress-fill,
+.pagination button.active {
+	background: var(--primary) !important;
+	border-color: var(--primary) !important;
+	color: #ffffff !important;
+}
+
+.new-project-btn:hover,
+.primary-button:hover,
+.btn-primary:hover,
+.pagination button.active:hover {
+	background: var(--primary-hover) !important;
+}
+
+.field input:focus,
+.search input:focus,
+.chip.active,
+.project-members input:focus,
+.settings-layout input:focus {
+	border-color: var(--primary) !important;
+}
+
+.status-badge.on-track,
+.status-badge.done {
+	background: var(--project-active-bg) !important;
+	color: var(--project-active-text) !important;
+}
+
+.status-badge.at-risk,
+.priority-badge.medium {
+	background: var(--status-review-bg) !important;
+	color: var(--status-review-text) !important;
+}
+
+.status-badge.completed,
+.status-badge.in-progress {
+	background: var(--project-completed-bg) !important;
+	color: var(--project-completed-text) !important;
+}
+
+.settings-page .tab:hover,
+.settings-page .tab.active {
+	background: var(--primary-light) !important;
+	border-bottom-color: var(--primary) !important;
+	color: var(--primary) !important;
+}
+
+.settings-page .save-btn,
+.settings-page .change-avatar-btn:hover,
+.settings-page .switch input:checked + .slider,
+.project-details .edit-btn,
+.project-members .add-btn,
+.team-page .add-team-button,
+.projects-page .new-project-btn,
+.create-project-dialog .btn-primary,
+.create-task-dialog .btn-primary {
+	background: var(--primary) !important;
+	border-color: var(--primary) !important;
+	color: #ffffff !important;
+}
+
+.settings-page .save-btn:hover,
+.settings-page .change-avatar-btn:hover,
+.project-details .edit-btn:hover,
+.project-members .add-btn:hover,
+.team-page .add-team-button:hover,
+.projects-page .new-project-btn:hover,
+.create-project-dialog .btn-primary:hover,
+.create-task-dialog .btn-primary:hover {
+	background: var(--primary-light) !important;
+	border-color: var(--primary) !important;
+	color: var(--primary) !important;
+}
+
+.badge,
+.status-badge,
+.priority-badge {
+	border-radius: 999px;
+	font-weight: 600;
+}
+
+.status-badge[data-status='To Do'],
+.status-badge.to-do,
+.priority-badge.low {
+	background: var(--status-todo-bg);
+	color: var(--status-todo-text);
+}
+
+.status-badge[data-status='In Progress'],
+.status-badge.in-progress,
+.priority-badge.medium {
+	background: var(--status-in-progress-bg);
+	color: var(--status-in-progress-text);
+}
+
+.status-badge[data-status='Done'],
+.status-badge.done,
+.priority-badge.high {
+	background: var(--status-done-bg);
+	color: var(--status-done-text);
+}
+
+.dark-theme body {
+	background: #101827;
+	color: #e5ecf9;
+}
+
+.dark-theme .sidebar,
+.dark-theme .header,
+.dark-theme .card,
+.dark-theme .task-card,
+.dark-theme .project-card,
+.dark-theme .member-card,
+.dark-theme .kanban-column,
+.dark-theme .task-details,
+.dark-theme .project-details,
+.dark-theme .project-members,
+.dark-theme .task-filters,
+.dark-theme .task-summary,
+.dark-theme .recent-projects,
+.dark-theme .activity-list,
+.dark-theme .stat-card,
+.dark-theme .panel,
+.dark-theme .team-group,
+.dark-theme .settings-layout,
+.dark-theme .dialog,
+.dark-theme .user-menu {
+	background: #1f2a3a !important;
+	border-color: #35445d !important;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.3);
+	color: #edf3ff !important;
+}
+
+.dark-theme .sidebar {
+	background: linear-gradient(180deg, #172233 0%, #111b2d 100%) !important;
+}
+
+.dark-theme .nav-item {
+	color: rgba(233, 240, 255, 0.8);
+}
+
+.dark-theme .nav-item:hover {
+	background: rgba(76, 154, 255, 0.12);
+	color: #dfeeff;
+}
+
+.dark-theme .nav-item.active {
+	background: linear-gradient(90deg, rgba(76, 154, 255, 0.2), rgba(76, 154, 255, 0.08));
+	color: #dfeeff;
+	box-shadow: inset 3px 0 0 #5aa9ff;
+}
+
+.dark-theme .page-title,
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme h3,
+.dark-theme .member-name,
+.dark-theme .project-name,
+.dark-theme .task-title {
+	color: #f4f8ff !important;
+}
+
+.dark-theme input,
+.dark-theme textarea,
+.dark-theme select,
+.dark-theme .search-input,
+.dark-theme .search input {
+	background: #172233 !important;
+	border-color: #35445d !important;
+	color: #edf3ff !important;
+}
+
+.dark-theme .primary-button,
+.dark-theme button[type='submit'],
+.dark-theme .btn-primary {
+	background: #0052cc;
+	border-color: #0052cc;
+}
+
+.dark-theme .subtitle,
+.dark-theme .member-role,
+.dark-theme .project-description,
+.dark-theme .task-description,
+.dark-theme .description,
+.dark-theme .muted {
+	color: #b8c5db;
+}
+
+/* Keep the sidebar shell neutral without painting its icon and label spans. */
+.sidebar {
+	background-color: #f8f9fb !important;
+	color: var(--slate-700) !important;
+	border-color: var(--line) !important;
+}
+
+.brand-icon {
+	background: var(--jira-700) !important;
+	color: #ffffff !important;
+	box-shadow: none !important;
+}
+
+.brand-name {
+	color: var(--jira-900) !important;
+}
+
+.nav-item {
+	background: transparent !important;
+	color: var(--slate-700) !important;
+	border-color: transparent !important;
+}
+
+.nav-item:hover {
+	background: var(--primary-light) !important;
+	color: var(--jira-700) !important;
+}
+
+.nav-item.active {
+	background: var(--primary-light) !important;
+	border-color: var(--jira-100) !important;
+	color: var(--jira-700) !important;
+	box-shadow: inset 3px 0 0 var(--jira-700) !important;
+}
+
+.header,
+.header *,
+.search input,
+.icon-button,
+.user-button,
+.theme-button,
+.stat-card,
+.task-card,
+.project-card,
+.member-card,
+.kanban-column,
+.task-details,
+.project-details,
+.project-members,
+.task-filters,
+.task-summary,
+.recent-projects,
+.activity-list,
+.panel,
+.team-group,
+.settings-layout,
+.dialog,
+.user-menu,
+.page-content,
+.content,
+.main-panel {
+	background-color: var(--surface) !important;
+	border-color: var(--line) !important;
+	color: var(--ink) !important;
+	box-shadow: 0 1px 2px var(--shadow) !important;
+}
+
+.stat-icon,
+.avatar,
+.task-icon,
+.project-icon {
+	background: var(--jira-100) !important;
+	color: var(--jira-700) !important;
+}
+
+.status-badge,
+.badge,
+.priority-badge {
+	border-radius: 999px !important;
+	font-weight: 700 !important;
+}
+
+.status-badge[data-status='To Do'],
+.status-badge.to-do,
+.priority-badge.low {
+	background: #e9f2ff !important;
+	color: var(--jira-700) !important;
+}
+
+.status-badge[data-status='In Progress'],
+.status-badge.in-progress,
+.priority-badge.medium {
+	background: #fff0b3 !important;
+	color: #7a4b00 !important;
+}
+
+.status-badge[data-status='Done'],
+.status-badge.done,
+.priority-badge.high {
+	background: #dcfce7 !important;
+	color: #13795b !important;
+}
+
+button,
+.primary-button,
+.secondary-button,
+.btn-primary,
+.btn-secondary {
+	border-radius: 8px !important;
+}
+
+.primary-button,
+button[type='submit'],
+.btn-primary {
+	background: var(--jira-700) !important;
+	border-color: var(--jira-700) !important;
+	color: #ffffff !important;
+}
+
+.secondary-button,
+.btn-secondary {
+	background: var(--jira-50) !important;
+	border-color: var(--line) !important;
+	color: var(--jira-700) !important;
+}
+
+.search input,
+input,
+textarea,
+select {
+	background: #ffffff !important;
+	border: 1px solid var(--line) !important;
+	color: var(--ink) !important;
+}
+
+body,
+.page-title,
+.section-header h3,
+.project-name,
+.task-title,
+.member-name,
+h1,
+h2,
+h3 {
+	color: var(--jira-900) !important;
+}
+
+.subtitle,
+.member-role,
+.project-description,
+.task-description,
+.description,
+.muted,
+.stat-label,
+.task-meta,
+.meta,
+.project-meta {
+	color: var(--ink-muted) !important;
+}

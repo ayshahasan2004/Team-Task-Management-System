@@ -1,0 +1,14 @@
+<div class="activity-list">
+  <div class="section-header">
+    <h3>Recent Activity</h3>
+  </div>
+
+  <div class="activity-item" *ngFor="let activity of activities">
+    <div class="avatar">{{ activity.userInitial }}</div>
+
+    <div class="activity-body">
+      <span class="activity-text">{{ activity.text }}</span>
+      <span class="activity-time">{{ activity.time }}</span>
+    </div>
+  </div>
+</div>

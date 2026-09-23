@@ -1,0 +1,128 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+* { box-sizing: border-box; }
+
+.recent-projects {
+  height: 100%;
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #dfe1e6;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(23, 42, 82, 0.08);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.recent-projects:hover {
+  box-shadow: 0 14px 30px rgba(23, 42, 82, 0.11);
+  transform: translateY(-3px);
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.section-header h3 {
+  margin: 0;
+  color: #172a52;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.view-all {
+  color: #0052cc;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.view-all:hover {
+  text-decoration: underline;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.project-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  margin: -8px;
+  border-radius: 10px;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.project-item:hover {
+  background: #f4f7ff;
+  transform: translateX(4px);
+}
+
+.project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.project-name {
+  color: #172a52;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.project-meta {
+  color: #6b778c;
+  font-size: 11px;
+}
+
+.project-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: #ebecf0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #0052cc;
+  border-radius: 999px;
+  transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  content: '';
+  animation: progress-sheen 2.4s ease-in-out infinite;
+}
+
+@keyframes progress-sheen {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+.progress-value {
+  color: #42526e;
+  font-size: 11px;
+  font-weight: 600;
+  min-width: 30px;
+  text-align: right;
+}

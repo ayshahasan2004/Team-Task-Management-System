@@ -1,0 +1,50 @@
+<div class="overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="dialog" (click)="$event.stopPropagation()">
+
+    <div class="dialog-header">
+      <h3>New Task</h3>
+      <button class="close-btn" type="button" (click)="onClose()">✕</button>
+    </div>
+
+    <div class="field">
+      <label for="ct-title">Task title</label>
+      <input type="text" id="ct-title" placeholder="e.g. Update login UI" />
+    </div>
+
+    <div class="field">
+      <label for="ct-description">Description</label>
+      <textarea id="ct-description" rows="3" placeholder="What needs to be done?"></textarea>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="ct-status">Status</label>
+        <select id="ct-status">
+          <option>To Do</option>
+          <option>In Progress</option>
+          <option>Done</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="ct-priority">Priority</label>
+        <select id="ct-priority">
+          <option>Low</option>
+          <option>Medium</option>
+          <option>High</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="ct-due-date">Due date</label>
+      <input type="text" id="ct-due-date" placeholder="e.g. Sep 25" />
+    </div>
+
+    <div class="dialog-actions">
+      <button class="btn-secondary" type="button" (click)="onClose()">Cancel</button>
+      <button class="btn-primary" type="button" (click)="onCreate()">Create Task</button>
+    </div>
+
+  </div>
+</div>

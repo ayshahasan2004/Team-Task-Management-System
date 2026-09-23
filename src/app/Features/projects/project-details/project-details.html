@@ -1,0 +1,29 @@
+<div class="project-details">
+
+  <div class="details-header">
+    <div>
+      <h2>{{ project.name }}</h2>
+      <span class="status-badge">{{ project.status }}</span>
+    </div>
+    <button class="edit-btn" type="button">Edit Project</button>
+  </div>
+
+  <p class="description">{{ project.description }}</p>
+
+  <div class="progress-row">
+    <div class="progress-track">
+      <div class="progress-fill" [style.width.%]="project.progress"></div>
+    </div>
+    <span class="progress-value">{{ project.progress }}%</span>
+  </div>
+
+  <div class="meta-row">
+    <span>📅 Due {{ project.dueDate }}</span>
+    <span>◎ {{ project.membersCount }} members</span>
+  </div>
+
+  <div class="details-grid">
+    <app-project-members [members]="members"></app-project-members>
+  </div>
+
+</div>

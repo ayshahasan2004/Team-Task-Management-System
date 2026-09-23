@@ -1,0 +1,14 @@
+<div class="overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="dialog" [style.max-width]="maxWidth" (click)="$event.stopPropagation()">
+
+    <div class="dialog-header" *ngIf="title">
+      <h3>{{ title }}</h3>
+      <button class="close-btn" type="button" (click)="onClose()">✕</button>
+    </div>
+
+    <div class="dialog-body">
+      <ng-content></ng-content>
+    </div>
+
+  </div>
+</div>

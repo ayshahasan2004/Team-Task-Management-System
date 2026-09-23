@@ -1,0 +1,20 @@
+<div class="project-card" (click)="onCardClick()">
+  <div class="card-header">
+    <span class="project-name">{{ project.name }}</span>
+    <span class="status-badge" [class]="statusClass">{{ project.status }}</span>
+  </div>
+
+  <p class="project-description">{{ project.description }}</p>
+
+  <div class="progress-row">
+    <div class="progress-track">
+      <div class="progress-fill" [style.width.%]="project.progress"></div>
+    </div>
+    <span class="progress-value">{{ project.progress }}%</span>
+  </div>
+
+  <div class="card-footer">
+    <span class="members">◎ {{ project.membersCount }} members</span>
+    <span class="due-date">Due {{ project.dueDate }}</span>
+  </div>
+</div>

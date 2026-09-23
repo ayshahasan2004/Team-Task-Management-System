@@ -1,0 +1,21 @@
+<div class="dashboard">
+
+  <div class="stats-grid">
+    <app-stat-card
+      *ngFor="let stat of stats"
+      [label]="stat.label"
+      [value]="stat.value"
+      [icon]="stat.icon"
+      [trend]="stat.trend"
+      [trendPositive]="stat.trendPositive"
+    ></app-stat-card>
+  </div>
+
+  <div class="middle-grid">
+    <app-task-summary></app-task-summary>
+    <app-recent-projects></app-recent-projects>
+  </div>
+
+  <app-activity-list></app-activity-list>
+
+</div>

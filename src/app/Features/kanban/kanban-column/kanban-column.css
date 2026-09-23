@@ -1,0 +1,66 @@
+:host {
+  display: block;
+  min-width: 280px;
+}
+
+* { box-sizing: border-box; }
+
+.kanban-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  padding: 16px;
+  height: 100%;
+
+  background: #f5f7f9;
+  border-radius: 14px;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.column-title {
+  color: #17211d;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.task-count {
+  margin-left: auto;
+
+  padding: 2px 8px;
+  border-radius: 999px;
+
+  background: #e9edeb;
+  color: #7b8580;
+
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.column-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.empty-state {
+  padding: 20px;
+  text-align: center;
+
+  color: #b3bab6;
+  font-size: 11.5px;
+
+  border: 1.5px dashed #dfe5e2;
+  border-radius: 10px;
+}
