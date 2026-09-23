@@ -1,1 +1,179 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+	--ink-strong: #17211d;
+	--ink: #405049;
+	--ink-muted: #7b8a83;
+	--green: #0b7552;
+	--green-bright: #00c77a;
+	--green-soft: #e1f5ed;
+	--surface: #ffffff;
+	--canvas: #f3f7f5;
+	--line: #dfe9e4;
+}
+
+html,
+body {
+	min-height: 100%;
+	margin: 0;
+}
+
+body {
+	background: var(--canvas);
+	color: var(--ink);
+	font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+	font-family: 'Segoe UI', 'Trebuchet MS', sans-serif !important;
+}
+
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}
+
+h1,
+h2,
+h3 {
+	font-family: 'Segoe UI', 'Trebuchet MS', sans-serif !important;
+	letter-spacing: -0.3px;
+}
+
+.dark-theme body {
+	background: #1d2924;
+	color: #e1ece6;
+}
+
+.dark-theme .layout {
+	background: #1d2924;
+}
+
+.dark-theme .sidebar {
+	background: linear-gradient(160deg, #29483a 0%, #203a30 58%, #1d332a 100%) !important;
+	border-color: rgba(220, 240, 230, 0.14) !important;
+	box-shadow: 10px 0 30px rgba(18, 42, 32, 0.16) !important;
+}
+
+.dark-theme .brand-name {
+	color: #ffffff;
+}
+
+.dark-theme .nav-item {
+	color: rgba(255, 255, 255, 0.65);
+}
+
+.dark-theme .nav-item:hover {
+	background: rgba(255, 255, 255, 0.07);
+	border-color: rgba(255, 255, 255, 0.06);
+	color: #ffffff;
+}
+
+.dark-theme .nav-item.active {
+	background: linear-gradient(90deg, rgba(0, 199, 122, 0.24), rgba(0, 199, 122, 0.08));
+	border-color: rgba(92, 240, 180, 0.12);
+	color: #71f3bd;
+	box-shadow: inset 3px 0 0 #16d98a;
+}
+
+.dark-theme .header {
+	background: rgba(34, 48, 42, 0.94) !important;
+	border-color: #3b5147 !important;
+}
+
+.dark-theme .theme-button,
+.dark-theme .icon-button,
+.dark-theme .user-button {
+	border-color: #385047;
+	background: #2a3d34;
+	color: #e4f1eb;
+}
+
+.dark-theme .theme-button:hover,
+.dark-theme .icon-button:hover,
+.dark-theme .user-button:hover {
+	background: #20382d;
+}
+
+.dark-theme .page-content {
+	background: #1d2924 !important;
+}
+
+.dark-theme .stat-card,
+.dark-theme .task-summary,
+.dark-theme .recent-projects,
+.dark-theme .activity-list,
+.dark-theme .project-card,
+.dark-theme .task-card,
+.dark-theme .task-filters,
+.dark-theme .task-details,
+.dark-theme .project-details,
+.dark-theme .project-members,
+.dark-theme .panel,
+.dark-theme .kanban-task,
+.dark-theme .team-group,
+.dark-theme .settings-layout,
+.dark-theme .member-card,
+.dark-theme .kanban-column,
+.dark-theme .task-details {
+	background: #2a3d34 !important;
+	border-color: #486257 !important;
+	color: #e1ece6 !important;
+}
+
+.dark-theme input,
+.dark-theme textarea,
+.dark-theme select,
+.dark-theme .search-input input,
+.dark-theme .search input {
+	background: #24372e !important;
+	border-color: #4a6257 !important;
+	color: #f0f7f3 !important;
+}
+
+.dark-theme input::placeholder,
+.dark-theme textarea::placeholder {
+	color: #82968c;
+}
+
+.dark-theme .user-menu,
+.dark-theme .dialog {
+	background: #2a3d34 !important;
+	border-color: #4a6257 !important;
+}
+
+.dark-theme .page-title,
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme h3,
+.dark-theme .member-name,
+.dark-theme .project-name,
+.dark-theme .task-title {
+	color: #f3faf6 !important;
+}
+
+.dark-theme .subtitle,
+.dark-theme .member-role,
+.dark-theme .project-description,
+.dark-theme .task-description,
+.dark-theme .description,
+.dark-theme .muted {
+	color: #9bb0a5;
+}
+
+.dark-theme .field label,
+.dark-theme .section-header h3,
+.dark-theme .task-filters label,
+.dark-theme .project-members h3 {
+	color: #dcebe3;
+}
+
+.dark-theme .divider,
+.dark-theme .card-footer,
+.dark-theme .task-meta,
+.dark-theme .member-list {
+	border-color: #3a5146;
+}
