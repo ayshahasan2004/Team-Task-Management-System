@@ -8,12 +8,10 @@
 .recent-projects {
   height: 100%;
   padding: 22px;
-
   background: #ffffff;
-  border: 1px solid #edf1ef;
+  border: 1px solid #dfe1e6;
   border-radius: 14px;
-
-  box-shadow: 0 4px 14px rgba(20, 40, 30, 0.04);
+  box-shadow: 0 1px 2px rgba(23, 42, 82, 0.08);
 }
 
 .section-header {
@@ -25,13 +23,13 @@
 
 .section-header h3 {
   margin: 0;
-  color: #17211d;
+  color: #172a52;
   font-size: 15px;
   font-weight: 700;
 }
 
 .view-all {
-  color: #00a963;
+  color: #0052cc;
   font-size: 11px;
   font-weight: 600;
   text-decoration: none;
@@ -60,13 +58,13 @@
 }
 
 .project-name {
-  color: #17211d;
+  color: #172a52;
   font-size: 13px;
   font-weight: 600;
 }
 
 .project-meta {
-  color: #98a19c;
+  color: #6b778c;
   font-size: 11px;
 }
 
@@ -79,21 +77,20 @@
 .progress-track {
   flex: 1;
   height: 6px;
-
   border-radius: 999px;
-  background: #eef1ef;
+  background: #ebecf0;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: #00d47e;
+  background: #0052cc;
   border-radius: 999px;
   transition: width 0.3s ease;
 }
 
 .progress-value {
-  color: #7b8580;
+  color: #42526e;
   font-size: 11px;
   font-weight: 600;
   min-width: 30px;

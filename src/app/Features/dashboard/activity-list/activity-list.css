@@ -6,12 +6,10 @@
 
 .activity-list {
   padding: 22px;
-
   background: #ffffff;
-  border: 1px solid #edf1ef;
+  border: 1px solid #dfe1e6;
   border-radius: 14px;
-
-  box-shadow: 0 4px 14px rgba(20, 40, 30, 0.04);
+  box-shadow: 0 1px 2px rgba(23, 42, 82, 0.08);
 }
 
 .section-header {
@@ -20,7 +18,7 @@
 
 .section-header h3 {
   margin: 0;
-  color: #17211d;
+  color: #172a52;
   font-size: 15px;
   font-weight: 700;
 }
@@ -29,9 +27,8 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
-
   padding: 12px 0;
-  border-bottom: 1px solid #f4f6f5;
+  border-bottom: 1px solid #ebecf0;
 }
 
 .activity-item:last-child {
@@ -43,15 +40,12 @@
   width: 32px;
   height: 32px;
   flex-shrink: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-  background: rgba(0, 212, 126, 0.12);
-  color: #00a963;
-
+  background: #deebff;
+  color: #0052cc;
   font-size: 12px;
   font-weight: 700;
 }
@@ -63,12 +57,12 @@
 }
 
 .activity-text {
-  color: #303b36;
+  color: #172a52;
   font-size: 12.5px;
   line-height: 1.5;
 }
 
 .activity-time {
-  color: #a3aca7;
+  color: #6b778c;
   font-size: 11px;
 }

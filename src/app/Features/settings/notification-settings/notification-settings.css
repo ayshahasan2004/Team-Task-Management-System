@@ -17,7 +17,7 @@
   gap: 16px;
 
   padding-bottom: 18px;
-  border-bottom: 1px solid #f4f6f5;
+  border-bottom: 1px solid var(--border);
 }
 
 .toggle-row:last-child {
@@ -78,7 +78,7 @@
 }
 
 .switch input:checked + .slider {
-  background: #00d47e;
+  background: var(--primary);
 }
 
 .switch input:checked + .slider::before {

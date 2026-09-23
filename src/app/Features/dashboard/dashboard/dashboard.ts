@@ -23,9 +23,9 @@ interface Stat {
 export class Dashboard {
   // Phase 1 — static mock data, passed down to StatCard via @Input()
   stats: Stat[] = [
-    { label: 'Total Projects', value: 12, icon: '📁', trend: '+2', trendPositive: true },
-    { label: 'Active Tasks', value: 25, icon: '✅', trend: '+8', trendPositive: true },
-    { label: 'Team Members', value: 9, icon: '👥', trend: '+1', trendPositive: true },
-    { label: 'Overdue', value: 3, icon: '⏰', trend: '-2', trendPositive: false },
+    { label: 'Total Projects', value: 12, icon: '▣', trend: '+2', trendPositive: true },
+    { label: 'Active Tasks', value: 25, icon: '✓', trend: '+8', trendPositive: true },
+    { label: 'Team Members', value: 9, icon: '◎', trend: '+1', trendPositive: true },
+    { label: 'Overdue', value: 3, icon: '◔', trend: '-2', trendPositive: false },
   ];
 }

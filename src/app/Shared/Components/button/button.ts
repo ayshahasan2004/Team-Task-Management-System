@@ -17,6 +17,8 @@ export class Button {
   @Input() disabled = false;
   @Input() fullWidth = false;
   @Input() type: 'button' | 'submit' = 'button';
+  @Input() icon?: string;
+  @Input() iconPosition: 'left' | 'right' = 'left';
 
   @Output() clicked = new EventEmitter<void>();
 

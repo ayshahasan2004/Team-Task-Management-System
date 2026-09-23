@@ -19,7 +19,7 @@ export class TaskSummary {
   statusGroups: TaskStatusGroup[] = [
     { label: 'To Do', count: 8, color: '#98a19c' },
     { label: 'In Progress', count: 5, color: '#48b4ff' },
-    { label: 'Done', count: 12, color: '#00d47e' },
+    { label: 'Done', count: 12, color: '#00875a' },
   ];
 
   get total(): number {

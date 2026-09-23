@@ -9,16 +9,16 @@
   cursor: pointer;
 
   background: #ffffff;
-  border: 1px solid #edf1ef;
+  border: 1px solid var(--border);
   border-radius: 14px;
 
-  box-shadow: 0 4px 14px rgba(20, 40, 30, 0.04);
+  box-shadow: 0 4px 14px rgba(23, 43, 77, 0.04);
   transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
 .project-card:hover {
-  box-shadow: 0 10px 26px rgba(20, 40, 30, 0.09);
-  border-color: #dfe5e2;
+  box-shadow: 0 10px 26px rgba(23, 43, 77, 0.09);
+  border-color: var(--border);
   transform: translateY(-2px);
 }
 
@@ -31,7 +31,7 @@
 }
 
 .project-name {
-  color: #17211d;
+  color: var(--text-primary);
   font-size: 14px;
   font-weight: 700;
 }
@@ -46,23 +46,23 @@
 }
 
 .status-badge.on-track {
-  background: rgba(0, 212, 126, 0.12);
-  color: #00a963;
+  background: var(--project-active-bg);
+  color: var(--project-active-text);
 }
 
 .status-badge.at-risk {
-  background: rgba(230, 160, 30, 0.12);
-  color: #b8790f;
+  background: var(--status-review-bg);
+  color: var(--status-review-text);
 }
 
 .status-badge.completed {
-  background: rgba(72, 180, 255, 0.12);
-  color: #2d84c9;
+  background: var(--project-completed-bg);
+  color: var(--project-completed-text);
 }
 
 .project-description {
   margin: 0 0 16px;
-  color: #7b8580;
+  color: var(--text-secondary);
   font-size: 12px;
   line-height: 1.6;
 
@@ -83,18 +83,18 @@
   flex: 1;
   height: 6px;
   border-radius: 999px;
-  background: #eef1ef;
+  background: var(--border);
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: #00d47e;
+  background: var(--primary);
   border-radius: 999px;
 }
 
 .progress-value {
-  color: #7b8580;
+  color: var(--text-muted);
   font-size: 11px;
   font-weight: 600;
   min-width: 30px;
@@ -107,8 +107,8 @@
   justify-content: space-between;
 
   padding-top: 14px;
-  border-top: 1px solid #f4f6f5;
+  border-top: 1px solid var(--border);
 
-  color: #98a19c;
+  color: var(--text-muted);
   font-size: 11px;
 }

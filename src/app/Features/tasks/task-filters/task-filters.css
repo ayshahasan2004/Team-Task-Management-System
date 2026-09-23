@@ -48,9 +48,15 @@
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-.search input:focus {
-  border-color: #00d47e;
+.search input:hover {
+  border-color: #2684ff;
   background: #ffffff;
+}
+
+.search input:focus {
+  border-color: var(--primary);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.16);
 }
 
 .status-chips {
@@ -79,9 +85,9 @@
 }
 
 .chip.active {
-  background: #00d47e;
-  border-color: #00d47e;
-  color: #062217;
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
 }
 
 .priority-select {

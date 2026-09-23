@@ -6,5 +6,7 @@
   [disabled]="disabled"
   (click)="onClick()"
 >
+  <span class="btn-icon" *ngIf="icon && iconPosition === 'left'">{{ icon }}</span>
   <ng-content></ng-content>
+  <span class="btn-icon" *ngIf="icon && iconPosition === 'right'">{{ icon }}</span>
 </button>

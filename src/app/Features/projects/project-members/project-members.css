@@ -32,8 +32,9 @@
   padding: 5px 11px;
   border: 1px solid #dfe5e2;
   border-radius: 999px;
-  background: #ffffff;
-  color: #00a963;
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
   font-family: inherit;
   font-size: 11px;
   font-weight: 700;
@@ -42,8 +43,9 @@
 }
 
 .add-btn:hover {
-  border-color: #00d47e;
-  background: rgba(0, 212, 126, 0.06);
+  border-color: var(--primary);
+  background: var(--primary-light);
+  color: var(--primary);
 }
 
 .member-list {

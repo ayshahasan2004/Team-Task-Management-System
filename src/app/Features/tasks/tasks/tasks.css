@@ -36,7 +36,7 @@
 
   border: none;
   border-radius: 10px;
-  background: var(--green);
+  background: var(--primary);
 
   color: #ffffff;
   font-family: inherit;
@@ -49,8 +49,9 @@
 }
 
 .new-task-btn:hover {
-  background: #095e43;
-  box-shadow: 0 10px 24px rgba(11, 117, 82, 0.24);
+  background: var(--primary-light);
+  color: var(--primary);
+  box-shadow: 0 10px 24px rgba(0, 82, 204, 0.16);
   transform: translateY(-1px);
 }
 

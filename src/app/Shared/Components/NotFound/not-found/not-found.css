@@ -7,8 +7,8 @@
   min-height: 100vh;
   width: 100%;
   padding: 32px;
-  background: #f3f7f5;
-  color: #17211d;
+  background: var(--bg-page);
+  color: var(--text-primary);
 }
 
 * { box-sizing: border-box; }
@@ -23,8 +23,8 @@
 :host::before {
   inset: 0;
   opacity: 0.45;
-  background-image: linear-gradient(#dce9e3 1px, transparent 1px),
-    linear-gradient(90deg, #dce9e3 1px, transparent 1px);
+  background-image: linear-gradient(#deebff 1px, transparent 1px),
+    linear-gradient(90deg, #deebff 1px, transparent 1px);
   background-size: 42px 42px;
   mask-image: linear-gradient(to bottom, black, transparent 75%);
 }
@@ -34,10 +34,10 @@
   right: -100px;
   width: 360px;
   height: 360px;
-  border: 1px solid rgba(0, 169, 99, 0.18);
+  border: 1px solid rgba(0, 82, 204, 0.18);
   border-radius: 50%;
-  box-shadow: 0 0 0 28px rgba(0, 169, 99, 0.04),
-    0 0 0 58px rgba(0, 169, 99, 0.025);
+  box-shadow: 0 0 0 28px rgba(0, 82, 204, 0.04),
+    0 0 0 58px rgba(0, 82, 204, 0.025);
 }
 
 .content {
@@ -51,17 +51,17 @@
 .code {
   display: block;
   margin-bottom: 18px;
-  color: #0b7552;
+  color: var(--primary);
   font-size: clamp(110px, 20vw, 180px);
   font-weight: 800;
   letter-spacing: -10px;
   line-height: 0.78;
-  text-shadow: 8px 8px 0 rgba(0, 169, 99, 0.10);
+  text-shadow: 8px 8px 0 rgba(0, 82, 204, 0.10);
 }
 
 .content h1 {
   margin: 0 0 10px;
-  color: #17211d;
+  color: var(--text-primary);
   font-size: 30px;
   font-weight: 700;
   letter-spacing: -0.8px;
@@ -70,7 +70,7 @@
 .content p {
   max-width: 360px;
   margin: 0 auto 30px;
-  color: #66756e;
+  color: var(--text-secondary);
   font-size: 14px;
   line-height: 1.6;
 }
@@ -80,14 +80,14 @@
   align-items: center;
   gap: 10px;
   padding: 13px 20px;
-  border: 1px solid #0b7552;
+  border: 1px solid var(--primary);
   border-radius: 10px;
-  background: #0b7552;
+  background: var(--primary);
   color: #ffffff;
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 10px 20px rgba(11, 117, 82, 0.18);
+  box-shadow: 0 10px 20px rgba(0, 82, 204, 0.18);
   transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
@@ -98,8 +98,8 @@
 }
 
 .home-link:hover {
-  background: #095e43;
-  box-shadow: 0 12px 26px rgba(11, 117, 82, 0.24);
+  background: var(--primary-hover);
+  box-shadow: 0 12px 26px rgba(0, 82, 204, 0.24);
   transform: translateY(-1px);
 }
 

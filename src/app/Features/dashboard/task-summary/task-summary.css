@@ -8,12 +8,10 @@
 .task-summary {
   height: 100%;
   padding: 22px;
-
   background: #ffffff;
-  border: 1px solid #edf1ef;
+  border: 1px solid #dfe1e6;
   border-radius: 14px;
-
-  box-shadow: 0 4px 14px rgba(20, 40, 30, 0.04);
+  box-shadow: 0 1px 2px rgba(23, 42, 82, 0.08);
 }
 
 .summary-header {
@@ -25,13 +23,13 @@
 
 .summary-header h3 {
   margin: 0;
-  color: #17211d;
+  color: #172a52;
   font-size: 15px;
   font-weight: 700;
 }
 
 .total {
-  color: #7b8580;
+  color: #42526e;
   font-size: 11px;
   font-weight: 500;
 }
@@ -40,12 +38,9 @@
   display: flex;
   width: 100%;
   height: 10px;
-
   border-radius: 999px;
   overflow: hidden;
-
-  background: #eef1ef;
-
+  background: #ebecf0;
   margin-bottom: 20px;
 }
 
@@ -75,13 +70,13 @@
 
 .legend-label {
   flex: 1;
-  color: #4c5650;
+  color: #42526e;
   font-size: 12px;
   font-weight: 500;
 }
 
 .legend-count {
-  color: #17211d;
+  color: #172a52;
   font-size: 12px;
   font-weight: 700;
 }

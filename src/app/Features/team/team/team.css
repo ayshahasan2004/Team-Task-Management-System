@@ -24,7 +24,7 @@
   border: 0;
   border-radius: 10px;
   padding: 10px 14px;
-  background: #2f806b;
+  background: var(--primary);
   color: #fff;
   cursor: pointer;
   font: inherit;
@@ -39,12 +39,13 @@
 }
 
 .add-team-button:hover {
-  background: #246b59;
+  background: var(--primary-light);
+  color: var(--primary);
   transform: translateY(-1px);
 }
 
 .add-team-button:focus-visible {
-  outline: 3px solid rgba(47, 128, 107, 0.25);
+  outline: 3px solid rgba(38, 132, 255, 0.25);
   outline-offset: 2px;
 }
 

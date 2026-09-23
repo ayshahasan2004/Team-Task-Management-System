@@ -18,11 +18,11 @@ interface NavItem {
 export class Sidebar {
   // Phase 1 — static mock nav data, no live/business logic
   navItems: NavItem[] = [
-    { label: 'Dashboard', icon: '🏠', path: '/dashboard' },
-    { label: 'Projects', icon: '📁', path: '/projects' },
-    { label: 'Tasks', icon: '✅', path: '/tasks' },
-    { label: 'Kanban', icon: '📋', path: '/kanban' },
-    { label: 'Team', icon: '👥', path: '/team' },
-    { label: 'Settings', icon: '⚙️', path: '/settings' },
+    { label: 'Dashboard', icon: '⌂', path: '/dashboard' },
+    { label: 'Projects', icon: '▣', path: '/projects' },
+    { label: 'Tasks', icon: '✓', path: '/tasks' },
+    { label: 'Kanban', icon: '▤', path: '/kanban' },
+    { label: 'Team', icon: '◎', path: '/team' },
+    { label: 'Settings', icon: '⚙', path: '/settings' },
   ];
 }
