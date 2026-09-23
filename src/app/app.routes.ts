@@ -1,36 +1,59 @@
 import { Routes } from '@angular/router';
-import { Login } from './Auth/login/login';
-import { Signup } from './Auth/signup/signup';
 import { MainLayout } from './Layout/main-layout/main-layout';
-import { Dashboard } from './Dashboard/dashboard/dashboard';
-import { Projects } from './Projects/projects/projects';
-import { Tasks } from './Tasks/tasks/tasks';
-import { KanbanBoard } from './Kanban/kanban-board/kanban-board';
-import { Team } from './Team/team/team';
-import { Settings } from './Settings/settings/settings';
-import { NotFound } from './NotFound/not-found/not-found';
 
 export const routes: Routes = [
-  // Root route shows the dashboard inside the main layout
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  {
+    path: 'login',
+    loadComponent: () => import('./Features/auth/login/login').then(m => m.Login),
+  },
+  {
+    path: 'signup',
+    loadComponent: () => import('./Features/auth/signup/signup').then(m => m.Signup),
+  },
 
-  // Auth pages — full screen, no Sidebar/Header
-  { path: 'login', component: Login },
-  { path: 'signup', component: Signup },
-
-  // Dashboard and other app pages render inside MainLayout
   {
     path: '',
     component: MainLayout,
     children: [
-      { path: 'dashboard', component: Dashboard },
-      { path: 'projects', component: Projects },
-      { path: 'tasks', component: Tasks },
-      { path: 'kanban', component: KanbanBoard },
-      { path: 'team', component: Team },
-      { path: 'settings', component: Settings },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./Features/dashboard/dashboard/dashboard').then(m => m.Dashboard),
+      },
+      {
+        path: 'projects',
+        loadComponent: () => import('./Features/projects/projects/projects').then(m => m.Projects),
+      },
+      {
+        path: 'projects/:id',
+        loadComponent: () => import('./Features/projects/project-details/project-details').then(m => m.ProjectDetails),
+      },
+      {
+        path: 'tasks',
+        loadComponent: () => import('./Features/tasks/tasks/tasks').then(m => m.Tasks),
+      },
+      {
+        path: 'tasks/:id',
+        loadComponent: () => import('./Features/tasks/task-details/task-details').then(m => m.TaskDetails),
+      },
+      {
+        path: 'kanban',
+        loadComponent: () => import('./Features/kanban/kanban-board/kanban-board').then(m => m.KanbanBoard),
+      },
+      {
+        path: 'team',
+        loadComponent: () => import('./Features/team/team/team').then(m => m.Team),
+      },
+      {
+        path: 'team/:id',
+        loadComponent: () => import('./Features/team/member-details/member-details').then(m => m.MemberDetails),
+      },
+      {
+        path: 'settings',
+        loadComponent: () => import('./Features/settings/settings/settings').then(m => m.Settings),
+      },
     ],
   },
 
-  { path: '**', component: NotFound },
+  { path: '**', loadComponent: () => import('./Shared/Components/NotFound/not-found/not-found').then(m => m.NotFound) },
 ];
