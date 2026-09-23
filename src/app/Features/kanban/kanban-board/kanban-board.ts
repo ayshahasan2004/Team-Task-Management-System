@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { KanbanColumn } from '../kanban-column/kanban-column';
-import { Task } from '../../Tasks/task-card/task-card';
+import { Task } from '../../tasks/task-card/task-card';
 
 @Component({
+  standalone: true,
   imports: [CommonModule, KanbanColumn],
   selector: 'app-kanban-board',
   styleUrl: './kanban-board.css',

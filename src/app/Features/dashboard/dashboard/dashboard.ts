@@ -14,6 +14,7 @@ interface Stat {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule, StatCard, TaskSummary, RecentProjects, ActivityList],
   selector: 'app-dashboard',
   styleUrl: './dashboard.css',

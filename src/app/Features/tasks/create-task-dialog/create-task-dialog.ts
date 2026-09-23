@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-create-task-dialog',
   styleUrl: './create-task-dialog.css',

@@ -5,6 +5,7 @@ import { TaskFilters } from '../task-filters/task-filters';
 import { CreateTaskDialog } from '../create-task-dialog/create-task-dialog';
 
 @Component({
+  standalone: true,
   imports: [CommonModule, TaskCard, TaskFilters, CreateTaskDialog],
   selector: 'app-tasks',
   styleUrl: './tasks.css',

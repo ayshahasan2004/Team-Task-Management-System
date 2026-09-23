@@ -16,6 +16,7 @@ export interface Task {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule, TaskStatusBadge],
   selector: 'app-task-card',
   styleUrl: './task-card.css',

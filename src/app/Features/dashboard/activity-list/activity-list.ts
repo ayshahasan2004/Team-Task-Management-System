@@ -8,6 +8,7 @@ interface ActivityItem {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-activity-list',
   styleUrl: './activity-list.css',

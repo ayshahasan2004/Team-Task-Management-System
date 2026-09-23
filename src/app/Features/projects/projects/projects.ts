@@ -4,6 +4,7 @@ import { ProjectCard, Project } from '../project-card/project-card';
 import { CreateProjectDialog } from '../create-project-dialog/create-project-dialog';
 
 @Component({
+  standalone: true,
   imports: [CommonModule, ProjectCard, CreateProjectDialog],
   selector: 'app-projects',
   styleUrl: './projects.css',

@@ -5,6 +5,7 @@ export type AvatarSize = 'sm' | 'md' | 'lg';
 export type AvatarStatus = 'online' | 'offline' | 'none';
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-avatar',
   styleUrl: './avatar.css',

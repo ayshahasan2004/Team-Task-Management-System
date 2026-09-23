@@ -9,6 +9,7 @@ export interface SettingsUser {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-profile-settings',
   styleUrl: './profile-settings.css',

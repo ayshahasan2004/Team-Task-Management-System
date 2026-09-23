@@ -4,6 +4,7 @@ import { ProjectMembers, Member } from '../project-members/project-members';
 import { Project } from '../project-card/project-card';
 
 @Component({
+  standalone: true,
   imports: [CommonModule, ProjectMembers],
   selector: 'app-project-details',
   styleUrl: './project-details.css',

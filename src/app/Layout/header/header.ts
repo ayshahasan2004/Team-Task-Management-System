@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserMenu } from '../user-menu/user-menu';
 
 @Component({
+  standalone: true,
   imports: [CommonModule, UserMenu],
   selector: 'app-header',
   styleUrl: './header.css',

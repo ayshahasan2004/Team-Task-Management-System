@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { KanbanTask } from '../kanban-task/kanban-task';
-import { Task } from '../../Tasks/task-card/task-card';
-import { TaskStatus } from '../../Tasks/task-status-badge/task-status-badge';
+import { Task } from '../../tasks/task-card/task-card';
+import { TaskStatus } from '../../tasks/task-status-badge/task-status-badge';
 
 @Component({
+  standalone: true,
   imports: [CommonModule, KanbanTask],
   selector: 'app-kanban-column',
   styleUrl: './kanban-column.css',

@@ -9,6 +9,7 @@ interface ProjectSummary {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-recent-projects',
   styleUrl: './recent-projects.css',

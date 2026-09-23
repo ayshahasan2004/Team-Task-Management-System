@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 export type BadgeVariant = 'success' | 'warning' | 'danger' | 'info' | 'neutral';
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-badge',
   styleUrl: './badge.css',

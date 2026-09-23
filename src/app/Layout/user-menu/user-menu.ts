@@ -9,6 +9,7 @@ interface MockUser {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-user-menu',
   styleUrl: './user-menu.css',

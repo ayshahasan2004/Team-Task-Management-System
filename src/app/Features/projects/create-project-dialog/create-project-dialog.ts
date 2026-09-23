@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Modal } from '../../Shared/modal/modal';
-import { Loading } from '../../Shared/loading/loading';
+import { Modal } from '../../../Shared/Components/modal/modal';
+import { Loading } from '../../../Shared/Components/loading/loading';
 
 @Component({
+  standalone: true,
   imports: [CommonModule, Modal, Loading],
   selector: 'app-create-project-dialog',
   styleUrl: './create-project-dialog.css',

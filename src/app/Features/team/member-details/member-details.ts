@@ -8,6 +8,7 @@ interface MemberProject {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-member-details',
   styleUrl: './member-details.css',

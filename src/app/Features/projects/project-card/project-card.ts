@@ -12,6 +12,7 @@ export interface Project {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-project-card',
   styleUrl: './project-card.css',

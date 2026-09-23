@@ -8,6 +8,7 @@ interface TaskStatusGroup {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-task-summary',
   styleUrl: './task-summary.css',

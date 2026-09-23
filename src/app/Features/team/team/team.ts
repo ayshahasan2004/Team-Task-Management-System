@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MemberCard, Member } from '../member-card/member-card';
-import { Search } from '../../Shared/search/search';
-import { Pagination } from '../../Shared/pagination/pagination';
-import { EmptyState } from '../../Shared/empty-state/empty-state';
+import { Search } from '../../../Shared/Components/search/search';
+import { Pagination } from '../../../Shared/Components/pagination/pagination';
+import { EmptyState } from '../../../Shared/Components/empty-state/empty-state';
 
 export interface TeamGroup {
   id: string;
@@ -12,6 +12,7 @@ export interface TeamGroup {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule, MemberCard, Search, Pagination, EmptyState],
   selector: 'app-team',
   styleUrl: './team.css',

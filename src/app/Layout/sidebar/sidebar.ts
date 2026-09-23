@@ -9,6 +9,7 @@ interface NavItem {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive],
   selector: 'app-sidebar',
   styleUrl: './sidebar.css',

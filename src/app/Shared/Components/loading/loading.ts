@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 export type LoadingSize = 'sm' | 'md' | 'lg';
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-loading',
   styleUrl: './loading.css',

@@ -4,6 +4,7 @@ import { TaskStatusBadge } from '../task-status-badge/task-status-badge';
 import { Task } from '../task-card/task-card';
 
 @Component({
+  standalone: true,
   imports: [CommonModule, TaskStatusBadge],
   selector: 'app-task-details',
   styleUrl: './task-details.css',

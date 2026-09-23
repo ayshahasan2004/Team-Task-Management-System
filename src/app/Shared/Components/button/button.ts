@@ -5,6 +5,7 @@ export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-button',
   styleUrl: './button.css',

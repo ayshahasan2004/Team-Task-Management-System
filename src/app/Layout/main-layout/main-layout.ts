@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { Sidebar } from '../sidebar/sidebar';
 import { Header } from '../header/header';
 @Component({
+  standalone: true,
   imports: [RouterOutlet, Sidebar, Header],
   selector: 'app-main-layout',
   styleUrl: './main-layout.css',

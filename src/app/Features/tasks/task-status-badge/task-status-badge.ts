@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 export type TaskStatus = 'To Do' | 'In Progress' | 'Done';
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-task-status-badge',
   styleUrl: './task-status-badge.css',

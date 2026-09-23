@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Task } from '../../Tasks/task-card/task-card';
+import { Task } from '../../tasks/task-card/task-card';
 
 @Component({
+  standalone: true,
   imports: [CommonModule],
   selector: 'app-kanban-task',
   styleUrl: './kanban-task.css',

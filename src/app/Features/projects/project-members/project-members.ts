@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Avatar } from '../../Shared/avatar/avatar';
+import { Avatar } from '../../../Shared/Components/avatar/avatar';
 
 export interface Member {
   name: string;
@@ -9,6 +9,7 @@ export interface Member {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule, Avatar],
   selector: 'app-project-members',
   styleUrl: './project-members.css',

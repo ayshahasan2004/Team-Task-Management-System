@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Badge, BadgeVariant } from '../../Shared/badge/badge';
+import { Badge, BadgeVariant } from '../../../Shared/Components/avatar/badge/badge';
 
 export interface Member {
   id: string;
@@ -13,6 +13,7 @@ export interface Member {
 }
 
 @Component({
+  standalone: true,
   imports: [CommonModule, Badge],
   selector: 'app-member-card',
   styleUrl: './member-card.css',

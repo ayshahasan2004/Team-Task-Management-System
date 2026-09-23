@@ -7,6 +7,7 @@ import { SecuritySettings } from '../security-settings/security-settings';
 type SettingsTab = 'Profile' | 'Notifications' | 'Security';
 
 @Component({
+  standalone: true,
   imports: [CommonModule, ProfileSettings, NotificationSettings, SecuritySettings],
   selector: 'app-settings',
   styleUrl: './settings.css',
