@@ -54,6 +54,10 @@
 	--ink-strong: var(--text-primary);
 	--green: var(--primary);
 	--shadow: rgba(23, 42, 82, 0.08);
+	--font-family: 'Atlassian Sans', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+	--heading-weight: 700;
+	--heading-letter-spacing: -0.02em;
+	--ui-letter-spacing: -0.01em;
 }
 
 html,
@@ -65,14 +69,18 @@ body {
 body {
 	background: var(--canvas);
 	color: var(--ink);
-	font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+	font-family: var(--font-family);
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1.5;
+	letter-spacing: var(--ui-letter-spacing);
 	-webkit-font-smoothing: antialiased;
 }
 
 *,
 *::before,
 *::after {
-	font-family: 'Segoe UI', 'Trebuchet MS', sans-serif !important;
+	font-family: var(--font-family) !important;
 }
 
 button,
@@ -91,7 +99,33 @@ h3,
 .task-title,
 .member-name {
 	color: var(--jira-900);
-	letter-spacing: -0.3px;
+	font-weight: var(--heading-weight);
+	letter-spacing: var(--heading-letter-spacing);
+}
+
+.sidebar,
+.header,
+.card,
+.task-card,
+.project-card,
+.member-card,
+.kanban-column,
+.task-details,
+.project-details,
+.project-members,
+.task-filters,
+.task-summary,
+.recent-projects,
+.activity-list,
+.stat-card,
+.panel,
+.team-group,
+.settings-layout,
+.dialog,
+.user-menu {
+	font-size: 13px;
+	line-height: 1.4;
+	letter-spacing: var(--ui-letter-spacing);
 }
 
 button,
