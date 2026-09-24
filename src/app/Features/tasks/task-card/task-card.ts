@@ -1,19 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TaskStatusBadge, TaskStatus } from '../task-status-badge/task-status-badge';
-
-export type TaskPriority = 'Low' | 'Medium' | 'High';
-
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  status: TaskStatus;
-  priority: TaskPriority;
-  assigneeInitial: string;
-  assigneeName: string;
-  dueDate: string;
-}
+import { TaskStatusBadge } from '../task-status-badge/task-status-badge';
+import { Task } from '../../../Core/models/task.model';
 
 @Component({
   standalone: true,
@@ -33,5 +21,17 @@ export class TaskCard {
 
   get priorityClass(): string {
     return this.task.priority.toLowerCase();
+  }
+
+  formatDueDate(date: Date | null): string {
+    if (!date) {
+      return 'No due date';
+    }
+
+    return new Date(date).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
   }
 }

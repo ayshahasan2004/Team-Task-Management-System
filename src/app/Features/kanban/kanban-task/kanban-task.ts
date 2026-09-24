@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Task } from '../../tasks/task-card/task-card';
+import { Task } from '../../../Core/models/task.model';
 
 @Component({
   standalone: true,
@@ -20,5 +20,17 @@ export class KanbanTask {
 
   get priorityClass(): string {
     return this.task.priority.toLowerCase();
+  }
+
+  formatDueDate(date: Date | null): string {
+    if (!date) {
+      return 'No due date';
+    }
+
+    return new Date(date).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
   }
 }

@@ -14,8 +14,8 @@
     <div class="meta-item">
       <span class="meta-label">Assignee</span>
       <div class="assignee">
-        <span class="avatar">{{ task.assigneeInitial }}</span>
-        <span>{{ task.assigneeName }}</span>
+        <span class="avatar">{{ task.assigneeId ? task.assigneeId.slice(0, 2).toUpperCase() : '?' }}</span>
+        <span>{{ task.assigneeId || 'Unassigned' }}</span>
       </div>
     </div>
 
@@ -26,7 +26,7 @@
 
     <div class="meta-item">
       <span class="meta-label">Due date</span>
-      <span class="meta-value">{{ task.dueDate }}</span>
+      <span class="meta-value">{{ task.dueDate ? (task.dueDate | date: 'MMM d, y') : 'No due date' }}</span>
     </div>
   </div>
 

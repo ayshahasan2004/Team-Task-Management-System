@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-export type TaskStatus = 'To Do' | 'In Progress' | 'Done';
+import { TaskStatus } from '../../../Core/models/task.model';
 
 @Component({
   standalone: true,
@@ -11,9 +10,15 @@ export type TaskStatus = 'To Do' | 'In Progress' | 'Done';
   templateUrl: './task-status-badge.html',
 })
 export class TaskStatusBadge {
-  @Input() status: TaskStatus = 'To Do';
+  @Input() status: TaskStatus = 'Todo';
 
   get statusClass(): string {
-    return this.status.toLowerCase().replace(' ', '-');
+    const normalized = this.status.toLowerCase();
+
+    if (normalized === 'todo') {
+      return 'to-do';
+    }
+
+    return normalized.replace(' ', '-');
   }
 }

@@ -1,29 +1,25 @@
-<div class="tasks-page">
-
-  <div class="page-header">
-    <div>
-      <h2>Tasks</h2>
-      <span class="subtitle">{{ tasks.length }} tasks</span>
-    </div>
-    <button class="new-task-btn" type="button" (click)="openCreateDialog()">
-      + New Task
-    </button>
-  </div>
-
-  <app-task-filters (statusChanged)="onStatusFilterChanged($event)"></app-task-filters>
-
-  <div class="tasks-grid">
-    <app-task-card
-      *ngFor="let task of tasks"
-      [task]="task"
-      (cardClicked)="onCardClicked($event)"
-    ></app-task-card>
-  </div>
-
-  <app-create-task-dialog
-    [isOpen]="isCreateDialogOpen"
-    (closed)="closeCreateDialog()"
-    (created)="onTaskCreated()"
-  ></app-create-task-dialog>
-
+<!-- tasks.html -->
+<div class="tasks-header">
+  <h2>Tasks</h2>
+  <button class="new-task-btn" (click)="openCreateDialog()">+ New Task</button>
 </div>
+
+<app-task-filters
+  (statusChanged)="onStatusFilterChanged($event)"
+  (priorityChanged)="onPriorityFilterChanged($event)"
+  (searchChanged)="onSearchChanged($event)">
+</app-task-filters>
+
+<div class="tasks-grid">
+  <app-task-card
+    *ngFor="let task of filteredTasks()"
+    [task]="task"
+    (cardClicked)="onCardClicked($event)">
+  </app-task-card>
+</div>
+
+<app-create-task-dialog
+  [isOpen]="isDialogOpen()"
+  (closed)="onDialogClosed()"
+  (created)="onTaskCreated()">
+</app-create-task-dialog>

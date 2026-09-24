@@ -9,9 +9,9 @@
 
   <div class="card-footer">
     <div class="assignee">
-      <span class="avatar">{{ task.assigneeInitial }}</span>
-      <span class="assignee-name">{{ task.assigneeName }}</span>
+      <span class="avatar">{{ task.assigneeId ? task.assigneeId.slice(0, 2).toUpperCase() : '?' }}</span>
+      <span class="assignee-name">{{ task.assigneeId || 'Unassigned' }}</span>
     </div>
-    <span class="due-date">{{ task.dueDate }}</span>
+    <span class="due-date">{{ formatDueDate(task.dueDate) }}</span>
   </div>
 </div>
