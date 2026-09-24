@@ -13,10 +13,11 @@ import { Task } from '../../../Core/models/task.model';
 export class TaskCard {
   @Input() task!: Task;
 
-  @Output() cardClicked = new EventEmitter<string>();
+  @Output() detailsClicked = new EventEmitter<string>();
 
-  onCardClick() {
-    this.cardClicked.emit(this.task.id);
+  onViewDetails(event: Event): void {
+    event.stopPropagation();
+    this.detailsClicked.emit(this.task.id);
   }
 
   get priorityClass(): string {

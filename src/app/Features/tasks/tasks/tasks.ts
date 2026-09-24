@@ -1,5 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { TaskService } from '../../../Core/services/task.service';
 import { TaskCard } from '../task-card/task-card';
 import { TaskFilters } from '../task-filters/task-filters';
@@ -14,6 +15,7 @@ import { CreateTaskDialog } from '../create-task-dialog/create-task-dialog';
 })
 export class Tasks {
   private taskService = inject(TaskService);
+  private router = inject(Router);
 
   tasks = this.taskService.tasks;
   selectedStatus = signal<'All' | 'Todo' | 'In Progress' | 'Done'>('All');
@@ -54,7 +56,7 @@ export class Tasks {
   }
 
   onCardClicked(taskId: string): void {
-    // route later if needed
+    this.router.navigate(['/tasks', taskId]);
   }
 
   onStatusFilterChanged(status: string): void {

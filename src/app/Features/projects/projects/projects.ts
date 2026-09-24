@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProjectCard, Project } from '../project-card/project-card';
+import { Router } from '@angular/router';
+import { ProjectCard } from '../project-card/project-card';
 import { CreateProjectDialog } from '../create-project-dialog/create-project-dialog';
+import { ProjectService } from '../../../Core/services/project.service';
+import { Project, ProjectStatus } from '../../../Core/models/project.model';
 
 @Component({
   standalone: true,
@@ -11,63 +14,48 @@ import { CreateProjectDialog } from '../create-project-dialog/create-project-dia
   templateUrl: './projects.html',
 })
 export class Projects {
-  // Phase 1 — static mock data
-  projects: Project[] = [
-    {
-      id: 'proj-1',
-      name: 'Website Redesign',
-      description: 'Complete overhaul of the marketing site and new brand system.',
-      progress: 72,
-      membersCount: 4,
-      dueDate: 'Sep 20',
-      status: 'On Track',
-    },
-    {
-      id: 'proj-2',
-      name: 'Mobile App Launch',
-      description: 'iOS and Android launch for the TaskFlow companion app.',
-      progress: 45,
-      membersCount: 6,
-      dueDate: 'Oct 02',
-      status: 'At Risk',
-    },
-    {
-      id: 'proj-3',
-      name: 'API Migration',
-      description: 'Move legacy REST endpoints to the new GraphQL gateway.',
-      progress: 90,
-      membersCount: 3,
-      dueDate: 'Sep 15',
-      status: 'On Track',
-    },
-    {
-      id: 'proj-4',
-      name: 'Marketing Campaign',
-      description: 'Q4 campaign assets, landing pages, and email sequences.',
-      progress: 100,
-      membersCount: 5,
-      dueDate: 'Sep 01',
-      status: 'Completed',
-    },
-  ];
+  private projectService = inject(ProjectService);
+  private router = inject(Router);
+
+  projects = this.projectService.projects;
 
   isCreateDialogOpen = false;
+  editingProject: Project | null = null;
 
   openCreateDialog() {
+    this.editingProject = null;
     this.isCreateDialogOpen = true;
+  }
+
+  onEditClicked(projectId: string): void {
+    const project = this.projectService.getById(projectId);
+    if (project) {
+      this.editingProject = project;
+      this.isCreateDialogOpen = true;
+    }
+  }
+
+  onDeleteClicked(projectId: string): void {
+    if (confirm('Delete this project? This cannot be undone.')) {
+      this.projectService.delete(projectId);
+    }
+  }
+
+  onStatusChanged(change: { id: string; status: ProjectStatus }): void {
+    this.projectService.updateStatus(change.id, change.status);
   }
 
   closeCreateDialog() {
     this.isCreateDialogOpen = false;
+    this.editingProject = null;
   }
 
-  onProjectCreated() {
-    // Phase 1 — no real creation logic yet
+  onProjectSaved() {
     this.isCreateDialogOpen = false;
+    this.editingProject = null;
   }
 
   onCardClicked(projectId: string) {
-    // Phase 1 — navigation to /projects/:id wiring comes in a later phase
-    console.log('Open project details for', projectId);
+    this.router.navigate(['/projects', projectId]);
   }
 }

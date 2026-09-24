@@ -3,7 +3,7 @@
   <div class="page-header">
     <div>
       <h2>Projects</h2>
-      <span class="subtitle">{{ projects.length }} active projects</span>
+      <span class="subtitle">{{ projects().length }} active projects</span>
     </div>
     <button class="new-project-btn" type="button" (click)="openCreateDialog()">
       + New Project
@@ -12,16 +12,20 @@
 
   <div class="projects-grid">
     <app-project-card
-      *ngFor="let project of projects"
+      *ngFor="let project of projects()"
       [project]="project"
       (cardClicked)="onCardClicked($event)"
+      (editClicked)="onEditClicked($event)"
+      (deleteClicked)="onDeleteClicked($event)"
+      (statusChanged)="onStatusChanged($event)"
     ></app-project-card>
   </div>
 
   <app-create-project-dialog
     [isOpen]="isCreateDialogOpen"
+    [editingProject]="editingProject"
     (closed)="closeCreateDialog()"
-    (created)="onProjectCreated()"
+    (saved)="onProjectSaved()"
   ></app-create-project-dialog>
 
 </div>

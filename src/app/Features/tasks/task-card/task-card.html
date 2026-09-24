@@ -1,4 +1,4 @@
-<div class="task-card" (click)="onCardClick()">
+<div class="task-card">
   <div class="card-top">
     <span class="priority-dot" [class]="priorityClass"></span>
     <app-task-status-badge [status]="task.status"></app-task-status-badge>
@@ -14,4 +14,8 @@
     </div>
     <span class="due-date">{{ formatDueDate(task.dueDate) }}</span>
   </div>
+
+  <button class="details-btn" type="button" title="View task details" (click)="onViewDetails($event)">
+    View details
+  </button>
 </div>

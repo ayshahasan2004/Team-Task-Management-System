@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { ProjectMembers, Member } from '../project-members/project-members';
-import { Project } from '../project-card/project-card';
+import { Project } from '../../../Core/models/project.model';
+import { ProjectService } from '../../../Core/services/project.service';
 
 @Component({
   standalone: true,
@@ -10,20 +12,11 @@ import { Project } from '../project-card/project-card';
   styleUrl: './project-details.css',
   templateUrl: './project-details.html',
 })
-export class ProjectDetails {
-  // Phase 1 — accepts a project via @Input(); falls back to mock data
-  // so this renders standalone during UI-only development.
-  // Wiring this to a real :id route param is a later-phase task.
-  @Input() project: Project = {
-    id: 'proj-1',
-    name: 'Website Redesign',
-    description:
-      'Complete overhaul of the marketing site, including new brand system, responsive layout, and CMS migration.',
-    progress: 72,
-    membersCount: 4,
-    dueDate: 'Sep 20',
-    status: 'On Track',
-  };
+export class ProjectDetails implements OnInit {
+  @Input() project: Project | null = null;
+
+  private projectService = inject(ProjectService);
+  private route = inject(ActivatedRoute, { optional: true });
 
   members: Member[] = [
     { name: 'Aysha', initial: 'A', role: 'Frontend Developer' },
@@ -31,4 +24,15 @@ export class ProjectDetails {
     { name: 'Sara', initial: 'S', role: 'Designer' },
     { name: 'Ahmad', initial: 'A', role: 'Project Lead' },
   ];
+
+  get projectProgress(): number {
+    return Math.min(100, (this.project?.memberIds.length ?? 0) * 25);
+  }
+
+  ngOnInit(): void {
+    const projectId = this.route?.snapshot.paramMap.get('id');
+    if (projectId) {
+      this.project = this.projectService.getById(projectId) ?? null;
+    }
+  }
 }

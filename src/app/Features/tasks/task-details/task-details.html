@@ -1,33 +1,80 @@
+<ng-container *ngIf="task as currentTask; else taskNotFound">
 <div class="task-details">
 
   <div class="details-header">
     <div>
-      <h2>{{ task.title }}</h2>
-      <app-task-status-badge [status]="task.status"></app-task-status-badge>
+      <span class="eyebrow">TASK DETAILS</span>
+      <h2>{{ currentTask.title }}</h2>
+      <app-task-status-badge [status]="currentTask.status"></app-task-status-badge>
     </div>
-    <button class="edit-btn" type="button">Edit Task</button>
+    <button class="edit-btn" type="button" *ngIf="!isEditing" (click)="startEditing()">Edit Task</button>
   </div>
 
-  <p class="description">{{ task.description }}</p>
+  <form class="edit-form" *ngIf="isEditing; else taskSummary" (ngSubmit)="saveChanges()">
+    <div class="form-field full-width">
+      <label for="task-title">Task title</label>
+      <input id="task-title" name="title" [(ngModel)]="title" required />
+    </div>
 
+    <div class="form-field full-width">
+      <label for="task-description">Description</label>
+      <textarea id="task-description" name="description" rows="4" [(ngModel)]="description"></textarea>
+    </div>
+
+    <div class="form-field">
+      <label for="task-status">Status</label>
+      <select id="task-status" name="status" [(ngModel)]="status">
+        <option *ngFor="let option of statuses" [ngValue]="option">{{ option }}</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="task-priority">Priority</label>
+      <select id="task-priority" name="priority" [(ngModel)]="priority">
+        <option *ngFor="let option of priorities" [ngValue]="option">{{ option }}</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="task-due-date">Due date</label>
+      <input id="task-due-date" name="dueDate" type="date" [(ngModel)]="dueDate" />
+    </div>
+
+    <div class="form-actions full-width">
+      <button class="cancel-btn" type="button" (click)="cancelEditing()">Cancel</button>
+      <button class="save-btn" type="submit">Save changes</button>
+    </div>
+  </form>
+
+  <ng-template #taskSummary>
+  <p class="description">{{ currentTask.description }}</p>
   <div class="meta-grid">
     <div class="meta-item">
       <span class="meta-label">Assignee</span>
       <div class="assignee">
-        <span class="avatar">{{ task.assigneeId ? task.assigneeId.slice(0, 2).toUpperCase() : '?' }}</span>
-        <span>{{ task.assigneeId || 'Unassigned' }}</span>
+        <span class="avatar">{{ currentTask.assigneeId ? currentTask.assigneeId.slice(0, 2).toUpperCase() : '?' }}</span>
+        <span>{{ currentTask.assigneeId || 'Unassigned' }}</span>
       </div>
     </div>
 
     <div class="meta-item">
       <span class="meta-label">Priority</span>
-      <span class="meta-value">{{ task.priority }}</span>
+      <span class="meta-value">{{ currentTask.priority }}</span>
     </div>
 
     <div class="meta-item">
       <span class="meta-label">Due date</span>
-      <span class="meta-value">{{ task.dueDate ? (task.dueDate | date: 'MMM d, y') : 'No due date' }}</span>
+      <span class="meta-value">{{ currentTask.dueDate ? (currentTask.dueDate | date: 'MMM d, y') : 'No due date' }}</span>
     </div>
   </div>
+  </ng-template>
 
 </div>
+</ng-container>
+
+<ng-template #taskNotFound>
+  <div class="task-not-found">
+    <h2>Task not found</h2>
+    <p>This task may have been deleted or the link is invalid.</p>
+  </div>
+</ng-template>

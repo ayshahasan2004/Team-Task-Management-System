@@ -14,7 +14,7 @@
   <app-task-card
     *ngFor="let task of filteredTasks()"
     [task]="task"
-    (cardClicked)="onCardClicked($event)">
+    (detailsClicked)="onCardClicked($event)">
   </app-task-card>
 </div>
 

@@ -8,13 +8,35 @@
 
   <div class="progress-row">
     <div class="progress-track">
-      <div class="progress-fill" [style.width.%]="project.progress"></div>
+      <div class="progress-fill" [style.width.%]="projectProgress"></div>
     </div>
-    <span class="progress-value">{{ project.progress }}%</span>
+    <span class="progress-value">{{ projectProgress }}%</span>
   </div>
 
   <div class="card-footer">
-    <span class="members">◎ {{ project.membersCount }} members</span>
-    <span class="due-date">Due {{ project.dueDate }}</span>
+    <span class="members">◎ {{ project.memberIds.length }} members</span>
+    <span class="due-date">No due date</span>
+  </div>
+
+  <div class="card-actions">
+    <button class="details-btn" type="button" title="View project details" (click)="onViewDetails($event)">
+      View details
+    </button>
+    <select
+      class="status-select"
+      [value]="project.status"
+      [class.status-active]="project.status === 'Active'"
+      [class.status-completed]="project.status === 'Completed'"
+      [class.status-archived]="project.status === 'Archived'"
+      aria-label="Change project status"
+      (click)="$event.stopPropagation()"
+      (change)="onStatusChange($event)"
+    >
+      <option value="Active">Active</option>
+      <option value="Completed">Completed</option>
+      <option value="Archived">Archived</option>
+    </select>
+    <button class="icon-btn" type="button" title="Edit project" (click)="onEdit($event)">Edit</button>
+    <button class="icon-btn delete-btn" type="button" title="Delete project" (click)="onDelete($event)">Delete</button>
   </div>
 </div>

@@ -126,3 +126,28 @@
   min-width: 30px;
   text-align: right;
 }
+
+.details-btn {
+  align-self: flex-start;
+  padding: 6px 10px;
+  border: 1px solid #b9d3f5;
+  border-radius: 7px;
+  background: #f4f8ff;
+  color: #0052cc;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.details-btn:hover {
+  border-color: #0052cc;
+  background: #0052cc;
+  color: #ffffff;
+}
+
+.details-btn:focus-visible {
+  outline: 3px solid rgba(38, 132, 255, 0.2);
+  outline-offset: 2px;
+}
