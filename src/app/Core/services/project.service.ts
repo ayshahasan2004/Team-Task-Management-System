@@ -1,8 +1,10 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { Project, ProjectStatus } from '../models/project.model';
+import { ActivityService } from './activity.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
+  private activityService = inject(ActivityService);
   private readonly _projects = signal<Project[]>(MOCK_PROJECTS);//stores all projects in a reactive signal
   readonly projects = this._projects.asReadonly();
 
@@ -28,13 +30,18 @@ export class ProjectService {
       updatedAt: new Date(),
     };
     this._projects.update(projects => [...projects, newProject]);///adds the new project to the list of projects
+    this.activityService.add('m1', `created project "${newProject.name}"`);
     return newProject;
   }
 
   update(id: string, changes: Partial<Project>): void {
+    const project = this.getById(id);
     this._projects.update(projects =>
       projects.map(p => (p.id === id ? { ...p, ...changes, updatedAt: new Date() } : p))
     );
+    if (project) {
+      this.activityService.add('m1', `updated project "${changes.name ?? project.name}"`);
+    }
   }
 
   updateStatus(id: string, status: ProjectStatus): void {
@@ -62,14 +69,18 @@ export class ProjectService {
   }
 
   delete(id: string): void {
+    const project = this.getById(id);
     this._projects.update(projects => projects.filter(p => p.id !== id));//removes the project with the given id from the list of projects
+    if (project) {
+      this.activityService.add('m1', `deleted project "${project.name}"`);
+    }
   }
 }
 
 const MOCK_PROJECTS: Project[] = [
   {
     id: 'p1', name: 'TaskFlow Redesign', description: 'Internal tool revamp',
-    status: 'Active', memberIds: ['m1', 'm2', 'm3'], dueDate: new Date('2026-10-15'), createdAt: new Date(), updatedAt: new Date(),
+    status: 'Active', memberIds: ['m1', 'm2', 'm3', 'm4', 'm5'], dueDate: new Date('2026-10-15'), createdAt: new Date(), updatedAt: new Date(),
   },
 ];
 

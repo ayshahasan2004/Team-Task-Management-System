@@ -1,108 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MemberCard, Member } from '../member-card/member-card';
+import { FormsModule } from '@angular/forms';
+import { MemberCard } from '../member-card/member-card';
+import { Member, TeamGroup } from '../../../Core/models/member.model';
+import { MemberService } from '../../../Core/services/member.service';
 import { Search } from '../../../Shared/Components/search/search';
 import { Pagination } from '../../../Shared/Components/pagination/pagination';
 import { EmptyState } from '../../../Shared/Components/empty-state/empty-state';
-
-export interface TeamGroup {
-  id: string;
-  name: string;
-  members: Member[];
-}
+import { Modal } from '../../../Shared/Components/modal/modal';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MemberCard, Search, Pagination, EmptyState],
+  imports: [CommonModule, FormsModule, MemberCard, Search, Pagination, EmptyState, Modal],
   selector: 'app-team',
   styleUrl: './team.css',
   templateUrl: './team.html',
 })
 export class Team {
+  private memberService = inject(MemberService);
+
   searchTerm = '';
   currentPage = 1;
   readonly pageSize = 4;
+  isAddTeamOpen = false;
+  newTeamName = '';
+  newMemberNames = ['', '', ''];
 
-  teamGroups: TeamGroup[] = [
-    {
-      id: 'product-team',
-      name: 'Product Team',
-      members: [
-        {
-          id: 'member-1',
-          name: 'Aysha',
-          initial: 'A',
-          role: 'Frontend Developer',
-          email: 'aysha@taskflow.dev',
-          projectsCount: 3,
-          status: 'Online',
-        },
-        {
-          id: 'member-2',
-          name: 'Sara',
-          initial: 'S',
-          role: 'Designer',
-          email: 'sara@taskflow.dev',
-          projectsCount: 4,
-          status: 'Online',
-        },
-        {
-          id: 'member-3',
-          name: 'Nora',
-          initial: 'N',
-          role: 'Product Manager',
-          email: 'nora@taskflow.dev',
-          projectsCount: 4,
-          status: 'Online',
-        },
-      ],
-    },
-    {
-      id: 'engineering-team',
-      name: 'Engineering Team',
-      members: [
-        {
-          id: 'member-4',
-          name: 'Ahmad',
-          initial: 'A',
-          role: 'Project Lead',
-          email: 'ahmad@taskflow.dev',
-          projectsCount: 5,
-          status: 'Online',
-        },
-        {
-          id: 'member-5',
-          name: 'Mohammad',
-          initial: 'M',
-          role: 'Backend Developer',
-          email: 'mohammad@taskflow.dev',
-          projectsCount: 2,
-          status: 'Offline',
-        },
-        {
-          id: 'member-6',
-          name: 'Lina',
-          initial: 'L',
-          role: 'QA Engineer',
-          email: 'lina@taskflow.dev',
-          projectsCount: 2,
-          status: 'Offline',
-        },
-        {
-          id: 'member-7',
-          name: 'Omar',
-          initial: 'O',
-          role: 'DevOps Engineer',
-          email: 'omar@taskflow.dev',
-          projectsCount: 3,
-          status: 'Online',
-        },
-      ],
-    },
-  ];
+  teamGroups = this.memberService.teamGroups;
 
   get members(): Member[] {
-    return this.teamGroups.flatMap((team) => team.members);
+    return this.memberService.members();
   }
 
   get filteredMembers(): Member[] {
@@ -146,27 +73,39 @@ export class Team {
     this.onSearchChanged('');
   }
 
-  addTeam() {
-    const teamNumber = this.teamGroups.length + 1;
+  openAddTeam(): void {
+    this.newTeamName = '';
+    this.newMemberNames = ['', '', ''];
+    this.isAddTeamOpen = true;
+  }
 
-    this.teamGroups = [
-      ...this.teamGroups,
-      {
-        id: `new-team-${teamNumber}`,
-        name: `New Team ${teamNumber}`,
-        members: [
-          {
-            id: `new-member-${teamNumber}`,
-            name: 'New member',
-            initial: 'N',
-            role: 'Team member',
-            email: `member${teamNumber}@taskflow.dev`,
-            projectsCount: 0,
-            status: 'Online',
-          },
-        ],
-      },
-    ];
+  closeAddTeam(): void {
+    this.isAddTeamOpen = false;
+    this.newTeamName = '';
+    this.newMemberNames = ['', '', ''];
+  }
+
+  addTeam(): void {
+    const name = this.newTeamName.trim();
+    const memberNames = this.newMemberNames.map(memberName => memberName.trim());
+
+    if (!name || memberNames.some(memberName => !memberName)) {
+      return;
+    }
+
+    this.memberService.addTeam(name, memberNames.map((memberName, index) => ({
+      name: memberName,
+      initial: memberName.charAt(0).toUpperCase(),
+      role: 'Team member',
+      email: `${memberName.toLowerCase().replace(/\s+/g, '.')}@taskflow.dev`,
+      projectsCount: 0,
+      status: 'Online',
+    })));
+    this.closeAddTeam();
+  }
+
+  get canCreateTeam(): boolean {
+    return Boolean(this.newTeamName.trim() && this.newMemberNames.every(memberName => memberName.trim()));
   }
 
   onCardClicked(memberId: string) {

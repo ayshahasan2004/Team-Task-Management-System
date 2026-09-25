@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Member } from '../member-card/member-card';
+import { Member } from '../../../Core/models/member.model';
 
 interface MemberProject {
   name: string;

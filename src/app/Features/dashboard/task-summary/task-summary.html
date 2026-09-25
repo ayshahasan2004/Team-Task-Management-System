@@ -1,12 +1,12 @@
 <div class="task-summary">
   <div class="summary-header">
     <h3>Task Summary</h3>
-    <span class="total">{{ total }} total</span>
+    <span class="total">{{ total() }} total</span>
   </div>
 
   <div class="bar">
     <div
-      *ngFor="let group of statusGroups"
+      *ngFor="let group of statusGroups()"
       class="bar-segment"
       [style.width.%]="widthPercent(group.count)"
       [style.background]="group.color"
@@ -14,7 +14,7 @@
   </div>
 
   <div class="legend">
-    <div class="legend-item" *ngFor="let group of statusGroups">
+    <div class="legend-item" *ngFor="let group of statusGroups()">
       <span class="dot" [style.background]="group.color"></span>
       <span class="legend-label">{{ group.label }}</span>
       <span class="legend-count">{{ group.count }}</span>

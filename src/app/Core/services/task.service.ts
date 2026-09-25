@@ -1,8 +1,10 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { Task, TaskStatus } from '../models/task.model';
+import { ActivityService } from './activity.service';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
+  private activityService = inject(ActivityService);
 ////_tasks ==> orginal tasks array, tasks ==> read-only access to the tasks, 
 ////todoTasks ==> computed signal for tasks with status 'Todo', 
 ////inProgressTasks ==> computed signal for tasks with status 'In Progress',
@@ -42,11 +44,17 @@ export class TaskService {
     };
     // adds the new task to the list
     this._tasks.update(tasks => [...tasks, newTask]);/////copies all existing tasks and adds the new task(spread operator) to the end of the array
+    this.activityService.add(newTask.assigneeId ?? 'm1', `created task "${newTask.title}"`);
     // returns the created task
     return newTask;
   }
   // updates an existing task
-  update(id: string, changes: Partial<Task>): void {
+  update(id: string, changes: Partial<Task>): boolean {
+    const task = this.getById(id);
+    if (!task) {
+      return false;
+    }
+
     // updates only the task with the given id
     this._tasks.update(tasks =>
       tasks.map(t => (
@@ -55,18 +63,24 @@ export class TaskService {
           : t
       ))
     );
+    this.activityService.add(task.assigneeId ?? 'm1', `updated task "${changes.title ?? task.title}"`);
+    return true;
   }
   // changes the status of a task
-  moveToStatus(id: string, status: TaskStatus): void {
+  moveToStatus(id: string, status: TaskStatus): boolean {
     // reuses update to change the status
-    this.update(id, { status });
+    return this.update(id, { status });
   }
   // deletes a task by its id
   delete(id: string): void {
+    const task = this.getById(id);
     // removes the task from the list
     this._tasks.update(tasks =>
       tasks.filter(t => t.id !== id)
     );
+    if (task) {
+      this.activityService.add(task.assigneeId ?? 'm1', `deleted task "${task.title}"`);
+    }
   }
 }
 // stores temporary task data

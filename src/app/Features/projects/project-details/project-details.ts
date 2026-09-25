@@ -1,9 +1,10 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { ProjectMembers, Member } from '../project-members/project-members';
+import { ProjectMembers } from '../project-members/project-members';
 import { Project } from '../../../Core/models/project.model';
 import { ProjectService } from '../../../Core/services/project.service';
+import { MemberService } from '../../../Core/services/member.service';
 
 @Component({
   standalone: true,
@@ -16,14 +17,13 @@ export class ProjectDetails implements OnInit {
   @Input() project: Project | null = null;
 
   private projectService = inject(ProjectService);//inject ProjectService to fetch project details
+  private memberService = inject(MemberService);
   private route = inject(ActivatedRoute, { optional: true });//inject ActivatedRoute to get the project ID from the URL
 
-  members: Member[] = [
-    { name: 'Aysha', initial: 'A', role: 'Frontend Developer' },
-    { name: 'Mohammad', initial: 'M', role: 'Backend Developer' },
-    { name: 'Sara', initial: 'S', role: 'Designer' },
-    { name: 'Ahmad', initial: 'A', role: 'Project Lead' },
-  ];
+  members = computed(() => {
+    const memberIds = new Set(this.project?.memberIds ?? []);
+    return this.memberService.members().filter(member => memberIds.has(member.id));
+  });
 
   get projectProgress(): number {
     return Math.min(100, (this.project?.memberIds.length ?? 0) * 25);

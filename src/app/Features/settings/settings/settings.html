@@ -20,7 +20,7 @@
     </div>
 
     <div class="tab-content">
-      <app-profile-settings *ngIf="activeTab === 'Profile'" [user]="user"></app-profile-settings>
+      <app-profile-settings *ngIf="activeTab === 'Profile'" [user]="user()"></app-profile-settings>
       <app-notification-settings *ngIf="activeTab === 'Notifications'"></app-notification-settings>
       <app-security-settings *ngIf="activeTab === 'Security'"></app-security-settings>
     </div>

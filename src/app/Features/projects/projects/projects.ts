@@ -22,7 +22,7 @@ export class Projects {
   isCreateDialogOpen = false;
   editingProject: Project | null = null;// Holds the project being edited, if any
 
-  openCreateDialog() {
+  openCreateDialog(): void {
     this.editingProject = null;
     this.isCreateDialogOpen = true;
   }
@@ -45,17 +45,17 @@ export class Projects {
     this.projectService.updateStatus(change.id, change.status);
   }
 
-  closeCreateDialog() {
+  closeCreateDialog(): void {
     this.isCreateDialogOpen = false;// Close the create/edit project dialog
     this.editingProject = null;
   }
 
-  onProjectSaved() {
+  onProjectSaved(): void {
     this.isCreateDialogOpen = false;
     this.editingProject = null;
   }
 
-  onCardClicked(projectId: string) {
+  onCardClicked(projectId: string): void {
     this.router.navigate(['/projects', projectId]);// Navigate to the project details page when a project card is clicked
   }
 }

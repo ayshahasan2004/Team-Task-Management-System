@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserMenu } from '../user-menu/user-menu';
+import { MemberService } from '../../Core/services/member.service';
 
 @Component({
   standalone: true,
@@ -10,11 +11,15 @@ import { UserMenu } from '../user-menu/user-menu';
   templateUrl: './header.html',
 })
 export class Header {
-  user = {
-    name: 'Aysha',
-    email: 'aysha@taskflow.dev',
-    avatarInitial: 'A',
-  };
+  private memberService = inject(MemberService);
+  user = computed(() => {
+    const member = this.memberService.getById('m1');
+    return {
+      name: member?.name ?? 'Team member',
+      email: member?.email ?? '',
+      avatarInitial: member?.initial ?? '?',
+    };
+  });
 
   isUserMenuOpen = false;
 

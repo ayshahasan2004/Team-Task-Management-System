@@ -1,16 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Badge, BadgeVariant } from '../../../Shared/Components/avatar/badge/badge';
-
-export interface Member {
-  id: string;
-  name: string;
-  initial: string;
-  role: string;
-  email: string;
-  projectsCount: number;
-  status: 'Online' | 'Offline';
-}
+import { Member } from '../../../Core/models/member.model';
 
 @Component({
   standalone: true,

@@ -31,13 +31,14 @@ export class Tasks {
     const byStatus = status === 'All' ? allTasks : allTasks.filter(task => task.status === status);
     const byPriority = priority === 'All' ? byStatus : byStatus.filter(task => task.priority === priority);
 
-    if (!search) {
+    const normalizedSearch = search.trim().toLowerCase();
+    if (!normalizedSearch) {
       return byPriority;
     }
 
     return byPriority.filter(task =>
-      task.title.toLowerCase().includes(search) ||
-      task.description.toLowerCase().includes(search)
+      task.title.toLowerCase().includes(normalizedSearch) ||
+      task.description.toLowerCase().includes(normalizedSearch)
     );
   });
 
