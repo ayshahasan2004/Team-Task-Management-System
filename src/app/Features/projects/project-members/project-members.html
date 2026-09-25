@@ -1,7 +1,7 @@
 <div class="project-members">
   <div class="section-header">
     <h3>Members</h3>
-    <button class="add-btn" type="button">+ Add</button>
+    <button class="add-btn" type="button" (click)="openAddMember()">+ Add</button>
   </div>
 
   <div class="member-list">
@@ -14,3 +14,27 @@
     </div>
   </div>
 </div>
+
+<app-modal
+  [isOpen]="isAddMemberOpen()"
+  title="Add member"
+  (closed)="closeAddMember()"
+>
+  <div class="available-members" *ngIf="availableMembers().length; else allMembersAssigned">
+    <button
+      class="available-member"
+      type="button"
+      *ngFor="let member of availableMembers()"
+      (click)="addMember(member.id)"
+    >
+      <app-avatar [initial]="member.initial" size="sm"></app-avatar>
+      <span>
+        <strong>{{ member.name }}</strong>
+        <small>{{ member.role }}</small>
+      </span>
+    </button>
+  </div>
+  <ng-template #allMembersAssigned>
+    <p class="assignment-message">All available members are already assigned.</p>
+  </ng-template>
+</app-modal>

@@ -21,7 +21,9 @@ export class ProjectDetails implements OnInit {
   private route = inject(ActivatedRoute, { optional: true });//inject ActivatedRoute to get the project ID from the URL
 
   members = computed(() => {
-    const memberIds = new Set(this.project?.memberIds ?? []);
+    this.projectService.projects();
+    const currentProject = this.projectService.getById(this.project?.id ?? '');
+    const memberIds = new Set(currentProject?.memberIds ?? []);
     return this.memberService.members().filter(member => memberIds.has(member.id));
   });
 
