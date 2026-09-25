@@ -15,12 +15,12 @@ import { Project, ProjectStatus } from '../../../Core/models/project.model';
 })
 export class Projects {
   private projectService = inject(ProjectService);
-  private router = inject(Router);
+  private router = inject(Router);//inject Router to navigate to project details page
 
   projects = this.projectService.projects;
 
   isCreateDialogOpen = false;
-  editingProject: Project | null = null;
+  editingProject: Project | null = null;// Holds the project being edited, if any
 
   openCreateDialog() {
     this.editingProject = null;
@@ -36,8 +36,8 @@ export class Projects {
   }
 
   onDeleteClicked(projectId: string): void {
-    if (confirm('Delete this project? This cannot be undone.')) {
-      this.projectService.delete(projectId);
+    if (confirm('Delete this project? This cannot be undone.')) {// Confirm deletion with the user
+      this.projectService.delete(projectId);// Delete the project using the ProjectService
     }
   }
 
@@ -46,7 +46,7 @@ export class Projects {
   }
 
   closeCreateDialog() {
-    this.isCreateDialogOpen = false;
+    this.isCreateDialogOpen = false;// Close the create/edit project dialog
     this.editingProject = null;
   }
 
@@ -56,6 +56,6 @@ export class Projects {
   }
 
   onCardClicked(projectId: string) {
-    this.router.navigate(['/projects', projectId]);
+    this.router.navigate(['/projects', projectId]);// Navigate to the project details page when a project card is clicked
   }
 }

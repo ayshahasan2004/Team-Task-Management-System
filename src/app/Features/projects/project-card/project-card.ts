@@ -12,19 +12,15 @@ import { Project, ProjectStatus } from '../../../Core/models/project.model';
 export class ProjectCard {
   @Input({ required: true }) project!: Project;
 
-  @Output() cardClicked = new EventEmitter<string>();
+  @Output() detailsClicked = new EventEmitter<string>();
   @Output() editClicked = new EventEmitter<string>();
   @Output() deleteClicked = new EventEmitter<string>();
   @Output() statusChanged = new EventEmitter<{ id: string; status: ProjectStatus }>();
   // Output event to notify parent component of status change
 
-  onCardClick() {
-    this.cardClicked.emit(this.project.id);
-  }
-
   onViewDetails(event: Event): void {
     event.stopPropagation();
-    this.cardClicked.emit(this.project.id);
+    this.detailsClicked.emit(this.project.id);
   }
 
   onEdit(event: Event): void {
@@ -49,5 +45,11 @@ export class ProjectCard {
 
   get projectProgress(): number {
     return Math.min(100, this.project.memberIds.length * 25);// Assuming each member contributes 25% to the progress, capped at 100%
+  }
+
+  formatDueDate(date: Date | null): string {
+    return date
+      ? new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      : 'No due date';
   }
 }

@@ -1,4 +1,4 @@
-<div class="project-card" (click)="onCardClick()">
+<div class="project-card">
   <div class="card-header">
     <span class="project-name">{{ project.name }}</span>
     <span class="status-badge" [class]="statusClass">{{ project.status }}</span>
@@ -15,7 +15,7 @@
 
   <div class="card-footer">
     <span class="members">◎ {{ project.memberIds.length }} members</span>
-    <span class="due-date">No due date</span>
+    <span class="due-date">Due {{ formatDueDate(project.dueDate) }}</span>
   </div>
 
   <div class="card-actions">

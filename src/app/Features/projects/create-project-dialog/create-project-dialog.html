@@ -28,9 +28,22 @@
     </select>
   </div>
 
+  <div class="field" *ngIf="!isCreating">
+    <label for="cp-due-date">Due date</label>
+    <input
+      type="date"
+      id="cp-due-date"
+      [min]="minimumDueDate"
+      [(ngModel)]="dueDate"
+      (input)="dueDateError = ''"
+    />
+    <span class="field-error" *ngIf="dueDateError">{{ dueDateError }}</span>
+  </div>
+
   <div class="dialog-actions" *ngIf="!isCreating">
     <button class="btn-secondary" type="button" (click)="onClose()">Cancel</button>
-    <button class="btn-primary" type="button" (click)="onSubmit()">
+    <button class="btn-primary" type="button" (click)="onSubmit()"><!-- click event binding 
+      (if click the button then call the onSubmit function in ts ) -->
       {{ isEditMode ? 'Save Changes' : 'Create Project' }}
     </button>
   </div>

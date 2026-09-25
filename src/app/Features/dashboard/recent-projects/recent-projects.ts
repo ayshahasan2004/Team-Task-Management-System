@@ -28,7 +28,7 @@ export class RecentProjects {
       name: project.name,
       progress: Math.min(100, project.memberIds.length * 25),// Assuming each member contributes 25% to the progress, capped at 100%
       membersCount: project.memberIds.length,// Count of members in the project
-      dueDate: 'No due date',
+      dueDate: project.dueDate ? new Date(project.dueDate).toLocaleDateString() : 'No due date',// Format the due date or show the fallback when it is not available
     }))
   );
 

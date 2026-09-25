@@ -14,7 +14,7 @@
     <app-project-card
       *ngFor="let project of projects()"
       [project]="project"
-      (cardClicked)="onCardClicked($event)"
+      (detailsClicked)="onCardClicked($event)"
       (editClicked)="onEditClicked($event)"
       (deleteClicked)="onDeleteClicked($event)"
       (statusChanged)="onStatusChanged($event)"

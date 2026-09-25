@@ -15,8 +15,8 @@ import { ProjectService } from '../../../Core/services/project.service';
 export class ProjectDetails implements OnInit {
   @Input() project: Project | null = null;
 
-  private projectService = inject(ProjectService);
-  private route = inject(ActivatedRoute, { optional: true });
+  private projectService = inject(ProjectService);//inject ProjectService to fetch project details
+  private route = inject(ActivatedRoute, { optional: true });//inject ActivatedRoute to get the project ID from the URL
 
   members: Member[] = [
     { name: 'Aysha', initial: 'A', role: 'Frontend Developer' },
@@ -30,9 +30,9 @@ export class ProjectDetails implements OnInit {
   }
 
   ngOnInit(): void {
-    const projectId = this.route?.snapshot.paramMap.get('id');
+    const projectId = this.route?.snapshot.paramMap.get('id');// Get the project ID from the route parameters
     if (projectId) {
-      this.project = this.projectService.getById(projectId) ?? null;
+      this.project = this.projectService.getById(projectId) ?? null;// Fetch the project details using the ProjectService
     }
   }
 }

@@ -69,8 +69,8 @@ export class ProjectService {
 const MOCK_PROJECTS: Project[] = [
   {
     id: 'p1', name: 'TaskFlow Redesign', description: 'Internal tool revamp',
-    status: 'Active', memberIds: ['m1', 'm2', 'm3'], createdAt: new Date(), updatedAt: new Date(),
+    status: 'Active', memberIds: ['m1', 'm2', 'm3'], dueDate: new Date('2026-10-15'), createdAt: new Date(), updatedAt: new Date(),
   },
 ];
 
-const DEFAULT_PROJECT_MEMBER_IDS = ['m1', 'm2'];//default members for new projects
+const DEFAULT_PROJECT_MEMBER_IDS = ['m1', 'm2', 'm3'];//default members for new projects
