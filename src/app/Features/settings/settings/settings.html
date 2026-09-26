@@ -8,21 +8,28 @@
   <div class="settings-layout">
 
     <div class="tabs">
-      <button
-        *ngFor="let tab of tabs"
-        type="button"
-        class="tab"
-        [class.active]="tab === activeTab"
-        (click)="selectTab(tab)"
-      >
-        {{ tab }}
-      </button>
+      @for (tab of tabs; track tab) {
+        <button
+          type="button"
+          class="tab"
+          [class.active]="tab === activeTab"
+          (click)="selectTab(tab)"
+        >
+          {{ tab }}
+        </button>
+      }
     </div>
 
     <div class="tab-content">
-      <app-profile-settings *ngIf="activeTab === 'Profile'" [user]="user()"></app-profile-settings>
-      <app-notification-settings *ngIf="activeTab === 'Notifications'"></app-notification-settings>
-      <app-security-settings *ngIf="activeTab === 'Security'"></app-security-settings>
+      @if (activeTab === 'Profile') {
+        <app-profile-settings [user]="user()"></app-profile-settings>
+      }
+      @if (activeTab === 'Notifications') {
+        <app-notification-settings></app-notification-settings>
+      }
+      @if (activeTab === 'Security') {
+        <app-security-settings></app-security-settings>
+      }
     </div>
 
   </div>

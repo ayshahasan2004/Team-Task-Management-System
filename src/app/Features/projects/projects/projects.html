@@ -11,14 +11,15 @@
   </div>
 
   <div class="projects-grid">
-    <app-project-card
-      *ngFor="let project of projects()"
-      [project]="project"
-      (detailsClicked)="onCardClicked($event)"
-      (editClicked)="onEditClicked($event)"
-      (deleteClicked)="onDeleteClicked($event)"
-      (statusChanged)="onStatusChanged($event)"
-    ></app-project-card>
+    @for (project of projects(); track project.id) {
+      <app-project-card
+        [project]="project"
+        (detailsClicked)="onCardClicked($event)"
+        (editClicked)="onEditClicked($event)"
+        (deleteClicked)="onDeleteClicked($event)"
+        (statusChanged)="onStatusChanged($event)"
+      ></app-project-card>
+    }
   </div>
 
   <app-create-project-dialog

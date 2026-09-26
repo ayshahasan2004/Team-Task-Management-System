@@ -1,10 +1,10 @@
 <div class="project-card">
   <div class="card-header">
-    <span class="project-name">{{ project.name }}</span>
-    <span class="status-badge" [class]="statusClass">{{ project.status }}</span>
+    <span class="project-name">{{ project().name }}</span>
+    <span class="status-badge" [class]="statusClass">{{ project().status }}</span>
   </div>
 
-  <p class="project-description">{{ project.description }}</p>
+  <p class="project-description">{{ project().description }}</p>
 
   <div class="progress-row">
     <div class="progress-track">
@@ -14,8 +14,8 @@
   </div>
 
   <div class="card-footer">
-    <span class="members">◎ {{ project.memberIds.length }} members</span>
-    <span class="due-date">Due {{ formatDueDate(project.dueDate) }}</span>
+    <span class="members">◎ {{ project().memberIds.length }} members</span>
+    <span class="due-date">Due {{ formatDueDate(project().dueDate) }}</span>
   </div>
 
   <div class="card-actions">
@@ -24,10 +24,10 @@
     </button>
     <select
       class="status-select"
-      [value]="project.status"
-      [class.status-active]="project.status === 'Active'"
-      [class.status-completed]="project.status === 'Completed'"
-      [class.status-archived]="project.status === 'Archived'"
+      [value]="project().status"
+      [class.status-active]="project().status === 'Active'"
+      [class.status-completed]="project().status === 'Completed'"
+      [class.status-archived]="project().status === 'Archived'"
       aria-label="Change project status"
       (click)="$event.stopPropagation()"
       (change)="onStatusChange($event)"

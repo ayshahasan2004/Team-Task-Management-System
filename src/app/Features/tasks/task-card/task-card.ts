@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskStatusBadge } from '../task-status-badge/task-status-badge';
 import { Task } from '../../../Core/models/task.model';
+import { TaskService } from '../../../Core/services/task.service';
 
 @Component({
   standalone: true,
@@ -11,17 +12,23 @@ import { Task } from '../../../Core/models/task.model';
   templateUrl: './task-card.html',
 })
 export class TaskCard {
-  @Input() task!: Task;
+  private taskService = inject(TaskService);
 
-  @Output() detailsClicked = new EventEmitter<string>();
+  readonly task = input.required<Task>();
+
+  readonly detailsClicked = output<string>();
 
   onViewDetails(event: Event): void {
     event.stopPropagation();
-    this.detailsClicked.emit(this.task.id);
+    this.detailsClicked.emit(this.task().id);
   }
 
   get priorityClass(): string {
-    return this.task.priority.toLowerCase();
+    return this.task().priority.toLowerCase();
+  }
+
+  get assigneeInitial(): string {
+    return this.taskService.initialFor(this.task());
   }
 
   formatDueDate(date: Date | null): string {

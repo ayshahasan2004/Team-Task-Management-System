@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Modal } from '../../../Shared/Components/modal/modal';
@@ -14,11 +14,11 @@ import { Project, ProjectStatus } from '../../../Core/models/project.model';
   templateUrl: './create-project-dialog.html',
 })
 export class CreateProjectDialog implements OnChanges {
-  @Input() isOpen = false;
-  @Input() editingProject: Project | null = null;// The project being edited, if any
+  readonly isOpen = input(false);
+  readonly editingProject = input<Project | null>(null);// The project being edited, if any
 
-  @Output() closed = new EventEmitter<void>();
-  @Output() saved = new EventEmitter<void>();
+  readonly closed = output<void>();
+  readonly saved = output<void>();
 
   private projectService = inject(ProjectService);
 // Inject ProjectService to handle project creation and updates
@@ -37,20 +37,21 @@ export class CreateProjectDialog implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['editingProject'] || changes['isOpen']) {// Check if the editingProject or isOpen input has changed
-      if (this.editingProject) {// If editingProject is provided, populate the form fields with its data
-        this.name = this.editingProject.name;// Set the name field to the editing project's name
-        this.description = this.editingProject.description;
-        this.status = this.editingProject.status;
-        this.dueDate = this.editingProject.dueDate ? this.toDateInputValue(this.editingProject.dueDate) : '';
+      const editingProject = this.editingProject();
+      if (editingProject) {// If editingProject is provided, populate the form fields with its data
+        this.name = editingProject.name;// Set the name field to the editing project's name
+        this.description = editingProject.description;
+        this.status = editingProject.status;
+        this.dueDate = editingProject.dueDate ? this.toDateInputValue(editingProject.dueDate) : '';
         this.dueDateError = '';
-      } else if (this.isOpen) {
+      } else if (this.isOpen()) {
         this.resetForm();// If the dialog is opened for creating a new project, reset the form fields
       }
     }
   }
 
   get isEditMode(): boolean {// Determine if the dialog is in edit mode based on whether editingProject is provided
-    return this.editingProject !== null;// Return true if editingProject is not null, indicating edit mode
+    return this.editingProject() !== null;// Return true if editingProject is not null, indicating edit mode
   }
 
   onClose() {
@@ -72,8 +73,8 @@ export class CreateProjectDialog implements OnChanges {
 
     this.isCreating = true;
 
-    if (this.editingProject) {// If editingProject is provided, update the existing project
-      this.projectService.update(this.editingProject.id, {// Update the project using the ProjectService
+    if (this.editingProject()) {// If editingProject is provided, update the existing project
+      this.projectService.update(this.editingProject()!.id, {// Update the project using the ProjectService
         name: this.name.trim(),
         description: this.description.trim(),
         status: this.status,

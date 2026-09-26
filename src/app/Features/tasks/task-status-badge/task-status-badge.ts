@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskStatus } from '../../../Core/models/task.model';
 
@@ -10,10 +10,10 @@ import { TaskStatus } from '../../../Core/models/task.model';
   templateUrl: './task-status-badge.html',
 })
 export class TaskStatusBadge {
-  @Input() status: TaskStatus = 'Todo';
+  readonly status = input<TaskStatus>('Todo');
 
   get statusClass(): string {
-    const normalized = this.status.toLowerCase();
+    const normalized = this.status().toLowerCase();
 
     if (normalized === 'todo') {
       return 'to-do';

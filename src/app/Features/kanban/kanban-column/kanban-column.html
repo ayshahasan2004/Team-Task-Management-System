@@ -1,19 +1,22 @@
 <div class="kanban-column">
   <div class="column-header">
-    <span class="dot" [style.background]="accentColor"></span>
-    <span class="column-title">{{ title }}</span>
-    <span class="task-count">{{ tasks.length }}</span>
+    <span class="dot" [style.background]="accentColor()"></span>
+    <span class="column-title">{{ title() }}</span>
+    <span class="task-count">{{ tasks().length }}</span>
   </div>
 
   <div class="column-body">
-    <app-kanban-task
-      *ngFor="let task of tasks"
-      [task]="task"
-      (cardClicked)="onTaskClick($event)"
-    ></app-kanban-task>
+    @for (task of tasks(); track task.id) {
+      <app-kanban-task
+        [task]="task"
+        (cardClicked)="onTaskClick($event)"
+      ></app-kanban-task>
+    }
 
-    <div class="empty-state" *ngIf="tasks.length === 0">
-      No tasks
-    </div>
+    @if (tasks().length === 0) {
+      <div class="empty-state">
+        No tasks
+      </div>
+    }
   </div>
 </div>

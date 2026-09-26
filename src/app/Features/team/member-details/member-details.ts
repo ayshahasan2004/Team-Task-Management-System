@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Member } from '../../../Core/models/member.model';
 
@@ -16,7 +16,7 @@ interface MemberProject {
 })
 export class MemberDetails {
   // Phase 1 — mock fallback, real wiring (route param / service) comes later
-  @Input() member: Member = {
+  readonly member = input<Member>({
     id: 'member-1',
     name: 'Aysha',
     initial: 'A',
@@ -24,7 +24,7 @@ export class MemberDetails {
     email: 'aysha@taskflow.dev',
     projectsCount: 3,
     status: 'Online',
-  };
+  });
 
   // Phase 1 — static mock data
   projects: MemberProject[] = [

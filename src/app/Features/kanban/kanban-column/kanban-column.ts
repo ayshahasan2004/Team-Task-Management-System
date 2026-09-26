@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { KanbanTask } from '../kanban-task/kanban-task';
 import { Task, TaskStatus } from '../../../Core/models/task.model';
@@ -12,12 +12,12 @@ import { Task, TaskStatus } from '../../../Core/models/task.model';
 })
 export class KanbanColumn {
   // Data comes down from KanbanBoard
-  @Input() title: TaskStatus = 'Todo';
-  @Input() tasks: Task[] = [];
-  @Input() accentColor = '#98a19c';
+  readonly title = input<TaskStatus>('Todo');
+  readonly tasks = input<Task[]>([]);
+  readonly accentColor = input('#98a19c');
 
   // Bubbles up to KanbanBoard
-  @Output() taskClicked = new EventEmitter<string>();
+  readonly taskClicked = output<string>();
 
   onTaskClick(taskId: string) {
     this.taskClicked.emit(taskId);

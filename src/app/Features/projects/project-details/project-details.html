@@ -1,4 +1,4 @@
-<ng-container *ngIf="project as currentProject; else projectNotFound">
+@if (resolvedProject; as currentProject) {
 <div class="project-details">
 
   <div class="details-header">
@@ -47,16 +47,14 @@
     </section>
 
     <aside class="details-sidebar">
-      <app-project-members [projectId]="project?.id ?? ''" [members]="members()"></app-project-members>
+      <app-project-members [projectId]="currentProject.id" [members]="members()"></app-project-members>
     </aside>
   </div>
 
 </div>
-</ng-container>
-
-<ng-template #projectNotFound>
+} @else {
   <div class="project-not-found">
     <h2>Project not found</h2>
     <p>This project may have been deleted or the link is invalid.</p>
   </div>
-</ng-template>
+}

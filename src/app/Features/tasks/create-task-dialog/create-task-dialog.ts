@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input, inject } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TaskService } from '../../../Core/services/task.service';
@@ -12,9 +12,9 @@ import { TaskStatus, TaskPriority } from '../../../Core/models/task.model';
   styleUrl: './create-task-dialog.css',
 })
 export class CreateTaskDialog {
-  @Input() isOpen = false;
-  @Output() closed = new EventEmitter<void>();
-  @Output() created = new EventEmitter<void>();
+  readonly isOpen = input(false);
+  readonly closed = output<void>();
+  readonly created = output<void>();
 
   private taskService = inject(TaskService);
 

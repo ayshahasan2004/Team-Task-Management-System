@@ -2,9 +2,15 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TaskService } from '../../../Core/services/task.service';
+import { TaskStatus } from '../../../Core/models/task.model';
 import { TaskCard } from '../task-card/task-card';
 import { TaskFilters } from '../task-filters/task-filters';
 import { CreateTaskDialog } from '../create-task-dialog/create-task-dialog';
+
+type TaskStatusFilter = 'All' | TaskStatus;
+
+// Single source of truth for the statuses this page can filter by
+const TASK_STATUS_OPTIONS: readonly TaskStatus[] = ['Todo', 'In Progress', 'Review', 'Done'];
 
 @Component({
   selector: 'app-tasks',
@@ -18,7 +24,7 @@ export class Tasks {
   private router = inject(Router);
 
   tasks = this.taskService.tasks;
-  selectedStatus = signal<'All' | 'Todo' | 'In Progress' | 'Done'>('All');
+  selectedStatus = signal<TaskStatusFilter>('All');
   selectedPriority = signal<'All' | 'Low' | 'Medium' | 'High'>('All');
   searchText = signal('');
 
@@ -61,8 +67,8 @@ export class Tasks {
   }
 
   onStatusFilterChanged(status: string): void {
-    if (status === 'All' || status === 'Todo' || status === 'In Progress' || status === 'Done') {
-      this.selectedStatus.set(status);
+    if (status === 'All' || TASK_STATUS_OPTIONS.includes(status as TaskStatus)) {
+      this.selectedStatus.set(status as TaskStatusFilter);
     }
   }
 

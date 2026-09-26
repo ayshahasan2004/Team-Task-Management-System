@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Badge, BadgeVariant } from '../../../Shared/Components/avatar/badge/badge';
 import { Member } from '../../../Core/models/member.model';
@@ -11,15 +11,15 @@ import { Member } from '../../../Core/models/member.model';
   templateUrl: './member-card.html',
 })
 export class MemberCard {
-  @Input() member!: Member;
+  readonly member = input.required<Member>();
 
-  @Output() cardClicked = new EventEmitter<string>();
+  readonly cardClicked = output<string>();
 
   get statusVariant(): BadgeVariant {
-    return this.member.status === 'Online' ? 'success' : 'neutral';
+    return this.member().status === 'Online' ? 'success' : 'neutral';
   }
 
   onCardClick() {
-    this.cardClicked.emit(this.member.id);
+    this.cardClicked.emit(this.member().id);
   }
 }

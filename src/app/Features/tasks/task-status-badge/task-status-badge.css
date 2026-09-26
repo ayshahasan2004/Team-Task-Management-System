@@ -26,6 +26,13 @@
   border-color: #b9d3ff;
 }
 
+/* Review sits between In Progress and Done — amber reads as "waiting on someone" */
+.status-badge.review {
+  background: linear-gradient(135deg, #fff4d6 0%, #ffe9ad 100%);
+  color: #8a5300;
+  border-color: #f5d98a;
+}
+
 .status-badge.done {
   background: linear-gradient(135deg, #e3fcef 0%, #c9f0d6 100%);
   color: #0f8a5f;

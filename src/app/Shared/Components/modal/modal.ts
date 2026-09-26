@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,11 +9,11 @@ import { CommonModule } from '@angular/common';
   templateUrl: './modal.html',
 })
 export class Modal {
-  @Input() isOpen = false;
-  @Input() title = '';
-  @Input() maxWidth = '440px';
+  readonly isOpen = input(false);
+  readonly title = input('');
+  readonly maxWidth = input('440px');
 
-  @Output() closed = new EventEmitter<void>();
+  readonly closed = output<void>();
 
   onClose() {
     this.closed.emit();

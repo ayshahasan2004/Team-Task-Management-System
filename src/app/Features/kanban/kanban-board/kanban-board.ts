@@ -17,6 +17,7 @@ export class KanbanBoard {
   // AFTER: same names, but pointing at the SAME service the Tasks page reads
   todoTasks = this.taskService.todoTasks;
   inProgressTasks = this.taskService.inProgressTasks;
+  reviewTasks = this.taskService.reviewTasks;
   doneTasks = this.taskService.doneTasks;
 
   onTaskClicked(taskId: string): void {

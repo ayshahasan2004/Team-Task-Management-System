@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -14,10 +14,13 @@ import { TaskService } from '../../../Core/services/task.service';
   templateUrl: './task-details.html',
 })
 export class TaskDetails implements OnInit {
-  @Input() task: Task | null = null;
+  readonly task = input<Task | null>(null);
 
-  private taskService = inject(TaskService);
+  readonly taskService = inject(TaskService);
   private route = inject(ActivatedRoute, { optional: true });
+
+  // Local editable copy — starts from the route when no input was supplied
+  currentTask: Task | null = null;
 
   isEditing = false;
   title = '';
@@ -32,29 +35,31 @@ export class TaskDetails implements OnInit {
   ngOnInit(): void {
     const taskId = this.route?.snapshot.paramMap.get('id');
     if (taskId) {
-      this.task = this.taskService.getById(taskId) ?? null;
+      this.currentTask = this.taskService.getById(taskId) ?? null;
+    } else {
+      this.currentTask = this.task();
     }
   }
 
   startEditing(): void {
-    if (!this.task) {
+    if (!this.currentTask) {
       return;
     }
 
-    this.title = this.task.title;
-    this.description = this.task.description;
-    this.status = this.task.status;
-    this.priority = this.task.priority;
-    this.dueDate = this.task.dueDate ? this.toDateInputValue(this.task.dueDate) : '';
+    this.title = this.currentTask.title;
+    this.description = this.currentTask.description;
+    this.status = this.currentTask.status;
+    this.priority = this.currentTask.priority;
+    this.dueDate = this.currentTask.dueDate ? this.toDateInputValue(this.currentTask.dueDate) : '';
     this.isEditing = true;
   }
 
   saveChanges(): void {
-    if (!this.task || !this.title.trim()) {
+    if (!this.currentTask || !this.title.trim()) {
       return;
     }
 
-    this.taskService.update(this.task.id, {
+    this.taskService.update(this.currentTask.id, {
       title: this.title.trim(),
       description: this.description.trim(),
       status: this.status,
@@ -62,7 +67,7 @@ export class TaskDetails implements OnInit {
       dueDate: this.dueDate ? new Date(`${this.dueDate}T00:00:00`) : null,
     });
 
-    this.task = this.taskService.getById(this.task.id) ?? null;
+    this.currentTask = this.taskService.getById(this.currentTask.id) ?? null;
     this.isEditing = false;
   }
 

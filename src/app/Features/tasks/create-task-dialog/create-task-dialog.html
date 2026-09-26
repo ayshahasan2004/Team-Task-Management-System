@@ -1,50 +1,53 @@
-<div class="dialog-overlay" *ngIf="isOpen" (click)="cancel()">
-  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="new-task-title" (click)="$event.stopPropagation()">
-    <div class="dialog-header">
-      <h3 id="new-task-title">New Task</h3>
-      <button type="button" class="close-btn" aria-label="Close" (click)="cancel()">×</button>
-    </div>
+@if (isOpen()) {
+  <div class="dialog-overlay" (click)="cancel()">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="new-task-title" (click)="$event.stopPropagation()">
+      <div class="dialog-header">
+        <h3 id="new-task-title">New Task</h3>
+        <button type="button" class="close-btn" aria-label="Close" (click)="cancel()">×</button>
+      </div>
 
-    <div class="field-group">
-      <label class="field">
-        <span>Task title</span>
-        <input [(ngModel)]="title" placeholder="Task title" />
-      </label>
-
-      <label class="field">
-        <span>Description</span>
-        <textarea [(ngModel)]="description" rows="4" placeholder="Description"></textarea>
-      </label>
-
-      <div class="field-row">
-        <label class="field half">
-          <span>Status</span>
-          <select [(ngModel)]="status">
-            <option value="Todo">Todo</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Done">Done</option>
-          </select>
+      <div class="field-group">
+        <label class="field">
+          <span>Task title</span>
+          <input [(ngModel)]="title" placeholder="Task title" />
         </label>
 
-        <label class="field half">
-          <span>Priority</span>
-          <select [(ngModel)]="priority">
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-          </select>
+        <label class="field">
+          <span>Description</span>
+          <textarea [(ngModel)]="description" rows="4" placeholder="Description"></textarea>
+        </label>
+
+        <div class="field-row">
+          <label class="field half">
+            <span>Status</span>
+            <select [(ngModel)]="status">
+              <option value="Todo">Todo</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Review">Review</option>
+              <option value="Done">Done</option>
+            </select>
+          </label>
+
+          <label class="field half">
+            <span>Priority</span>
+            <select [(ngModel)]="priority">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Due date</span>
+          <input type="date" [(ngModel)]="dueDate" />
         </label>
       </div>
 
-      <label class="field">
-        <span>Due date</span>
-        <input type="date" [(ngModel)]="dueDate" />
-      </label>
-    </div>
-
-    <div class="dialog-actions">
-      <button type="button" class="btn-secondary" (click)="cancel()">Cancel</button>
-      <button type="button" class="btn-primary" (click)="submit()">Create</button>
+      <div class="dialog-actions">
+        <button type="button" class="btn-secondary" (click)="cancel()">Cancel</button>
+        <button type="button" class="btn-primary" (click)="submit()">Create</button>
+      </div>
     </div>
   </div>
-</div>
+}

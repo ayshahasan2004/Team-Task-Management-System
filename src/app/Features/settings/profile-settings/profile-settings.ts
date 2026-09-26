@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export interface SettingsUser {
@@ -17,5 +17,5 @@ export interface SettingsUser {
 })
 export class ProfileSettings {
   // Data comes down from parent (Settings)
-  @Input() user!: SettingsUser;
+  readonly user = input.required<SettingsUser>();
 }

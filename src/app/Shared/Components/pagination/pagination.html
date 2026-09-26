@@ -2,26 +2,27 @@
   <button
     class="nav-btn"
     type="button"
-    [disabled]="currentPage === 1"
+    [disabled]="currentPage() === 1"
     (click)="prev()"
   >
     ‹
   </button>
 
-  <button
-    *ngFor="let page of pages"
-    type="button"
-    class="page-btn"
-    [class.active]="page === currentPage"
-    (click)="goTo(page)"
-  >
-    {{ page }}
-  </button>
+  @for (page of pages; track page) {
+    <button
+      type="button"
+      class="page-btn"
+      [class.active]="page === currentPage()"
+      (click)="goTo(page)"
+    >
+      {{ page }}
+    </button>
+  }
 
   <button
     class="nav-btn"
     type="button"
-    [disabled]="currentPage === totalPages"
+    [disabled]="currentPage() === totalPages()"
     (click)="next()"
   >
     ›

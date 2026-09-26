@@ -5,19 +5,22 @@
   </div>
 
   <div class="bar">
-    <div
-      *ngFor="let group of statusGroups()"
-      class="bar-segment"
-      [style.width.%]="widthPercent(group.count)"
-      [style.background]="group.color"
-    ></div>
+    @for (group of statusGroups(); track group.label) {
+      <div
+        class="bar-segment"
+        [style.width.%]="widthPercent(group.count)"
+        [style.background]="group.color"
+      ></div>
+    }
   </div>
 
   <div class="legend">
-    <div class="legend-item" *ngFor="let group of statusGroups()">
-      <span class="dot" [style.background]="group.color"></span>
-      <span class="legend-label">{{ group.label }}</span>
-      <span class="legend-count">{{ group.count }}</span>
-    </div>
+    @for (group of statusGroups(); track group.label) {
+      <div class="legend-item">
+        <span class="dot" [style.background]="group.color"></span>
+        <span class="legend-label">{{ group.label }}</span>
+        <span class="legend-count">{{ group.count }}</span>
+      </div>
+    }
   </div>
 </div>

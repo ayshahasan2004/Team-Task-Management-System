@@ -11,11 +11,12 @@
 </app-task-filters>
 
 <div class="tasks-grid">
-  <app-task-card
-    *ngFor="let task of filteredTasks()"
-    [task]="task"
-    (detailsClicked)="onCardClicked($event)">
-  </app-task-card>
+  @for (task of filteredTasks(); track task.id) {
+    <app-task-card
+      [task]="task"
+      (detailsClicked)="onCardClicked($event)">
+    </app-task-card>
+  }
 </div>
 
 <app-create-task-dialog

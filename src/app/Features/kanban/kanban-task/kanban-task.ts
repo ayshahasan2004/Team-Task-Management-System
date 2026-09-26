@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Task } from '../../../Core/models/task.model';
 
@@ -10,16 +10,16 @@ import { Task } from '../../../Core/models/task.model';
   templateUrl: './kanban-task.html',
 })
 export class KanbanTask {
-  @Input() task!: Task;
+  readonly task = input.required<Task>();
 
-  @Output() cardClicked = new EventEmitter<string>();
+  readonly cardClicked = output<string>();
 
   onCardClick() {
-    this.cardClicked.emit(this.task.id);
+    this.cardClicked.emit(this.task().id);
   }
 
   get priorityClass(): string {
-    return this.task.priority.toLowerCase();
+    return this.task().priority.toLowerCase();
   }
 
   formatDueDate(date: Date | null): string {

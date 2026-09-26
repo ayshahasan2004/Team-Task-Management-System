@@ -2,12 +2,16 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { Task, TaskStatus } from '../models/task.model';
 import { ActivityService } from './activity.service';
 
+// Keeps the Tasks page filter in sync with what the model actually supports
+const TASK_STATUSES: readonly TaskStatus[] = ['Todo', 'In Progress', 'Review', 'Done'];
+
 @Injectable({ providedIn: 'root' })
 export class TaskService {
   private activityService = inject(ActivityService);
-////_tasks ==> orginal tasks array, tasks ==> read-only access to the tasks, 
-////todoTasks ==> computed signal for tasks with status 'Todo', 
+////_tasks ==> orginal tasks array, tasks ==> read-only access to the tasks,
+////todoTasks ==> computed signal for tasks with status 'Todo',
 ////inProgressTasks ==> computed signal for tasks with status 'In Progress',
+////reviewTasks ==> computed signal for tasks with status 'Review',
 ////doneTasks ==> computed signal for tasks with status 'Done'
 ////stores all tasks in a reactive signal
   private readonly _tasks = signal<Task[]>(MOCK_TASKS);
@@ -21,6 +25,10 @@ export class TaskService {
   readonly inProgressTasks = computed(() =>
     this._tasks().filter(t => t.status === 'In Progress')
   );
+  // returns only tasks waiting for review
+  readonly reviewTasks = computed(() =>
+    this._tasks().filter(t => t.status === 'Review')
+  );
   // returns only completed tasks
   readonly doneTasks = computed(() =>
     this._tasks().filter(t => t.status === 'Done')
@@ -29,6 +37,32 @@ export class TaskService {
   getById(id: string): Task | undefined {
     return this._tasks().find(t => t.id === id);
   }
+
+  // Turns "m1" / "Aysha" / "Aysha Rahman" into a 2-letter avatar initial
+  initialFor(task: Task): string {
+    const assigneeId = task.assigneeId;
+    if (!assigneeId) {
+      return '?';
+    }
+
+    const parts = assigneeId.trim().split(/\s+/);
+    const letters = parts.length > 1
+      ? `${parts[0].charAt(0)}${parts[1].charAt(0)}`
+      : assigneeId.slice(0, 2);
+
+    return letters.toUpperCase();
+  }
+  // returns a short count per status so the UI never has to hardcode the status list
+  readonly statusCounts = computed<Record<TaskStatus, number>>(() => {
+    const tasks = this._tasks();
+    return TASK_STATUSES.reduce(
+      (counts, status) => {
+        counts[status] = tasks.filter(t => t.status === status).length;
+        return counts;
+      },
+      { Todo: 0, 'In Progress': 0, Review: 0, Done: 0 } as Record<TaskStatus, number>,
+    );
+  });
   // returns all tasks for a project
   getByProject(projectId: string): Task[] {
     return this._tasks().filter(t => t.projectId === projectId);
@@ -88,13 +122,19 @@ const MOCK_TASKS: Task[] = [
   {
     id: '1', projectId: 'p1', title: 'Set up CI pipeline',
     description: 'Configure GitHub Actions for build + lint', status: 'Todo',
-    priority: 'High', assigneeId: 'm1', dueDate: new Date('2026-10-01'),
+    priority: 'High', assigneeId: 'Aysha', dueDate: new Date('2026-10-01'),
     tags: ['devops'], createdAt: new Date(), updatedAt: new Date(),
   },
   {
     id: '2', projectId: 'p1', title: 'Design login page',
     description: 'Mockup + responsive layout', status: 'In Progress',
-    priority: 'Medium', assigneeId: 'm2', dueDate: new Date('2026-09-28'),
+    priority: 'Medium', assigneeId: 'Sara', dueDate: new Date('2026-09-28'),
     tags: ['ui'], createdAt: new Date(), updatedAt: new Date(),
+  },
+  {
+    id: '3', projectId: 'p1', title: 'Code review — auth module',
+    description: 'Review pull request #42 before merging', status: 'Review',
+    priority: 'Medium', assigneeId: 'Aysha', dueDate: new Date('2026-09-30'),
+    tags: ['review'], createdAt: new Date(), updatedAt: new Date(),
   },
 ];

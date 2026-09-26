@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,12 +9,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './empty-state.html',
 })
 export class EmptyState {
-  @Input() icon = '📭';
-  @Input() title = 'Nothing here yet';
-  @Input() description = '';
-  @Input() actionLabel = '';
+  readonly icon = input('📭');
+  readonly title = input('Nothing here yet');
+  readonly description = input('');
+  readonly actionLabel = input('');
 
-  @Output() actionClicked = new EventEmitter<void>();
+  readonly actionClicked = output<void>();
 
   onAction() {
     this.actionClicked.emit();
