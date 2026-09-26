@@ -8,4 +8,5 @@ export interface Project {
   memberIds: string[];
   createdAt: Date;
   updatedAt: Date;
+  dueDate: Date | null;
 }

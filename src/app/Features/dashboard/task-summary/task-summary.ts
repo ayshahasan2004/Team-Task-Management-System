@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TaskService } from '../../../Core/services/task.service';
 
 interface TaskStatusGroup {
   label: string;
@@ -15,18 +16,22 @@ interface TaskStatusGroup {
   templateUrl: './task-summary.html',
 })
 export class TaskSummary {
-  // Phase 1 — static mock data
-  statusGroups: TaskStatusGroup[] = [
-    { label: 'To Do', count: 8, color: '#98a19c' },
-    { label: 'In Progress', count: 5, color: '#48b4ff' },
-    { label: 'Done', count: 12, color: '#00875a' },
-  ];
+  private taskService = inject(TaskService);
 
-  get total(): number {
-    return this.statusGroups.reduce((sum, g) => sum + g.count, 0);
+  statusGroups = computed<TaskStatusGroup[]>(() => {
+    const tasks = this.taskService.tasks();
+    return [
+      { label: 'To Do', count: tasks.filter(task => task.status === 'Todo').length, color: '#98a19c' },
+      { label: 'In Progress', count: tasks.filter(task => task.status === 'In Progress').length, color: '#48b4ff' },
+      { label: 'Done', count: tasks.filter(task => task.status === 'Done').length, color: '#f38eda' },
+    ];
+  });
+
+  total(): number {
+    return this.statusGroups().reduce((sum, group) => sum + group.count, 0);
   }
 
   widthPercent(count: number): number {
-    return this.total ? (count / this.total) * 100 : 0;
+    return this.total() ? (count / this.total()) * 100 : 0;
   }
 }

@@ -5,10 +5,11 @@
 * { box-sizing: border-box; }
 
 .project-card {
-  padding: 20px;
+  min-height: 320px;
+  padding: 26px;
   cursor: pointer;
 
-  background: #ffffff;
+  background: linear-gradient(135deg, #ffffff 0%, #fbfdff 64%, #f2fff8 100%);
   border: 1px solid var(--border);
   border-radius: 14px;
 
@@ -18,7 +19,7 @@
 
 .project-card:hover {
   box-shadow: 0 10px 26px rgba(23, 43, 77, 0.09);
-  border-color: var(--border);
+  border-color: #b9d8f5;
   transform: translateY(-2px);
 }
 
@@ -32,7 +33,7 @@
 
 .project-name {
   color: var(--text-primary);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
 }
 
@@ -60,11 +61,17 @@
   color: var(--project-completed-text);
 }
 
+.status-badge.active {
+  background: var(--project-active-bg);
+  color: var(--project-active-text);
+}
+
 .project-description {
-  margin: 0 0 16px;
+  min-height: 42px;
+  margin: 0 0 22px;
   color: var(--text-secondary);
-  font-size: 12px;
-  line-height: 1.6;
+  font-size: 13px;
+  line-height: 1.7;
 
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -76,12 +83,12 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 22px;
 }
 
 .progress-track {
   flex: 1;
-  height: 6px;
+  height: 8px;
   border-radius: 999px;
   background: var(--border);
   overflow: hidden;
@@ -106,9 +113,157 @@
   align-items: center;
   justify-content: space-between;
 
-  padding-top: 14px;
+  padding-top: 18px;
   border-top: 1px solid var(--border);
 
   color: var(--text-muted);
+  font-size: 12px;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 8px 8px;
+}
+
+.details-btn {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-family: inherit;
   font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.details-btn:hover {
+  background: var(--primary);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.details-btn:focus-visible {
+  outline: 3px solid rgba(0, 82, 204, 0.2);
+  outline-offset: 2px;
+}
+
+.icon-btn {
+  min-height: 32px;
+  border: 1px solid #dce5df;
+  border-radius: 8px;
+  background: #f8fbf9;
+  color: #315044;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.status-select {
+  flex: 1;
+  min-width: 0;
+  min-height: 32px;
+  padding: 0 28px 0 10px;
+  border: 1px solid #cfe9dc;
+  border-radius: 8px;
+  background: #effaf4;
+  color: #147447;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.status-select.status-active {
+  border-color: #b7e6cd;
+  background: var(--project-active-bg);
+  color: var(--project-active-text);
+}
+
+.status-select.status-completed {
+  border-color: #b7d3f7;
+  background: var(--project-completed-bg);
+  color: var(--project-completed-text);
+}
+
+.status-select.status-archived {
+  border-color: #c9ced6;
+  background: var(--project-archived-bg);
+  color: var(--project-archived-text);
+}
+
+.icon-btn {
+  padding: 0 12px;
+}
+
+.icon-btn:hover {
+  border-color: #9dd5ba;
+  background: #eaf8f0;
+  color: #08783f;
+  transform: translateY(-1px);
+}
+
+.status-select:hover,
+.status-select:focus {
+  border-color: #73c99c;
+  background: #e7f8ee;
+  box-shadow: 0 0 0 3px rgba(0, 180, 105, 0.1);
+}
+
+.delete-btn:hover {
+  border-color: #f0b4b1;
+  background: #fff3f2;
+  color: #c23d38;
+}
+
+.icon-btn:focus-visible,
+.status-select:focus-visible {
+  outline: 3px solid rgba(0, 180, 105, 0.2);
+  outline-offset: 2px;
+}
+
+.icon-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 420px) {
+  .project-card {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .card-actions {
+    flex-wrap: wrap;
+  }
+
+  .status-select {
+    flex-basis: 100%;
+  }
+
+  .icon-btn {
+    flex: 1;
+  }
+}
+
+.status-select.status-completed:hover,
+.status-select.status-completed:focus {
+  border-color: #78aef0;
+  background: #c9e0ff;
+}
+
+.status-select.status-archived:hover,
+.status-select.status-archived:focus {
+  border-color: #9ea7b4;
+  background: #eceff3;
 }

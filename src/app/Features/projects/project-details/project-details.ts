@@ -1,7 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, computed, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProjectMembers, Member } from '../project-members/project-members';
-import { Project } from '../project-card/project-card';
+import { ActivatedRoute } from '@angular/router';
+import { ProjectMembers } from '../project-members/project-members';
+import { Project } from '../../../Core/models/project.model';
+import { ProjectService } from '../../../Core/services/project.service';
+import { MemberService } from '../../../Core/services/member.service';
 
 @Component({
   standalone: true,
@@ -10,25 +13,39 @@ import { Project } from '../project-card/project-card';
   styleUrl: './project-details.css',
   templateUrl: './project-details.html',
 })
-export class ProjectDetails {
-  // Phase 1 — accepts a project via @Input(); falls back to mock data
-  // so this renders standalone during UI-only development.
-  // Wiring this to a real :id route param is a later-phase task.
-  @Input() project: Project = {
-    id: 'proj-1',
-    name: 'Website Redesign',
-    description:
-      'Complete overhaul of the marketing site, including new brand system, responsive layout, and CMS migration.',
-    progress: 72,
-    membersCount: 4,
-    dueDate: 'Sep 20',
-    status: 'On Track',
-  };
+export class ProjectDetails implements OnInit {
+  readonly project = input<Project | null>(null);
 
-  members: Member[] = [
-    { name: 'Aysha', initial: 'A', role: 'Frontend Developer' },
-    { name: 'Mohammad', initial: 'M', role: 'Backend Developer' },
-    { name: 'Sara', initial: 'S', role: 'Designer' },
-    { name: 'Ahmad', initial: 'A', role: 'Project Lead' },
-  ];
+  private projectService = inject(ProjectService);//inject ProjectService to fetch project details
+  private memberService = inject(MemberService);
+  private route = inject(ActivatedRoute, { optional: true });//inject ActivatedRoute to get the project ID from the URL
+
+  isLoading = false;
+
+  members = computed(() => {
+    this.projectService.projects();
+    const currentProject = this.projectService.getById(this.project()?.id ?? '');
+    const memberIds = new Set(currentProject?.memberIds ?? []);
+    return this.memberService.members().filter(member => memberIds.has(member.id));
+  });
+
+  // Resolved from the route when no project input was supplied by the parent
+  routeProject: Project | null = null;
+
+  get resolvedProject(): Project | null {
+    return this.project() ?? this.routeProject;
+  }
+
+  get projectProgress(): number {
+    return Math.min(100, (this.resolvedProject?.memberIds.length ?? 0) * 25);
+  }
+
+  ngOnInit(): void {
+    this.isLoading = true;
+    const projectId = this.route?.snapshot.paramMap.get('id');// Get the project ID from the route parameters
+    if (projectId) {
+      this.routeProject = this.projectService.getById(projectId) ?? null;// Fetch the project details using the ProjectService
+    }
+    this.isLoading = false;
+  }
 }

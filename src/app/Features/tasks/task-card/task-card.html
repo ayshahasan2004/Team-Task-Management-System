@@ -1,17 +1,21 @@
-<div class="task-card" (click)="onCardClick()">
+<div class="task-card">
   <div class="card-top">
     <span class="priority-dot" [class]="priorityClass"></span>
-    <app-task-status-badge [status]="task.status"></app-task-status-badge>
+    <app-task-status-badge [status]="task().status"></app-task-status-badge>
   </div>
 
-  <h4 class="task-title">{{ task.title }}</h4>
-  <p class="task-description">{{ task.description }}</p>
+  <h4 class="task-title">{{ task().title }}</h4>
+  <p class="task-description">{{ task().description }}</p>
 
   <div class="card-footer">
     <div class="assignee">
-      <span class="avatar">{{ task.assigneeInitial }}</span>
-      <span class="assignee-name">{{ task.assigneeName }}</span>
+      <span class="avatar">{{ assigneeInitial }}</span>
+      <span class="assignee-name">{{ task().assigneeId || 'Unassigned' }}</span>
     </div>
-    <span class="due-date">{{ task.dueDate }}</span>
+    <span class="due-date">{{ formatDueDate(task().dueDate) }}</span>
   </div>
+
+  <button class="details-btn" type="button" title="View task details" (click)="onViewDetails($event)">
+    View details
+  </button>
 </div>

@@ -1,19 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TaskStatusBadge, TaskStatus } from '../task-status-badge/task-status-badge';
-
-export type TaskPriority = 'Low' | 'Medium' | 'High';
-
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  status: TaskStatus;
-  priority: TaskPriority;
-  assigneeInitial: string;
-  assigneeName: string;
-  dueDate: string;
-}
+import { TaskStatusBadge } from '../task-status-badge/task-status-badge';
+import { Task } from '../../../Core/models/task.model';
+import { TaskService } from '../../../Core/services/task.service';
 
 @Component({
   standalone: true,
@@ -23,15 +12,34 @@ export interface Task {
   templateUrl: './task-card.html',
 })
 export class TaskCard {
-  @Input() task!: Task;
+  private taskService = inject(TaskService);
 
-  @Output() cardClicked = new EventEmitter<string>();
+  readonly task = input.required<Task>();
 
-  onCardClick() {
-    this.cardClicked.emit(this.task.id);
+  readonly detailsClicked = output<string>();
+
+  onViewDetails(event: Event): void {
+    event.stopPropagation();
+    this.detailsClicked.emit(this.task().id);
   }
 
   get priorityClass(): string {
-    return this.task.priority.toLowerCase();
+    return this.task().priority.toLowerCase();
+  }
+
+  get assigneeInitial(): string {
+    return this.taskService.initialFor(this.task());
+  }
+
+  formatDueDate(date: Date | null): string {
+    if (!date) {
+      return 'No due date';
+    }
+
+    return new Date(date).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
   }
 }

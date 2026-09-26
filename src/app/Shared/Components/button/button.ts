@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost';
@@ -12,18 +12,18 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
   templateUrl: './button.html',
 })
 export class Button {
-  @Input() variant: ButtonVariant = 'primary';
-  @Input() size: ButtonSize = 'md';
-  @Input() disabled = false;
-  @Input() fullWidth = false;
-  @Input() type: 'button' | 'submit' = 'button';
-  @Input() icon?: string;
-  @Input() iconPosition: 'left' | 'right' = 'left';
+  readonly variant = input<ButtonVariant>('primary');
+  readonly size = input<ButtonSize>('md');
+  readonly disabled = input(false);
+  readonly fullWidth = input(false);
+  readonly type = input<'button' | 'submit'>('button');
+  readonly icon = input<string | undefined>();
+  readonly iconPosition = input<'left' | 'right'>('left');
 
-  @Output() clicked = new EventEmitter<void>();
+  readonly clicked = output<void>();
 
   onClick() {
-    if (!this.disabled) {
+    if (!this.disabled()) {
       this.clicked.emit();
     }
   }

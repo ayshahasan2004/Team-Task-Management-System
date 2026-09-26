@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type AvatarSize = 'sm' | 'md' | 'lg';
@@ -12,7 +12,7 @@ export type AvatarStatus = 'online' | 'offline' | 'none';
   templateUrl: './avatar.html',
 })
 export class Avatar {
-  @Input() initial = '';
-  @Input() size: AvatarSize = 'md';
-  @Input() status: AvatarStatus = 'none';
+  readonly initial = input('');
+  readonly size = input<AvatarSize>('md');
+  readonly status = input<AvatarStatus>('none');
 }

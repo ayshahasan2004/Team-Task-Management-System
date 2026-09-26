@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileSettings, SettingsUser } from '../profile-settings/profile-settings';
 import { NotificationSettings } from '../notification-settings/notification-settings';
 import { SecuritySettings } from '../security-settings/security-settings';
+import { MemberService } from '../../../Core/services/member.service';
 
 type SettingsTab = 'Profile' | 'Notifications' | 'Security';
 
@@ -14,17 +15,20 @@ type SettingsTab = 'Profile' | 'Notifications' | 'Security';
   templateUrl: './settings.html',
 })
 export class Settings {
+  private memberService = inject(MemberService);
   // Phase 1 — tab switching is visual-only
   tabs: SettingsTab[] = ['Profile', 'Notifications', 'Security'];
   activeTab: SettingsTab = 'Profile';
 
-  // Owned here, passed down to ProfileSettings via @Input()
-  user: SettingsUser = {
-    name: 'Aysha',
-    email: 'aysha@taskflow.dev',
-    role: 'Frontend Developer',
-    initial: 'A',
-  };
+  user = computed<SettingsUser>(() => {
+    const member = this.memberService.getById('m1');
+    return {
+      name: member?.name ?? 'Team member',
+      email: member?.email ?? '',
+      role: member?.role ?? 'Team member',
+      initial: member?.initial ?? '?',
+    };
+  });
 
   selectTab(tab: SettingsTab) {
     this.activeTab = tab;

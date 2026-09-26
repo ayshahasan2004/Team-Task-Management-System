@@ -93,3 +93,38 @@
   color: #98a19c;
   font-size: 11px;
 }
+.available-members {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.available-member {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #edf1ef;
+  border-radius: 10px;
+  background: #fff;
+  color: #17211d;
+  text-align: left;
+  cursor: pointer;
+}
+
+.available-member:hover {
+  border-color: var(--primary);
+  background: #f4fff9;
+}
+
+.available-member span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.available-member small,
+.assignment-message {
+  color: #7c8982;
+}

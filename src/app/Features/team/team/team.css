@@ -100,3 +100,103 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 18px;
 }
+
+.team-dialog-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.team-dialog-field label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.team-dialog-field input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #ffffff;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.team-dialog-field input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.12);
+}
+
+.team-dialog-help {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.team-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.team-cancel-button,
+.team-create-button {
+  min-height: 36px;
+  padding: 0 15px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.team-cancel-button {
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: var(--text-secondary);
+}
+
+.team-create-button {
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.team-create-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.team-members-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.team-members-fields label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.team-members-fields input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.team-members-fields input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.12);
+}

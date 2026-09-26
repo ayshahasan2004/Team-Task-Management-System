@@ -1,16 +1,44 @@
 <div class="project-members">
   <div class="section-header">
     <h3>Members</h3>
-    <button class="add-btn" type="button">+ Add</button>
+    <button class="add-btn" type="button" (click)="openAddMember()">+ Add</button>
   </div>
 
   <div class="member-list">
-    <div class="member-item" *ngFor="let member of members">
-      <app-avatar [initial]="member.initial" size="sm"></app-avatar>
-      <div class="member-info">
-        <span class="member-name">{{ member.name }}</span>
-        <span class="member-role">{{ member.role }}</span>
+    @for (member of members(); track member.id) {
+      <div class="member-item">
+        <app-avatar [initial]="member.initial" size="sm"></app-avatar>
+        <div class="member-info">
+          <span class="member-name">{{ member.name }}</span>
+          <span class="member-role">{{ member.role }}</span>
+        </div>
       </div>
-    </div>
+    }
   </div>
 </div>
+
+<app-modal
+  [isOpen]="isAddMemberOpen()"
+  title="Add member"
+  (closed)="closeAddMember()"
+>
+  @if (availableMembers().length) {
+    <div class="available-members">
+      @for (member of availableMembers(); track member.id) {
+        <button
+          class="available-member"
+          type="button"
+          (click)="addMember(member.id)"
+        >
+          <app-avatar [initial]="member.initial" size="sm"></app-avatar>
+          <span>
+            <strong>{{ member.name }}</strong>
+            <small>{{ member.role }}</small>
+          </span>
+        </button>
+      }
+    </div>
+  } @else {
+    <p class="assignment-message">All available members are already assigned.</p>
+  }
+</app-modal>

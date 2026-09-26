@@ -29,7 +29,12 @@
   color: #7b8580;
   font-size: 12px;
 }
-
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
 .new-task-btn {
   flex-shrink: 0;
   padding: 11px 18px;

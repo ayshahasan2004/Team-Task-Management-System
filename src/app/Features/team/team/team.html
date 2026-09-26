@@ -5,7 +5,7 @@
       <h2>Team</h2>
       <span class="subtitle">{{ members.length }} members</span>
     </div>
-    <button class="add-team-button" type="button" (click)="addTeam()">
+    <button class="add-team-button" type="button" (click)="openAddTeam()">
       <span aria-hidden="true">+</span>
       Add team
     </button>
@@ -17,36 +17,78 @@
   ></app-search>
 
   <div class="team-groups">
-    <section class="team-group" *ngFor="let teamGroup of teamGroups">
-      <div class="team-group-header">
-        <h3>{{ teamGroup.name }}</h3>
-        <span>{{ teamGroup.members.length }} members</span>
-      </div>
+    @for (teamGroup of teamGroups(); track teamGroup.name) {
+      <section class="team-group">
+        <div class="team-group-header">
+          <h3>{{ teamGroup.name }}</h3>
+          <span>{{ teamGroup.members.length }} members</span>
+        </div>
 
-      <div class="members-grid">
-        <app-member-card
-          *ngFor="let member of membersForTeam(teamGroup)"
-          [member]="member"
-          (cardClicked)="onCardClicked($event)"
-        ></app-member-card>
-      </div>
-    </section>
+        <div class="members-grid">
+          @for (member of membersForTeam(teamGroup); track member.id) {
+            <app-member-card
+              [member]="member"
+              (cardClicked)="onCardClicked($event)"
+            ></app-member-card>
+          }
+        </div>
+      </section>
+    }
   </div>
 
-  <app-empty-state
-    *ngIf="filteredMembers.length === 0"
-    icon="🔎"
-    title="No members found"
-    description="Try a different name, role, or email address."
-    actionLabel="Clear search"
-    (actionClicked)="clearSearch()"
-  ></app-empty-state>
+  @if (filteredMembers.length === 0) {
+    <app-empty-state
+      icon="🔎"
+      title="No members found"
+      description="Try a different name, role, or email address."
+      actionLabel="Clear search"
+      (actionClicked)="clearSearch()"
+    ></app-empty-state>
+  }
 
-  <app-pagination
-    *ngIf="filteredMembers.length > pageSize"
-    [currentPage]="currentPage"
-    [totalPages]="totalPages"
-    (pageChanged)="onPageChanged($event)"
-  ></app-pagination>
+  @if (filteredMembers.length > pageSize) {
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (pageChanged)="onPageChanged($event)"
+    ></app-pagination>
+  }
+
+  <app-modal
+    [isOpen]="isAddTeamOpen"
+    title="Add team"
+    (closed)="closeAddTeam()"
+  >
+    <div class="team-dialog-field">
+      <label for="new-team-name">Team name</label>
+      <input
+        id="new-team-name"
+        type="text"
+        [(ngModel)]="newTeamName"
+        placeholder="e.g. Design Team"
+        (keyup.enter)="addTeam()"
+      />
+    </div>
+
+    <div class="team-members-fields">
+      <label>Team members</label>
+      @for (memberName of newMemberNames; track $index) {
+        <input
+          type="text"
+          [(ngModel)]="newMemberNames[$index]"
+          [placeholder]="'Member ' + ($index + 1) + ' name'"
+        />
+      }
+    </div>
+
+    <p class="team-dialog-help">Enter three members for this team.</p>
+
+    <div class="team-dialog-actions">
+      <button class="team-cancel-button" type="button" (click)="closeAddTeam()">Cancel</button>
+      <button class="team-create-button" type="button" [disabled]="!canCreateTeam" (click)="addTeam()">
+        Create team
+      </button>
+    </div>
+  </app-modal>
 
 </div>

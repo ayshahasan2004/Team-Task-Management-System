@@ -1,29 +1,60 @@
+@if (resolvedProject; as currentProject) {
 <div class="project-details">
 
   <div class="details-header">
     <div>
-      <h2>{{ project.name }}</h2>
-      <span class="status-badge">{{ project.status }}</span>
+      <span class="eyebrow">PROJECT OVERVIEW</span>
+      <h2>{{ currentProject.name }}</h2>
+      <span class="status-badge">{{ currentProject.status }}</span>
     </div>
-    <button class="edit-btn" type="button">Edit Project</button>
   </div>
 
-  <p class="description">{{ project.description }}</p>
+  <div class="details-layout">
+    <section class="overview-panel">
+      <div class="panel-heading">
+        <div>
+          <span class="panel-kicker">ABOUT THIS PROJECT</span>
+          <h3>Work in progress</h3>
+        </div>
+        <strong class="progress-value">{{ projectProgress }}%</strong>
+      </div>
 
-  <div class="progress-row">
-    <div class="progress-track">
-      <div class="progress-fill" [style.width.%]="project.progress"></div>
-    </div>
-    <span class="progress-value">{{ project.progress }}%</span>
-  </div>
+      <p class="description">{{ currentProject.description }}</p>
 
-  <div class="meta-row">
-    <span>📅 Due {{ project.dueDate }}</span>
-    <span>◎ {{ project.membersCount }} members</span>
-  </div>
+      <div class="progress-row">
+        <div class="progress-track">
+          <div class="progress-fill" [style.width.%]="projectProgress"></div>
+        </div>
+      </div>
 
-  <div class="details-grid">
-    <app-project-members [members]="members"></app-project-members>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">TEAM MEMBERS</span>
+          <strong>{{ currentProject.memberIds.length }}</strong>
+          <span>people assigned</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">DEADLINE</span>
+          <strong>No due date</strong>
+          <span>not scheduled</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">CREATED</span>
+          <strong>{{ currentProject.createdAt | date: 'MMM d, y' }}</strong>
+          <span>project started</span>
+        </div>
+      </div>
+    </section>
+
+    <aside class="details-sidebar">
+      <app-project-members [projectId]="currentProject.id" [members]="members()"></app-project-members>
+    </aside>
   </div>
 
 </div>
+} @else {
+  <div class="project-not-found">
+    <h2>Project not found</h2>
+    <p>This project may have been deleted or the link is invalid.</p>
+  </div>
+}

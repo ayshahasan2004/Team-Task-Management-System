@@ -1,25 +1,39 @@
 <div class="task-filters">
   <div class="search">
     <span class="search-icon">⌕</span>
-    <input type="text" placeholder="Search tasks..." />
+    <input
+      type="text"
+      placeholder="Search tasks..."
+      [value]="searchText"
+      (input)="onSearchInput($any($event.target).value)"
+    />
   </div>
 
   <div class="status-chips">
-    <button
-      *ngFor="let status of statusOptions"
-      type="button"
-      class="chip"
-      [class.active]="status === activeStatus"
-      (click)="selectStatus(status)"
-    >
-      {{ status }}
-    </button>
+    @for (status of statusOptions; track status) {
+      <button
+        type="button"
+        class="chip"
+        [class.active]="status === activeStatus"
+        (click)="selectStatus(status)"
+      >
+        {{ status }}
+        @if (status !== 'All') {
+          <span class="chip-count">{{ statusCounts()[asTaskStatus(status)] }}</span>
+        }
+      </button>
+    }
   </div>
 
-  <select class="priority-select">
-    <option>All Priorities</option>
-    <option>Low</option>
-    <option>Medium</option>
-    <option>High</option>
+  <select
+    class="priority-select"
+    [value]="activePriority"
+    (change)="selectPriority($any($event.target).value)"
+  >
+    @for (priority of priorityOptions; track priority) {
+      <option [value]="priority">
+        {{ priority }}
+      </option>
+    }
   </select>
 </div>
