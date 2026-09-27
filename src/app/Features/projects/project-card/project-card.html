@@ -1,17 +1,24 @@
 <div class="project-card">
-  <div class="card-header">
+ <div class="card-header">
     <span class="project-name">{{ project().name }}</span>
     <span class="status-badge" [class]="statusClass">{{ project().status }}</span>
-  </div>
+ </div>
 
-  <p class="project-description">{{ project().description }}</p>
+ <p class="project-description">{{ project().description }}</p>
 
-  <div class="progress-row">
-    <div class="progress-track">
+ <div class="progress-row">
+    <div
+      class="progress-track"
+      role="progressbar"
+      [attr.aria-valuenow]="projectProgress"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      [attr.aria-label]="project().name + ' progress'"
+    >
       <div class="progress-fill" [style.width.%]="projectProgress"></div>
     </div>
     <span class="progress-value">{{ projectProgress }}%</span>
-  </div>
+ </div>
 
   <div class="card-footer">
     <span class="members">◎ {{ project().memberIds.length }} members</span>
@@ -36,7 +43,7 @@
       <option value="Completed">Completed</option>
       <option value="Archived">Archived</option>
     </select>
-    <button class="icon-btn" type="button" title="Edit project" (click)="onEdit($event)">Edit</button>
-    <button class="icon-btn delete-btn" type="button" title="Delete project" (click)="onDelete($event)">Delete</button>
+    <button class="icon-btn" type="button" [attr.aria-label]="'Edit ' + project().name" (click)="onEdit($event)">Edit</button>
+    <button class="icon-btn delete-btn" type="button" [attr.aria-label]="'Delete ' + project().name" (click)="onDelete($event)">Delete</button>
   </div>
 </div>

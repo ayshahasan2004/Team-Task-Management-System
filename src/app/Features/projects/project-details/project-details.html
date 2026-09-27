@@ -1,4 +1,6 @@
-@if (resolvedProject; as currentProject) {
+@let currentProject = resolvedProject();
+
+@if (currentProject) {
 <div class="project-details">
 
   <div class="details-header">
@@ -47,7 +49,10 @@
     </section>
 
     <aside class="details-sidebar">
-      <app-project-members [projectId]="currentProject.id" [members]="members()"></app-project-members>
+      <app-project-members
+        [projectId]="currentProject.id"
+        [members]="members()"
+      ></app-project-members>
     </aside>
   </div>
 

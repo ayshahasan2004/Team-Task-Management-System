@@ -5,11 +5,44 @@
 * { box-sizing: border-box; }
 
 .project-details {
-  padding: 28px;
-  background: linear-gradient(135deg, #ffffff 0%, #fbfdff 68%, #f2fff8 100%);
+  position: relative;
+  padding: 30px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff 0%, #fbfdff 62%, #eef5ff 100%);
   border: 1px solid #dfe6ee;
-  border-radius: 18px;
-  box-shadow: 0 12px 30px rgba(23, 43, 77, 0.07);
+  border-radius: 20px;
+  box-shadow: 0 14px 34px rgba(23, 43, 77, 0.08);
+  animation: details-enter 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Decorative corner glow. */
+.project-details::before {
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(38, 132, 255, 0.14), transparent 68%);
+  content: '';
+  pointer-events: none;
+  animation: details-glow 9s ease-in-out infinite alternate;
+}
+
+@keyframes details-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes details-glow {
+  from { transform: translate3d(0, 0, 0) scale(0.9); }
+  to   { transform: translate3d(-24px, 20px, 0) scale(1.1); }
 }
 
 .details-header {
@@ -87,10 +120,17 @@
 
 .overview-panel {
   min-width: 0;
-  padding: 24px;
+  padding: 26px;
   border: 1px solid #e2eaf2;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.72);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.overview-panel:hover {
+  border-color: #c9ddf5;
+  box-shadow: 0 14px 32px rgba(23, 42, 82, 0.1);
+  transform: translateY(-2px);
 }
 
 .panel-heading {
@@ -136,8 +176,21 @@
 .progress-fill {
   height: 100%;
   background: linear-gradient(90deg, #2684ff, #36b37e);
+  background-size: 200% 100%;
   border-radius: 999px;
-  transition: width 0.3s ease;
+  transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: progress-grow 0.9s cubic-bezier(0.22, 1, 0.36, 1) both,
+    progress-hue 6s linear infinite;
+}
+
+@keyframes progress-grow {
+  from { transform: scaleX(0); transform-origin: left center; }
+  to   { transform: scaleX(1); transform-origin: left center; }
+}
+
+@keyframes progress-hue {
+  from { background-position: 0% 50%; }
+  to   { background-position: 200% 50%; }
 }
 
 .meta-grid {
@@ -150,8 +203,15 @@
 .meta-item {
   min-width: 0;
   padding: 14px;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #f5f8fb;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.meta-item:hover {
+  background: var(--primary-light);
+  box-shadow: 0 8px 18px rgba(23, 42, 82, 0.08);
+  transform: translateY(-3px);
 }
 
 .meta-item strong,
@@ -206,6 +266,18 @@
   margin-top: 8px;
   color: var(--text-muted);
   font-size: 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-details,
+  .project-details::before,
+  .progress-fill {
+    animation: none;
+  }
+  .overview-panel:hover,
+  .meta-item:hover {
+    transform: none;
+  }
 }
 
 @media (max-width: 760px) {

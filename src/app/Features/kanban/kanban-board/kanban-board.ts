@@ -7,6 +7,7 @@ import { KanbanColumn } from '../kanban-column/kanban-column';
   selector: 'app-kanban-board',
   standalone: true,
   imports: [KanbanColumn],
+  styleUrl: './kanban-board.css',
   templateUrl: './kanban-board.html',
 })
 export class KanbanBoard {

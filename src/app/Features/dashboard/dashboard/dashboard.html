@@ -1,5 +1,17 @@
 <div class="dashboard">
 
+  <div class="page-header">
+    <div>
+      <span class="eyebrow">Overview</span>
+      <h2>Dashboard</h2>
+      <span class="subtitle">Here is what is happening across your workspace today.</span>
+    </div>
+    <span class="header-chip">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      Live
+    </span>
+  </div>
+
   <div class="stats-grid">
     @for (stat of stats(); track stat.label) {
       <app-stat-card

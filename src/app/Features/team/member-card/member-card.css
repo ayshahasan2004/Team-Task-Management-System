@@ -5,26 +5,59 @@
 * { box-sizing: border-box; }
 
 .member-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 
-  padding: 24px 18px;
+  padding: 26px 18px;
   cursor: pointer;
+  overflow: hidden;
 
-  background: #ffffff;
+  background: linear-gradient(160deg, #ffffff 0%, #fbfdff 60%, #eef5ff 100%);
   border: 1px solid #edf1ef;
-  border-radius: 14px;
+  border-radius: 16px;
 
-  box-shadow: 0 4px 14px rgba(20, 40, 30, 0.04);
-  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 4px 14px rgba(23, 42, 82, 0.05);
+  transition: box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.28s ease;
+}
+
+/* Ring that expands from the avatar on hover. */
+.member-card::after {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  width: 56px;
+  height: 56px;
+  margin-left: -28px;
+  border: 2px solid rgba(38, 132, 255, 0.3);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.85);
+  content: '';
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.member-card:hover::after {
+  opacity: 1;
+  transform: scale(1.9);
 }
 
 .member-card:hover {
-  box-shadow: 0 10px 26px rgba(20, 40, 30, 0.09);
-  border-color: #dfe5e2;
-  transform: translateY(-2px);
+  box-shadow: 0 20px 44px rgba(23, 42, 82, 0.16);
+  border-color: #b9d8f5;
+  transform: translateY(-7px) scale(1.012);
+}
+
+.member-card:hover .member-name {
+  color: var(--primary);
+}
+
+.member-name {
+  transition: color 0.2s ease;
 }
 
 .avatar-wrap {
@@ -33,6 +66,8 @@
 }
 
 .avatar {
+  position: relative;
+  z-index: 1;
   width: 56px;
   height: 56px;
 
@@ -41,11 +76,21 @@
   justify-content: center;
 
   border-radius: 50%;
-  background: rgba(0, 212, 126, 0.12);
-  color: #00a963;
+  background: linear-gradient(140deg, #deebff 0%, #e3fcef 100%);
+  color: var(--primary);
 
   font-size: 20px;
   font-weight: 700;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .member-card:hover {
+    transform: none;
+  }
+  .member-card::after {
+    display: none;
+  }
 }
 
 .status-dot {

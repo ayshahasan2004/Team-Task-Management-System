@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, input } from '@angular/core';
+import { Component, OnInit, computed, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectMembers } from '../project-members/project-members';
@@ -22,29 +22,28 @@ export class ProjectDetails implements OnInit {
 
   isLoading = false;
 
-  members = computed(() => {
-    this.projectService.projects();
-    const currentProject = this.projectService.getById(this.project()?.id ?? '');
-    const memberIds = new Set(currentProject?.memberIds ?? []);
-    return this.memberService.members().filter(member => memberIds.has(member.id));
-  });
+  // Resolved from the route when no project input was supplied by the parent.
+  // A signal so the members computed below react to it.//
+  private readonly routeProject = signal<Project | null>(null);
 
-  // Resolved from the route when no project input was supplied by the parent
-  routeProject: Project | null = null;
+  readonly resolvedProject = computed<Project | null>(
+    () => this.project() ?? this.routeProject()
+  );
 
-  get resolvedProject(): Project | null {
-    return this.project() ?? this.routeProject;
-  }
+  // Re-reads from ProjectService so members appear/disappear as the project changes
+  readonly members = computed(() =>
+    this.memberService.getMembersForProject(this.resolvedProject()?.id ?? '')
+  );
 
   get projectProgress(): number {
-    return Math.min(100, (this.resolvedProject?.memberIds.length ?? 0) * 25);
+    return Math.min(100, (this.resolvedProject()?.memberIds.length ?? 0) * 25);
   }
 
   ngOnInit(): void {
     this.isLoading = true;
     const projectId = this.route?.snapshot.paramMap.get('id');// Get the project ID from the route parameters
     if (projectId) {
-      this.routeProject = this.projectService.getById(projectId) ?? null;// Fetch the project details using the ProjectService
+      this.routeProject.set(this.projectService.getById(projectId) ?? null);// Fetch the project details using the ProjectService
     }
     this.isLoading = false;
   }

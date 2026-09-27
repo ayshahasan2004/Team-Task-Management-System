@@ -1,18 +1,36 @@
 <header class="header">
+  <div class="header-title">
+    <span class="page-title">{{ pageTitle() }}</span>
+  </div>
+
   <div class="header-actions">
     <div class="search">
-      <span class="search-icon">⌕</span>
-      <input type="text" placeholder="Search..." />
+      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <input type="text" placeholder="Search projects, tasks, people" aria-label="Search" />
     </div>
 
     <button class="icon-button" type="button" aria-label="Notifications">
-      🔔
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
+        <path d="M13.7 21a2 2 0 0 1-3.4 0" />
+      </svg>
       <span class="badge">3</span>
     </button>
 
+    <span class="actions-divider" aria-hidden="true"></span>
+
     <button class="user-button" type="button" (click)="toggleUserMenu()">
-      <div class="avatar">{{ user().avatarInitial }}</div>
-      <span class="user-name">{{ user().name }}</span>
+      <span class="avatar">{{ user().avatarInitial }}</span>
+      <span class="user-meta">
+        <span class="user-name">{{ user().name }}</span>
+        <span class="user-role">Member</span>
+      </span>
+      <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" />
+      </svg>
     </button>
 
     <app-user-menu

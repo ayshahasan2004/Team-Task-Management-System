@@ -1,14 +1,26 @@
-<div class="member-card" (click)="onCardClick()">
-  <div class="avatar-wrap">
+<div
+  class="member-card"
+  role="button"
+  tabindex="0"
+  [attr.aria-label]="member().name + ', ' + member().role"
+  (click)="onCardClick()"
+  (keydown.enter)="onCardClick()"
+  (keydown.space)="onCardClick(); $event.preventDefault()"
+>
+ <div class="avatar-wrap">
     <div class="avatar">{{ member().initial }}</div>
-    <span class="status-dot" [class.online]="member().status === 'Online'"></span>
-  </div>
+    <span
+      class="status-dot"
+      [class.online]="member().status === 'Online'"
+      [attr.aria-label]="member().status"
+    ></span>
+ </div>
 
-  <span class="member-name">{{ member().name }}</span>
-  <span class="member-role">{{ member().role }}</span>
-  <app-badge [text]="member().status" [variant]="statusVariant"></app-badge>
+ <span class="member-name">{{ member().name }}</span>
+ <span class="member-role">{{ member().role }}</span>
+ <app-badge [text]="member().status" [variant]="statusVariant"></app-badge>
 
-  <div class="card-footer">
+ <div class="card-footer">
     <span class="projects-count">{{ member().projectsCount }} projects</span>
-  </div>
+ </div>
 </div>

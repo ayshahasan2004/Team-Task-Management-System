@@ -10,6 +10,24 @@
   gap: 22px;
 }
 
+/* Tasks page: animated header underline + gentle backdrop glow. */
+.tasks-header {
+  position: relative;
+}
+
+.tasks-header h2 {
+  margin: 0;
+  color: var(--ink-strong);
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+/* The page itself drifts in behind the cards. */
+:host {
+  position: relative;
+}
+
 .page-header {
   display: flex;
   align-items: flex-start;
@@ -34,6 +52,18 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+  animation: tasks-header-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes tasks-header-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .new-task-btn {
   flex-shrink: 0;
@@ -56,12 +86,22 @@
 .new-task-btn:hover {
   background: var(--primary-light);
   color: var(--primary);
-  box-shadow: 0 10px 24px rgba(0, 82, 204, 0.16);
-  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(0, 82, 204, 0.2);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.new-task-btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .tasks-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tasks-header {
+    animation: none;
+  }
 }

@@ -6,15 +6,44 @@
 * { box-sizing: border-box; }
 
 .kanban-column {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 14px;
 
-  padding: 16px;
+  padding: 18px 16px;
   height: 100%;
 
-  background: #f5f7f9;
-  border-radius: 14px;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e6ecf3;
+  border-radius: 16px;
+
+  transition: box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+}
+
+.kanban-column::before {
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--column-accent, var(--primary));
+  opacity: 0.55;
+  content: '';
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.kanban-column:hover {
+  border-color: #c9ddf5;
+  box-shadow: 0 16px 36px rgba(23, 42, 82, 0.12);
+  transform: translateY(-3px);
+}
+
+.kanban-column:hover::before {
+  opacity: 1;
+  transform: scaleY(1.4);
 }
 
 .column-header {
@@ -27,6 +56,13 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.12);
+  animation: column-dot-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes column-dot-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.25); }
 }
 
 .column-title {
@@ -62,5 +98,22 @@
   font-size: 11.5px;
 
   border: 1.5px dashed #dfe5e2;
-  border-radius: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+}
+
+.kanban-column:hover .empty-state {
+  border-color: #b9d8f5;
+  background: rgba(255, 255, 255, 0.85);
+  color: #7f8a85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kanban-column:hover {
+    transform: none;
+  }
+  .dot {
+    animation: none;
+  }
 }

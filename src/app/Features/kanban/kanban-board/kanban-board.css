@@ -5,10 +5,31 @@
 * { box-sizing: border-box; }
 
 .kanban-board-page {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 22px;
   height: 100%;
+  isolation: isolate;
+}
+
+.kanban-board-page::before {
+  position: absolute;
+  z-index: -1;
+  top: -120px;
+  right: -140px;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(38, 132, 255, 0.13), transparent 68%);
+  content: '';
+  pointer-events: none;
+  animation: board-glow 11s ease-in-out infinite alternate;
+}
+
+@keyframes board-glow {
+  from { transform: translate3d(0, 0, 0) scale(0.9); }
+  to   { transform: translate3d(-30px, 26px, 0) scale(1.1); }
 }
 
 .page-header h2 {
@@ -30,4 +51,33 @@
 
   overflow-x: auto;
   padding-bottom: 8px;
+
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+}
+
+/* The board is a flex row of columns — keep its children as flex items so the
+   columns sit side by side instead of stacking. */
+.board > app-kanban-column {
+  flex: 0 0 auto;
+  display: block;
+}
+
+.board::-webkit-scrollbar {
+  height: 8px;
+}
+
+.board::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(23, 42, 82, 0.18);
+}
+
+.board::-webkit-scrollbar-thumb:hover {
+  background: rgba(23, 42, 82, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kanban-board-page::before {
+    animation: none;
+  }
 }

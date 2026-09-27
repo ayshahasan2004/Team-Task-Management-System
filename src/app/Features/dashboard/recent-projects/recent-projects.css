@@ -8,16 +8,18 @@
 .recent-projects {
   height: 100%;
   padding: 22px;
-  background: #ffffff;
+  background: linear-gradient(140deg, #ffffff 0%, #fbfdff 60%, #eef5ff 100%);
   border: 1px solid #dfe1e6;
-  border-radius: 14px;
-  box-shadow: 0 1px 2px rgba(23, 42, 82, 0.08);
-  transition: transform 220ms ease, box-shadow 220ms ease;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(23, 42, 82, 0.06);
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 260ms cubic-bezier(0.22, 1, 0.36, 1), border-color 260ms ease;
 }
 
 .recent-projects:hover {
-  box-shadow: 0 14px 30px rgba(23, 42, 82, 0.11);
-  transform: translateY(-3px);
+  border-color: #b3d4ff;
+  box-shadow: 0 18px 38px rgba(23, 42, 82, 0.13);
+  transform: translateY(-4px);
 }
 
 .section-header {
@@ -39,10 +41,24 @@
   font-size: 11px;
   font-weight: 600;
   text-decoration: none;
+  transition: transform 200ms ease, color 200ms ease;
+  display: inline-block;
 }
 
 .view-all:hover {
   text-decoration: underline;
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recent-projects:hover,
+  .project-item:hover,
+  .view-all:hover {
+    transform: none;
+  }
+  .progress-fill {
+    animation: none;
+  }
 }
 
 .project-list {
@@ -57,13 +73,14 @@
   gap: 8px;
   padding: 8px;
   margin: -8px;
-  border-radius: 10px;
-  transition: background 180ms ease, transform 180ms ease;
+  border-radius: 12px;
+  transition: background 200ms ease, transform 200ms ease, box-shadow 200ms ease;
 }
 
 .project-item:hover {
-  background: #f4f7ff;
-  transform: translateX(4px);
+  background: #f2f7ff;
+  box-shadow: 0 8px 20px rgba(23, 42, 82, 0.07);
+  transform: translateX(5px);
 }
 
 .project-info {
@@ -99,11 +116,18 @@
 
 .progress-fill {
   height: 100%;
-  background: #0052cc;
+  background: linear-gradient(90deg, #0052cc, #2684ff, #36b37e);
+  background-size: 200% 100%;
   border-radius: 999px;
-  transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
   overflow: hidden;
+  animation: progress-hue 6s linear infinite;
+}
+
+@keyframes progress-hue {
+  from { background-position: 0% 50%; }
+  to   { background-position: 200% 50%; }
 }
 
 .progress-fill::after {
