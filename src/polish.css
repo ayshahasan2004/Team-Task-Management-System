@@ -1,0 +1,336 @@
+/* ==========================================================================
+   TaskFlow — shared polish & motion layer
+   Loaded after styles.css. Adds entrance animations, card sheen, richer
+   hover states and a unified "page enter" reveal across every page.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Motion tokens
+   -------------------------------------------------------------------------- */
+:root {
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 160ms;
+  --dur-base: 240ms;
+  --dur-slow: 560ms;
+}/* --------------------------------------------------------------------------
+   2. Page enter — every routed page rises + fades in
+   -------------------------------------------------------------------------- */
+.page-content > *,
+.content > *,
+.main-panel > * {
+  animation: page-enter var(--dur-slow) var(--ease-out-soft) both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.995);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. Card grid stagger — children appear one after another
+   -------------------------------------------------------------------------- */
+.projects-grid > *,
+.tasks-grid > *,
+.members-grid > *,
+.stats-grid > *,
+.board > *,
+.column-body > * {
+  animation: card-rise var(--dur-slow) var(--ease-out-soft) both;
+}
+
+@keyframes card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Stagger the first twelve items in any grid (40ms steps). */
+.projects-grid > *:nth-child(1),  .tasks-grid > *:nth-child(1),  .members-grid > *:nth-child(1),  .board > *:nth-child(1),  .column-body > *:nth-child(1)  { animation-delay: 0ms; }
+.projects-grid > *:nth-child(2),  .tasks-grid > *:nth-child(2),  .members-grid > *:nth-child(2),  .board > *:nth-child(2),  .column-body > *:nth-child(2)  { animation-delay: 45ms; }
+.projects-grid > *:nth-child(3),  .tasks-grid > *:nth-child(3),  .members-grid > *:nth-child(3),  .board > *:nth-child(3),  .column-body > *:nth-child(3)  { animation-delay: 90ms; }
+.projects-grid > *:nth-child(4),  .tasks-grid > *:nth-child(4),  .members-grid > *:nth-child(4),  .board > *:nth-child(4),  .column-body > *:nth-child(4)  { animation-delay: 135ms; }
+.projects-grid > *:nth-child(5),  .tasks-grid > *:nth-child(5),  .members-grid > *:nth-child(5),  .board > *:nth-child(5),  .column-body > *:nth-child(5)  { animation-delay: 180ms; }
+.projects-grid > *:nth-child(6),  .tasks-grid > *:nth-child(6),  .members-grid > *:nth-child(6),  .board > *:nth-child(6),  .column-body > *:nth-child(6)  { animation-delay: 225ms; }
+.projects-grid > *:nth-child(7),  .tasks-grid > *:nth-child(7),  .members-grid > *:nth-child(7),  .board > *:nth-child(7),  .column-body > *:nth-child(7)  { animation-delay: 270ms; }
+.projects-grid > *:nth-child(8),  .tasks-grid > *:nth-child(8),  .members-grid > *:nth-child(8),  .board > *:nth-child(8),  .column-body > *:nth-child(8)  { animation-delay: 315ms; }
+.projects-grid > *:nth-child(9),  .tasks-grid > *:nth-child(9),  .members-grid > *:nth-child(9),  .board > *:nth-child(9),  .column-body > *:nth-child(9)  { animation-delay: 360ms; }
+.projects-grid > *:nth-child(10), .tasks-grid > *:nth-child(10), .members-grid > *:nth-child(10), .board > *:nth-child(10), .column-body > *:nth-child(10) { animation-delay: 405ms; }
+.projects-grid > *:nth-child(11), .tasks-grid > *:nth-child(11), .members-grid > *:nth-child(11), .board > *:nth-child(11), .column-body > *:nth-child(11) { animation-delay: 450ms; }
+.projects-grid > *:nth-child(n + 12), .tasks-grid > *:nth-child(n + 12), .members-grid > *:nth-child(n + 12), .board > *:nth-child(n + 12), .column-body > *:nth-child(n + 12) { animation-delay: 495ms; }
+
+/* --------------------------------------------------------------------------
+   4. Page headers — title underline sweep + button glow
+   -------------------------------------------------------------------------- */
+.page-header,
+.tasks-header {
+  position: relative;
+  animation: page-enter var(--dur-slow) var(--ease-out-soft) both;
+}
+
+.page-header h2,
+.tasks-header h2,
+.kanban-board-page .page-header h2 {
+  position: relative;
+  display: block;
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+/* Subtitles always sit on their own line under the title, never inline. */
+.page-header .subtitle,
+.tasks-header .subtitle,
+.kanban-board-page .page-header .subtitle {
+  display: block;
+  margin-top: 6px;
+}
+
+.page-header h2::after,
+.tasks-header h2::after,
+.kanban-board-page .page-header h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 3px;
+  width: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), #36b37e);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: title-underline 620ms var(--ease-out-soft) 180ms forwards;
+}
+
+@keyframes title-underline {
+  to { transform: scaleX(1); }
+}
+
+/* Primary action buttons get a travelling sheen on hover. */
+.new-project-btn,
+.new-task-btn,
+.add-team-button,
+.primary-button,
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.new-project-btn::after,
+.new-task-btn::after,
+.add-team-button::after,
+.primary-button::after,
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-18deg);
+  pointer-events: none;
+}
+
+.new-project-btn:hover::after,
+.new-task-btn:hover::after,
+.add-team-button:hover::after,
+.primary-button:hover::after,
+.btn-primary:hover::after {
+  animation: btn-sheen 620ms var(--ease-out-soft);
+}
+
+@keyframes btn-sheen {
+  to { left: 140%; }
+}/* --------------------------------------------------------------------------
+   5. Card depth — richer hover lift + pointer-follow glow
+   -------------------------------------------------------------------------- */
+.project-card,
+.task-card,
+.member-card,
+.kanban-task,
+.stat-card,
+.activity-list,
+.recent-projects,
+.task-summary,
+.team-group,
+.project-members {
+  position: relative;
+  transition:
+    transform var(--dur-base) var(--ease-out-soft),
+    box-shadow var(--dur-base) var(--ease-out-soft),
+    border-color var(--dur-base) var(--ease-out-soft);
+}
+
+/* Only transform the column's inner surface — never the host element, which
+   is a flex child of the board and must keep its own display/layout. */
+.kanban-column {
+  transition:
+    transform var(--dur-base) var(--ease-out-soft),
+    box-shadow var(--dur-base) var(--ease-out-soft),
+    border-color var(--dur-base) var(--ease-out-soft);
+}
+
+.project-card:hover,
+.task-card:hover,
+.member-card:hover {
+  box-shadow: 0 18px 40px rgba(23, 42, 82, 0.14);
+  transform: translateY(-6px);
+}
+
+/* Soft accent glow that fades in behind hovered cards. */
+.project-card::before,
+.task-card::before,
+.member-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(38, 132, 255, 0.5), rgba(54, 179, 126, 0.35), transparent 70%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out-soft);
+  pointer-events: none;
+}
+
+.project-card:hover::before,
+.task-card:hover::before,
+.member-card:hover::before {
+  opacity: 1;
+}
+
+/* Avatar pop on member card hover. */
+.member-card:hover .avatar {
+  transform: scale(1.08) rotate(-4deg);
+  transition: transform var(--dur-base) var(--ease-spring);
+}
+
+.member-card .avatar {
+  transition: transform var(--dur-base) var(--ease-spring);
+}
+
+/* Online dot gentle pulse. */
+.status-dot.online {
+  animation: dot-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 126, 0.45); }
+  55%      { box-shadow: 0 0 0 5px rgba(0, 212, 126, 0); }
+}
+
+/* --------------------------------------------------------------------------
+   6. Progress bars — grow in and shimmer
+   -------------------------------------------------------------------------- */
+.progress-track {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  position: relative;
+  overflow: hidden;
+  transition: width 900ms var(--ease-out-soft);
+  background-image: linear-gradient(90deg, var(--primary), #2684ff, #36b37e);
+  background-size: 200% 100%;
+  animation: progress-grow 900ms var(--ease-out-soft) both, progress-hue 6s linear infinite;
+}
+
+@keyframes progress-grow {
+  from { transform: scaleX(0); transform-origin: left center; }
+  to   { transform: scaleX(1); transform-origin: left center; }
+}
+
+@keyframes progress-hue {
+  from { background-position: 0% 50%; }
+  to   { background-position: 200% 50%; }
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-100%);
+  animation: progress-sheen 2.4s ease-in-out infinite;
+}
+
+@keyframes progress-sheen {
+  to { transform: translateX(100%); }
+}
+
+/* --------------------------------------------------------------------------
+   7. Section headers slide their content in
+   -------------------------------------------------------------------------- */
+.team-group {
+  animation: card-rise var(--dur-slow) var(--ease-out-soft) both;
+}
+
+.team-group:nth-child(2) { animation-delay: 90ms; }
+.team-group:nth-child(3) { animation-delay: 180ms; }
+.team-group:nth-child(4) { animation-delay: 270ms; }
+.team-group:nth-child(5) { animation-delay: 360ms; }
+
+/* --------------------------------------------------------------------------
+   8. Accessibility — respect reduced-motion preferences
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .page-content > *,
+  .content > *,
+  .main-panel > *,
+  .projects-grid > *,
+  .tasks-grid > *,
+  .members-grid > *,
+  .stats-grid > *,
+  .board > *,
+  .column-body > *,
+  .page-header,
+  .tasks-header,
+  .team-group,
+  .progress-fill,
+  .progress-fill::after,
+  .status-dot.online,
+  .page-header h2::after,
+  .tasks-header h2::after,
+  .kanban-board-page .page-header h2::after {
+    animation: none !important;
+  }
+
+  .project-card:hover,
+  .task-card:hover,
+  .member-card:hover {
+    transform: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9. Dark theme alignment for the new glow layer
+   -------------------------------------------------------------------------- */
+.dark-theme .project-card:hover,
+.dark-theme .task-card:hover,
+.dark-theme .member-card:hover {
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.dark-theme .project-card::before,
+.dark-theme .task-card::before,
+.dark-theme .member-card::before {
+  background: linear-gradient(135deg, rgba(90, 169, 255, 0.55), rgba(54, 179, 126, 0.35), transparent 70%);
+}

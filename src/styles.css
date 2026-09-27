@@ -8,8 +8,8 @@
 	--text-primary: #172b4d;
 	--text-secondary: #42526e;
 	--text-muted: #6b778c;
-	--status-todo-bg: #dfe1e6;
-	--status-todo-text: #42526e;
+	--status-todo-bg: var(--status-in-progress-bg);
+	--status-todo-text: var(--status-in-progress-text);
 	--status-in-progress-bg: #deebff;
 	--status-in-progress-text: #0052cc;
 	--status-review-bg: #fff0b3;
@@ -54,7 +54,7 @@
 	--ink-strong: var(--text-primary);
 	--green: var(--primary);
 	--shadow: rgba(23, 42, 82, 0.08);
-	--font-family: 'Atlassian Sans', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+	--font-family: 'Century Gothic', 'Avenir Next', 'Segoe UI', sans-serif;
 	--heading-weight: 700;
 	--heading-letter-spacing: -0.02em;
 	--ui-letter-spacing: -0.01em;
@@ -70,7 +70,7 @@ body {
 	background: var(--canvas);
 	color: var(--ink);
 	font-family: var(--font-family);
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: 500;
 	line-height: 1.5;
 	letter-spacing: var(--ui-letter-spacing);
@@ -123,7 +123,7 @@ h3,
 .settings-layout,
 .dialog,
 .user-menu {
-	font-size: 13px;
+	font-size: 14px;
 	line-height: 1.4;
 	letter-spacing: var(--ui-letter-spacing);
 }
@@ -208,6 +208,33 @@ select,
 	border: 1px solid var(--line);
 	border-radius: 8px;
 	color: var(--ink);
+}
+
+select {
+	min-height: 40px;
+	padding: 0 36px 0 13px;
+	appearance: auto;
+	font-family: var(--font-family);
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+select:hover {
+	border-color: var(--jira-600);
+}
+
+select:focus {
+	outline: 3px solid rgba(38, 132, 255, 0.16);
+	border-color: var(--jira-600);
+}
+
+option {
+	padding: 10px 12px;
+	background: #ffffff;
+	color: var(--jira-900);
+	font-family: var(--font-family);
+	font-size: 13px;
 }
 
 input:focus,
@@ -336,6 +363,12 @@ button[type='submit']:hover,
 .priority-badge.medium {
 	background: var(--status-in-progress-bg);
 	color: var(--status-in-progress-text);
+}
+
+.status-badge[data-status='Review'],
+.status-badge.review {
+	background: var(--status-review-bg);
+	color: var(--status-review-text);
 }
 
 .status-badge[data-status='Done'],
@@ -527,6 +560,12 @@ button[type='submit']:hover,
 	color: #7a4b00 !important;
 }
 
+.status-badge[data-status='Review'],
+.status-badge.review {
+	background: #fff0b3 !important;
+	color: #7a4b00 !important;
+}
+
 .status-badge[data-status='Done'],
 .status-badge.done,
 .priority-badge.high {
@@ -564,6 +603,35 @@ select {
 	background: #ffffff !important;
 	border: 1px solid var(--line) !important;
 	color: var(--ink) !important;
+}
+
+/* Settings inputs are borderless soft fills — override the global input border. */
+.settings-page input,
+.settings-page textarea,
+.settings-page select {
+  border: none !important;
+  background: #f2f5f9 !important;
+  box-shadow: none;
+}
+
+.settings-page input:focus,
+.settings-page textarea:focus,
+.settings-page select:focus {
+  background: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.28) !important;
+}
+
+/* The settings tab panels are card-less — no outer border. */
+.settings-page .panel,
+.settings-page .tab-content,
+.settings-page .tabs {
+  border: none !important;
+}
+
+/* Keep the shared .panel rule from boxing the settings panels. */
+.settings-page .panel {
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 body,
