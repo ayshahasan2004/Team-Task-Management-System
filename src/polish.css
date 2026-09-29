@@ -1,5 +1,5 @@
-/* ==========================================================================
-   TaskFlow — shared polish & motion layer
+﻿﻿/* ==========================================================================
+   TaskFlow â€” shared polish & motion layer
    Loaded after styles.css. Adds entrance animations, card sheen, richer
    hover states and a unified "page enter" reveal across every page.
    ========================================================================== */
@@ -14,7 +14,7 @@
   --dur-base: 240ms;
   --dur-slow: 560ms;
 }/* --------------------------------------------------------------------------
-   2. Page enter — every routed page rises + fades in
+   2. Page enter â€” every routed page rises + fades in
    -------------------------------------------------------------------------- */
 .page-content > *,
 .content > *,
@@ -36,7 +36,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   3. Card grid stagger — children appear one after another
+   3. Card grid stagger â€” children appear one after another
    -------------------------------------------------------------------------- */
 .projects-grid > *,
 .tasks-grid > *,
@@ -73,7 +73,7 @@
 .projects-grid > *:nth-child(n + 12), .tasks-grid > *:nth-child(n + 12), .members-grid > *:nth-child(n + 12), .board > *:nth-child(n + 12), .column-body > *:nth-child(n + 12) { animation-delay: 495ms; }
 
 /* --------------------------------------------------------------------------
-   4. Page headers — title underline sweep + button glow
+   4. Page headers â€” title underline sweep + button glow
    -------------------------------------------------------------------------- */
 .page-header,
 .tasks-header {
@@ -155,7 +155,7 @@
 @keyframes btn-sheen {
   to { left: 140%; }
 }/* --------------------------------------------------------------------------
-   5. Card depth — richer hover lift + pointer-follow glow
+   5. Card depth â€” richer hover lift + pointer-follow glow
    -------------------------------------------------------------------------- */
 .project-card,
 .task-card,
@@ -174,7 +174,7 @@
     border-color var(--dur-base) var(--ease-out-soft);
 }
 
-/* Only transform the column's inner surface — never the host element, which
+/* Only transform the column's inner surface â€” never the host element, which
    is a flex child of the board and must keep its own display/layout. */
 .kanban-column {
   transition:
@@ -237,7 +237,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   6. Progress bars — grow in and shimmer
+   6. Progress bars â€” grow in and shimmer
    -------------------------------------------------------------------------- */
 .progress-track {
   position: relative;
@@ -289,7 +289,7 @@
 .team-group:nth-child(5) { animation-delay: 360ms; }
 
 /* --------------------------------------------------------------------------
-   8. Accessibility — respect reduced-motion preferences
+   8. Accessibility â€” respect reduced-motion preferences
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .page-content > *,
@@ -333,4 +333,77 @@
 .dark-theme .task-card::before,
 .dark-theme .member-card::before {
   background: linear-gradient(135deg, rgba(90, 169, 255, 0.55), rgba(54, 179, 126, 0.35), transparent 70%);
+}/* --------------------------------------------------------------------------
+/* --------------------------------------------------------------------------
+   10. Dark theme — gradient/allowance fixes only
+   The base tokens now flip in styles.css, so most surfaces follow automatically.
+   These rules only cover things painted with hardcoded light gradients.
+   -------------------------------------------------------------------------- */
+.dark-theme .stat-card,
+.dark-theme .task-card,
+.dark-theme .project-card,
+.dark-theme .member-card,
+.dark-theme .activity-list,
+.dark-theme .recent-projects,
+.dark-theme .task-summary,
+.dark-theme .overview-panel,
+.dark-theme .edit-form,
+.dark-theme .team-group,
+.dark-theme .kanban-column,
+.dark-theme .project-details,
+.dark-theme .task-details,
+.dark-theme .tab-content {
+  background-image: linear-gradient(140deg, #223047 0%, #1c273a 100%) !important;
+  border-color: var(--line) !important;
+}
+
+.dark-theme .meta-item,
+.dark-theme .tab,
+.dark-theme .tabs,
+.dark-theme .empty-state {
+  background-color: #1b2739 !important;
+  border-color: var(--line) !important;
+}
+
+.dark-theme .progress-track,
+.dark-theme .bar,
+.dark-theme .task-filters {
+  background-color: #2b3a52 !important;
+}
+
+.dark-theme .icon-button svg,
+.dark-theme .theme-button svg,
+.dark-theme .chevron {
+  stroke: #9fb0c9 !important;
+}
+
+/* Soft (borderless) settings inputs need a dark fill. The component styles use
+   `.field input`, which outranks a plain `.settings-page input`, so match it. */
+.dark-theme .settings-page .field input,
+.dark-theme .settings-page .team-dialog-field input,
+.dark-theme .settings-page .team-members-fields input,
+.dark-theme .settings-page input,
+.dark-theme .settings-page textarea,
+.dark-theme .settings-page select {
+  background-color: #172233 !important;
+  color: var(--ink) !important;
+}
+
+.dark-theme .settings-page .field input:hover:not(:disabled) {
+  background-color: #1b2740 !important;
+}
+
+.dark-theme .settings-page .field input:disabled {
+  background-color: #141d2c !important;
+  color: #7f8ea6 !important;
+}
+
+.dark-theme .settings-page .field input:focus,
+.dark-theme .settings-page input:focus {
+  background-color: #1b2740 !important;
+  box-shadow: 0 0 0 3px rgba(90, 169, 255, 0.3) !important;
+}
+
+.dark-theme .actions-divider {
+  background: var(--line) !important;
 }
