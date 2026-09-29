@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
 }
 
@@ -45,7 +45,7 @@
   border: 0;
   border-radius: 10px;
   padding: 10px 14px;
-  background: var(--primary);
+  background: var(--primary-solid);
   color: #fff;
   cursor: pointer;
   font: inherit;
@@ -60,7 +60,7 @@
 }
 
 .add-team-button:hover {
-  background: var(--primary-light);
+  background: var(--primary-solid-hover);
   color: var(--primary);
   box-shadow: 0 12px 26px rgba(0, 82, 204, 0.2);
   transform: translateY(-2px) scale(1.02);
@@ -138,7 +138,7 @@
 }
 
 .subtitle {
-  color: #7b8580;
+  color: var(--ink-muted);
   font-size: 12px;
 }
 
@@ -174,7 +174,7 @@
   padding: 11px 13px;
   border: 1px solid var(--border);
   border-radius: 9px;
-  background: #ffffff;
+  background: var(--card-bg-solid);
   color: var(--text-primary);
   font-family: inherit;
   font-size: 13px;
@@ -212,13 +212,13 @@
 
 .team-cancel-button {
   border: 1px solid var(--border);
-  background: #ffffff;
+  background: var(--card-bg-solid);
   color: var(--text-secondary);
 }
 
 .team-create-button {
   border: 1px solid var(--primary);
-  background: var(--primary);
+  background: var(--primary-solid);
   color: #ffffff;
 }
 
@@ -245,7 +245,7 @@
   padding: 10px 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: #ffffff;
+  background: var(--card-bg-solid);
   color: var(--text-primary);
   font-family: inherit;
   font-size: 12px;

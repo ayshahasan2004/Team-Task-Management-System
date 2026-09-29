@@ -3,7 +3,7 @@
   <div class="page-header">
     <div>
       <h2>Team</h2>
-      <span class="subtitle">{{ members.length }} members</span>
+      <span class="subtitle">{{ filteredMembers.length }} {{ filteredMembers.length === 1 ? 'member' : 'members' }}</span>
     </div>
     <button class="add-team-button" type="button" (click)="openAddTeam()">
       <span aria-hidden="true">+</span>
@@ -17,11 +17,11 @@
   ></app-search>
 
   <div class="team-groups">
-    @for (teamGroup of teamGroups(); track teamGroup.name) {
+    @for (teamGroup of visibleTeamGroups; track teamGroup.id) {
       <section class="team-group">
         <div class="team-group-header">
           <h3>{{ teamGroup.name }}</h3>
-          <span>{{ teamGroup.members.length }} members</span>
+          <span>{{ membersForTeam(teamGroup).length }} {{ membersForTeam(teamGroup).length === 1 ? 'member' : 'members' }}</span>
         </div>
 
         <div class="members-grid">

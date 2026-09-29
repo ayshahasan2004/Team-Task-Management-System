@@ -1,11 +1,23 @@
 @if (isOpen()) {
   <div class="overlay" (click)="onClose()">
-    <div class="dialog" [style.max-width]="maxWidth()" (click)="$event.stopPropagation()">
+    <div
+      #dialog
+      class="dialog"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="title() ? titleId : null"
+      [attr.aria-label]="title() ? null : 'Dialog'"
+      tabindex="-1"
+      [style.max-width]="maxWidth()"
+      (click)="$event.stopPropagation()"
+    >
 
       @if (title()) {
         <div class="dialog-header">
-          <h3>{{ title() }}</h3>
-          <button class="close-btn" type="button" (click)="onClose()">✕</button>
+          <h3 [id]="titleId">{{ title() }}</h3>
+          <button class="close-btn" type="button" aria-label="Close dialog" (click)="onClose()">
+            <span aria-hidden="true">✕</span>
+          </button>
         </div>
       }
 

@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
 }
 
@@ -30,8 +30,8 @@
   padding: 0 15px;
   border: none;
   border-radius: 12px;
-  background: #f2f5f9;
-  color: #17211d;
+  background: var(--field-bg, #f2f5f9);
+  color: var(--ink);
   font-family: inherit;
   font-size: 13px;
   outline: none;
@@ -39,11 +39,11 @@
 }
 
 .field input:hover {
-  background: #eaf1fb;
+  background: var(--field-bg-hover, #eaf1fb);
 }
 
 .field input:focus {
-  background: #ffffff;
+  background: var(--surface);
   box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.28);
 }
 
@@ -54,7 +54,7 @@
   padding: 12px 24px;
   border: none;
   border-radius: 11px;
-  background: linear-gradient(135deg, #2684ff, #0052cc);
+  background: var(--primary-solid);
   color: #ffffff;
   font-family: inherit;
   font-size: 12.5px;

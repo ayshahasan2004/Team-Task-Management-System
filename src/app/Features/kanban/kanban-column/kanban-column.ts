@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { KanbanTask } from '../kanban-task/kanban-task';
-import { Task, TaskStatus } from '../../../Core/models/task.model';
+import { Task } from '../../../Core/models/task.model';
 
 @Component({
   standalone: true,
@@ -11,8 +11,8 @@ import { Task, TaskStatus } from '../../../Core/models/task.model';
   templateUrl: './kanban-column.html',
 })
 export class KanbanColumn {
-  // Data comes down from KanbanBoard
-  readonly title = input<TaskStatus>('Todo');
+  // Display label for the column — not a TaskStatus ('Todo', 'In Progress'…).
+  readonly title = input('Todo');
   readonly tasks = input<Task[]>([]);
   readonly accentColor = input('#98a19c');
 

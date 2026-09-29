@@ -22,15 +22,22 @@ export class ProjectDetails implements OnInit {
 
   isLoading = false;
 
-  // Resolved from the route when no project input was supplied by the parent.
-  // A signal so the members computed below react to it.//
-  private readonly routeProject = signal<Project | null>(null);
+  // The route's project id, as a signal so everything below stays reactive.
+  private readonly routeProjectId = signal<string | null>(null);
 
-  readonly resolvedProject = computed<Project | null>(
-    () => this.project() ?? this.routeProject()
-  );
+  // Always re-reads from ProjectService, so this detail page reflects live
+  // edits (adding members, renaming, deleting) instead of a stale snapshot.
+  readonly resolvedProject = computed<Project | null>(() => {
+    const fromInput = this.project();
+    if (fromInput) {
+      return this.projectService.getById(fromInput.id) ?? fromInput;
+    }
 
-  // Re-reads from ProjectService so members appear/disappear as the project changes
+    const id = this.routeProjectId();
+    return id ? this.projectService.getById(id) ?? null : null;
+  });
+
+  // Re-reads from MemberService so members appear/disappear as the project changes
   readonly members = computed(() =>
     this.memberService.getMembersForProject(this.resolvedProject()?.id ?? '')
   );
@@ -42,9 +49,7 @@ export class ProjectDetails implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     const projectId = this.route?.snapshot.paramMap.get('id');// Get the project ID from the route parameters
-    if (projectId) {
-      this.routeProject.set(this.projectService.getById(projectId) ?? null);// Fetch the project details using the ProjectService
-    }
+    this.routeProjectId.set(projectId ?? null);
     this.isLoading = false;
   }
 }

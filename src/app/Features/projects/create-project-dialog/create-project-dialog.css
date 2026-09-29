@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: contents;
 }
 
@@ -24,7 +24,7 @@
   max-width: 440px;
   padding: 28px;
 
-  background: #ffffff;
+  background: var(--card-bg-solid);
   border-radius: 16px;
 
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
@@ -39,7 +39,7 @@
 
 .dialog-header h3 {
   margin: 0;
-  color: #17211d;
+  color: var(--ink);
   font-size: 17px;
   font-weight: 700;
 }
@@ -65,7 +65,7 @@
 
 .close-btn:hover {
   background: #f0f5f2;
-  color: #303b36;
+  color: var(--ink);
 }
 
 .field {
@@ -75,7 +75,7 @@
 .field label {
   display: block;
   margin-bottom: 7px;
-  color: #303b36;
+  color: var(--ink);
   font-size: 12px;
   font-weight: 600;
 }
@@ -95,9 +95,9 @@
 
   border: 1px solid #dfe5e2;
   border-radius: 9px;
-  background: #ffffff;
+  background: var(--card-bg-solid);
 
-  color: #17211d;
+  color: var(--ink);
   font-family: inherit;
   font-size: 13px;
   outline: none;
@@ -134,8 +134,8 @@
 
 .btn-secondary {
   border: 1px solid #dfe5e2;
-  background: #ffffff;
-  color: #303b36;
+  background: var(--card-bg-solid);
+  color: var(--ink);
 }
 
 .btn-secondary:hover {

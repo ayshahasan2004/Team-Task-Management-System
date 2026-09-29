@@ -60,6 +60,10 @@
   text-transform: uppercase;
 }
 
+.dark-theme .eyebrow {
+  color: #8ec1ff;
+}
+
 .page-header .subtitle {
   display: block;
   color: var(--text-muted);
@@ -80,6 +84,13 @@
   font-size: 11.5px;
   font-weight: 700;
   box-shadow: 0 6px 16px rgba(19, 121, 91, 0.1);
+}
+
+.dark-theme .header-chip {
+  border-color: #2f5f4d;
+  background: #1b2f2a;
+  color: #6ee7b7;
+  box-shadow: none;
 }
 
 .pulse-dot {

@@ -1,5 +1,13 @@
-<div class="project-card">
- <div class="card-header">
+<div
+  class="project-card"
+  role="button"
+  tabindex="0"
+  [attr.aria-label]="project().name + ' project, ' + project().status"
+  (click)="onViewDetails($event)"
+  (keydown.enter)="onViewDetails($event)"
+  (keydown.space)="onViewDetails($event); $event.preventDefault()"
+>
+  <div class="card-header">
     <span class="project-name">{{ project().name }}</span>
     <span class="status-badge" [class]="statusClass">{{ project().status }}</span>
  </div>
@@ -26,7 +34,7 @@
   </div>
 
   <div class="card-actions">
-    <button class="details-btn" type="button" title="View project details" (click)="onViewDetails($event)">
+    <button class="details-btn" type="button" [attr.aria-label]="'View details for ' + project().name" (click)="onViewDetails($event)">
       View details
     </button>
     <select

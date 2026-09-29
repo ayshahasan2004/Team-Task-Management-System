@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
   height: 100%;
 }
@@ -44,7 +44,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 11px;
-  background: linear-gradient(135deg, #2684ff, #0052cc);
+  background: var(--primary-solid);
   color: #ffffff;
   font-size: 16px;
   font-weight: 800;
@@ -63,7 +63,7 @@
 }
 
 .brand-name {
-  color: #172a52;
+  color: var(--ink);
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.3px;
@@ -83,7 +83,7 @@
   padding: 11px 12px;
   border: 1px solid transparent;
   border-radius: 10px;
-  color: #42526e;
+  color: var(--ink-soft);
   text-decoration: none;
   font-size: 13px;
   font-weight: 500;
@@ -100,7 +100,7 @@
   height: 0;
   width: 3px;
   border-radius: 999px;
-  background: var(--primary);
+  background: var(--primary-solid);
   transform: translateY(-50%);
   transition: height 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }

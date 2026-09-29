@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MemberCard } from '../member-card/member-card';
 import { Member, TeamGroup } from '../../../Core/models/member.model';
 import { MemberService } from '../../../Core/services/member.service';
@@ -18,6 +19,7 @@ import { Modal } from '../../../Shared/Components/modal/modal';
 })
 export class Team {
   private memberService = inject(MemberService);
+  private router = inject(Router);
 
   searchTerm = '';
   currentPage = 1;
@@ -58,6 +60,14 @@ export class Team {
   membersForTeam(teamGroup: TeamGroup): Member[] {
     const visibleIds = new Set(this.pagedMembers.map((member) => member.id));
     return teamGroup.members.filter((member) => visibleIds.has(member.id));
+  }
+
+  /**
+   * Teams that still have at least one visible card after search + paging.
+   * Prevents stray empty group headers. Track these by id, not name.
+   */
+  get visibleTeamGroups(): TeamGroup[] {
+    return this.teamGroups().filter((teamGroup) => this.membersForTeam(teamGroup).length > 0);
   }
 
   onSearchChanged(value: string) {
@@ -109,7 +119,6 @@ export class Team {
   }
 
   onCardClicked(memberId: string) {
-    // Phase 1 — navigation to member details is a later-phase task
-    console.log('Open member details for', memberId);
+    this.router.navigate(['/team', memberId]);
   }
 }

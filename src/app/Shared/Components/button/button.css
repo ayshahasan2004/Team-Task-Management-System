@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: inline-block;
 }
 
@@ -74,9 +74,9 @@
 }
 
 .btn.secondary {
-  background: #ffffff;
-  color: #172a52;
-  border: 1px solid #dfe1e6;
+  background: var(--card-bg-solid);
+  color: var(--ink);
+  border: 1px solid var(--card-border);
 }
 
 .btn.secondary:hover:not(:disabled) {
@@ -98,7 +98,7 @@
 
 .btn.ghost {
   background: transparent;
-  color: #42526e;
+  color: var(--ink-soft);
 }
 
 .btn.ghost:hover:not(:disabled) {

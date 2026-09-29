@@ -1,10 +1,12 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { Project, ProjectStatus } from '../models/project.model';
 import { ActivityService } from './activity.service';
+import { TaskService } from './task.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
   private activityService = inject(ActivityService);
+  private taskService = inject(TaskService);
   private readonly _projects = signal<Project[]>(MOCK_PROJECTS);//stores all projects in a reactive signal
   readonly projects = this._projects.asReadonly();
 
@@ -16,20 +18,25 @@ export class ProjectService {
     return this._projects().find(p => p.id === id);
   }
 
+  /** Maximum members a project can hold. */
+  private static readonly MAX_PROJECT_MEMBERS = 20;
+
   create(project: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>): Project {
-    const memberIds = Array.from(new Set([
-      ...project.memberIds,
-      ...DEFAULT_PROJECT_MEMBER_IDS,
-    ])).slice(0, Math.max(20, project.memberIds.length));//ensures that the memberIds array contains unique values and limits the number of members to a maximum of 3, while also ensuring that at least 3 members are included if the provided memberIds array has fewer than 3 members.
+    // Keep the caller's members, de-duplicated. Defaults are only used when the
+    // caller supplied nobody — never force-merged, so progress reflects reality.
+    const provided = Array.from(new Set(project.memberIds));
+    const memberIds = (
+      provided.length > 0 ? provided : DEFAULT_PROJECT_MEMBER_IDS
+    ).slice(0, ProjectService.MAX_PROJECT_MEMBERS);
 
     const newProject: Project = {
       ...project,
       memberIds,
-      id: crypto.randomUUID(),////generate a unique id for the new item.
+      id: crypto.randomUUID(),
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    this._projects.update(projects => [...projects, newProject]);///adds the new project to the list of projects
+    this._projects.update(projects => [...projects, newProject]);
     this.activityService.add('m1', `created project "${newProject.name}"`);
     return newProject;
   }
@@ -70,7 +77,9 @@ export class ProjectService {
 
   delete(id: string): void {
     const project = this.getById(id);
-    this._projects.update(projects => projects.filter(p => p.id !== id));//removes the project with the given id from the list of projects
+    this._projects.update(projects => projects.filter(p => p.id !== id));
+    // Cascade: remove the project's tasks so no orphaned records remain.
+    this.taskService.removeTasksForProject(id);
     if (project) {
       this.activityService.add('m1', `deleted project "${project.name}"`);
     }

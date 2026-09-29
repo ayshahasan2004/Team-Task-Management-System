@@ -116,25 +116,30 @@ export class TaskService {
       this.activityService.add(task.assigneeId ?? 'm1', `deleted task "${task.title}"`);
     }
   }
+
+  /** Removes every task belonging to a project (used when a project is deleted). */
+  removeTasksForProject(projectId: string): void {
+    this._tasks.update(tasks => tasks.filter(t => t.projectId !== projectId));
+  }
 }
 // stores temporary task data
 const MOCK_TASKS: Task[] = [
   {
     id: '1', projectId: 'p1', title: 'Set up CI pipeline',
     description: 'Configure GitHub Actions for build + lint', status: 'Todo',
-    priority: 'High', assigneeId: 'Aysha', dueDate: new Date('2026-10-01'),
+    priority: 'High', assigneeId: 'm1', dueDate: new Date('2026-10-01'),
     tags: ['devops'], createdAt: new Date(), updatedAt: new Date(),
   },
   {
     id: '2', projectId: 'p1', title: 'Design login page',
     description: 'Mockup + responsive layout', status: 'In Progress',
-    priority: 'Medium', assigneeId: 'Sara', dueDate: new Date('2026-09-28'),
+    priority: 'Medium', assigneeId: 'm2', dueDate: new Date('2026-09-28'),
     tags: ['ui'], createdAt: new Date(), updatedAt: new Date(),
   },
   {
     id: '3', projectId: 'p1', title: 'Code review — auth module',
     description: 'Review pull request #42 before merging', status: 'Review',
-    priority: 'Medium', assigneeId: 'Aysha', dueDate: new Date('2026-09-30'),
+    priority: 'Medium', assigneeId: 'm1', dueDate: new Date('2026-09-30'),
     tags: ['review'], createdAt: new Date(), updatedAt: new Date(),
   },
 ];

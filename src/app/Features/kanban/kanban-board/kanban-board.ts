@@ -1,5 +1,6 @@
 // features/kanban/kanban-board/kanban-board.ts
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { TaskService } from '../../../Core/services/task.service';
 import { KanbanColumn } from '../kanban-column/kanban-column';
 
@@ -12,6 +13,7 @@ import { KanbanColumn } from '../kanban-column/kanban-column';
 })
 export class KanbanBoard {
   private taskService = inject(TaskService);
+  private router = inject(Router);
 
   // BEFORE: todoTasks/inProgressTasks/doneTasks were getters over a
   // local mock array (per your reference file)
@@ -22,6 +24,6 @@ export class KanbanBoard {
   doneTasks = this.taskService.doneTasks;
 
   onTaskClicked(taskId: string): void {
-    console.log('Task clicked:', taskId);
+    this.router.navigate(['/tasks', taskId]);
   }
 }

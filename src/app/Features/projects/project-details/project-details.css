@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
 }
 
@@ -94,7 +94,7 @@
 
   border: 1px solid #dfe5e2;
   border-radius: 9px;
-  background: var(--primary);
+  background: var(--primary-solid);
 
   color: #ffffff;
   font-family: inherit;
@@ -204,12 +204,12 @@
   min-width: 0;
   padding: 14px;
   border-radius: 12px;
-  background: #f5f8fb;
+  background: var(--card-hover-bg);
   transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .meta-item:hover {
-  background: var(--primary-light);
+  background: var(--primary-solid-hover);
   box-shadow: 0 8px 18px rgba(23, 42, 82, 0.08);
   transform: translateY(-3px);
 }

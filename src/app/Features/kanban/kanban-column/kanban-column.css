@@ -14,8 +14,8 @@
   padding: 18px 16px;
   height: 100%;
 
-  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-  border: 1px solid #e6ecf3;
+  background: var(--column-bg);
+  border: 1px solid var(--card-border);
   border-radius: 16px;
 
   transition: box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
@@ -66,7 +66,7 @@
 }
 
 .column-title {
-  color: #17211d;
+  color: var(--ink);
   font-size: 13px;
   font-weight: 700;
 }
@@ -77,8 +77,8 @@
   padding: 2px 8px;
   border-radius: 999px;
 
-  background: #e9edeb;
-  color: #7b8580;
+  background: var(--chip-bg);
+  color: var(--ink-muted);
 
   font-size: 10.5px;
   font-weight: 700;
@@ -94,19 +94,18 @@
   padding: 20px;
   text-align: center;
 
-  color: #b3bab6;
+  color: var(--ink-muted);
   font-size: 11.5px;
 
-  border: 1.5px dashed #dfe5e2;
+  border: 1.5px dashed var(--card-border);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.5);
+  background: transparent;
   transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
 }
 
 .kanban-column:hover .empty-state {
   border-color: #b9d8f5;
-  background: rgba(255, 255, 255, 0.85);
-  color: #7f8a85;
+  color: var(--ink-soft);
 }
 
 @media (prefers-reduced-motion: reduce) {

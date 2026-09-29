@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
 }
 
@@ -21,7 +21,7 @@
 
 .empty-state h3 {
   margin: 0 0 8px;
-  color: #17211d;
+  color: var(--ink);
   font-size: 15px;
   font-weight: 700;
 }
@@ -29,7 +29,7 @@
 .empty-state p {
   margin: 0 0 20px;
   max-width: 320px;
-  color: #7b8580;
+  color: var(--ink-muted);
   font-size: 12.5px;
   line-height: 1.6;
 }

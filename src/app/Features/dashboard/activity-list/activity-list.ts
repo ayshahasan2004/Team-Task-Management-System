@@ -14,8 +14,10 @@ export class ActivityList {
   private memberService = inject(MemberService);
   private activityService = inject(ActivityService);
 
-  activities = computed(() => this.activityService.activities().map(activity => ({
-    ...activity,
-    member: this.memberService.getById(activity.memberId),
-  })));
+  activities = computed(() =>
+    this.activityService.activitiesWithTime().map(activity => ({
+      ...activity,
+      member: this.memberService.getById(activity.memberId),
+    })),
+  );
 }

@@ -37,7 +37,7 @@ export class Dashboard {
     return [
     { label: 'Total Projects', value: this.projectService.projects().length, icon: '▣', trend: '', trendPositive: true },
     { label: 'Active Tasks', value: activeTasks, icon: '✓', trend: '', trendPositive: true },
-    { label: 'Team Members', value: this.memberService.projectMembers().length, icon: '◎', trend: '', trendPositive: true },
+    { label: 'Team Members', value: this.memberService.members().length, icon: '◎', trend: '', trendPositive: true },
     { label: 'Overdue', value: overdueTasks, icon: '◔', trend: '', trendPositive: false },
     ];
   });

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, input } from '@angular/core';
+import { Component, OnInit, computed, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -19,8 +19,17 @@ export class TaskDetails implements OnInit {
   readonly taskService = inject(TaskService);
   private route = inject(ActivatedRoute, { optional: true });
 
-  // Local editable copy — starts from the route when no input was supplied
-  currentTask: Task | null = null;
+  // The route's task id, as a signal so the view stays reactive to edits.
+  private readonly routeTaskId = signal<string | null>(null);
+
+  /**
+   * Always resolved from the service, so the page reflects the latest saved
+   * state rather than a snapshot copied once in ngOnInit.
+   */
+  readonly currentTask = computed<Task | null>(() => {
+    const id = this.routeTaskId() ?? this.task()?.id ?? null;
+    return id ? this.taskService.getById(id) ?? null : null;
+  });
 
   isEditing = false;
   title = '';
@@ -34,32 +43,30 @@ export class TaskDetails implements OnInit {
 
   ngOnInit(): void {
     const taskId = this.route?.snapshot.paramMap.get('id');
-    if (taskId) {
-      this.currentTask = this.taskService.getById(taskId) ?? null;
-    } else {
-      this.currentTask = this.task();
-    }
+    this.routeTaskId.set(taskId ?? null);
   }
 
   startEditing(): void {
-    if (!this.currentTask) {
+    const task = this.currentTask();
+    if (!task) {
       return;
     }
 
-    this.title = this.currentTask.title;
-    this.description = this.currentTask.description;
-    this.status = this.currentTask.status;
-    this.priority = this.currentTask.priority;
-    this.dueDate = this.currentTask.dueDate ? this.toDateInputValue(this.currentTask.dueDate) : '';
+    this.title = task.title;
+    this.description = task.description;
+    this.status = task.status;
+    this.priority = task.priority;
+    this.dueDate = task.dueDate ? this.toDateInputValue(task.dueDate) : '';
     this.isEditing = true;
   }
 
   saveChanges(): void {
-    if (!this.currentTask || !this.title.trim()) {
+    const task = this.currentTask();
+    if (!task || !this.title.trim()) {
       return;
     }
 
-    this.taskService.update(this.currentTask.id, {
+    this.taskService.update(task.id, {
       title: this.title.trim(),
       description: this.description.trim(),
       status: this.status,
@@ -67,7 +74,7 @@ export class TaskDetails implements OnInit {
       dueDate: this.dueDate ? new Date(`${this.dueDate}T00:00:00`) : null,
     });
 
-    this.currentTask = this.taskService.getById(this.currentTask.id) ?? null;
+    // No manual refresh needed — currentTask is derived from the service signal.
     this.isEditing = false;
   }
 

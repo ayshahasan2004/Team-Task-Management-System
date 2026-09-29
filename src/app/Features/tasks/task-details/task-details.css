@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
 }
 
@@ -82,9 +82,9 @@
 
   border: 1px solid #dfe5e2;
   border-radius: 9px;
-  background: #ffffff;
+  background: var(--card-bg-solid);
 
-  color: #303b36;
+  color: var(--ink);
   font-family: inherit;
   font-size: 12px;
   font-weight: 600;
@@ -95,14 +95,14 @@
 
 .edit-btn:hover {
   border-color: var(--primary);
-  background: var(--primary);
+  background: var(--primary-solid);
   color: #ffffff;
   transform: translateY(-1px);
 }
 
 .description {
   margin: 0;
-  color: #7b8580;
+  color: var(--ink-muted);
   font-size: 13px;
   line-height: 1.7;
 }
@@ -113,7 +113,7 @@
   gap: 28px;
 
   padding-top: 18px;
-  border-top: 1px solid #f4f6f5;
+  border-top: 1px solid var(--line);
 }
 
 .meta-item {
@@ -122,18 +122,18 @@
   gap: 6px;
   padding: 12px 14px;
   border-radius: 12px;
-  background: #f5f8fb;
+  background: var(--card-hover-bg);
   transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .meta-item:hover {
-  background: var(--primary-light);
+  background: var(--primary-solid-hover);
   box-shadow: 0 8px 18px rgba(23, 42, 82, 0.08);
   transform: translateY(-3px);
 }
 
 .meta-label {
-  color: #98a19c;
+  color: var(--ink-muted);
   font-size: 10.5px;
   font-weight: 600;
   text-transform: uppercase;
@@ -141,7 +141,7 @@
 }
 
 .meta-value {
-  color: #17211d;
+  color: var(--ink);
   font-size: 13px;
   font-weight: 600;
 }
@@ -151,7 +151,7 @@
   align-items: center;
   gap: 8px;
 
-  color: #17211d;
+  color: var(--ink);
   font-size: 13px;
   font-weight: 600;
 }
@@ -214,7 +214,7 @@
   padding: 11px 12px;
   border: 1px solid #d7e1eb;
   border-radius: 9px;
-  background: #ffffff;
+  background: var(--card-bg-solid);
   color: var(--text-primary);
   font-family: inherit;
   font-size: 13px;
@@ -252,13 +252,13 @@
 }
 
 .cancel-btn {
-  background: #ffffff;
+  background: var(--card-bg-solid);
   color: var(--text-secondary);
 }
 
 .save-btn {
   border-color: var(--primary);
-  background: var(--primary);
+  background: var(--primary-solid);
   color: #ffffff;
 }
 

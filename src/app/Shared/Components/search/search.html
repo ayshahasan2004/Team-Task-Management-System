@@ -1,4 +1,9 @@
 <div class="search-input">
-  <span class="search-icon">⌕</span>
-  <input type="text" [placeholder]="placeholder()" (input)="onInput($event)" />
+  <span class="search-icon" aria-hidden="true">⌕</span>
+  <input
+    type="text"
+    [placeholder]="placeholder()"
+    [attr.aria-label]="placeholder()"
+    (input)="onInput($event)"
+  />
 </div>

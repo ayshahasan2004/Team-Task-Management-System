@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
 }
 
@@ -33,7 +33,7 @@
 
 .toggle-title {
   display: block;
-  color: #17211d;
+  color: var(--ink);
   font-size: 15px;
   font-weight: 600;
   margin-bottom: 4px;
@@ -83,14 +83,14 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #ffffff;
+  background: var(--card-bg-solid);
 
   transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .switch input:checked + .slider {
-  background: linear-gradient(135deg, #2684ff, #0052cc);
+  background: var(--primary-solid);
   box-shadow: 0 4px 12px rgba(0, 82, 204, 0.28);
 }
 

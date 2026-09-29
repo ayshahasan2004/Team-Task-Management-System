@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
 }
 
@@ -11,11 +11,11 @@
   cursor: pointer;
   overflow: hidden;
 
-  background: linear-gradient(135deg, #ffffff 0%, #fbfdff 64%, #eef5ff 100%);
-  border: 1px solid var(--border);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 16px;
 
-  box-shadow: 0 4px 14px rgba(23, 43, 77, 0.05);
+  box-shadow: 0 4px 14px var(--shadow);
   transition: box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.28s ease;
 }
@@ -62,6 +62,12 @@
   transform: translateY(-7px) scale(1.012);
 }
 
+.project-card:focus-visible {
+  outline: 3px solid rgba(0, 82, 204, 0.45);
+  outline-offset: 3px;
+  border-color: #b9d8f5;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .project-card:hover {
     transform: none;
@@ -83,7 +89,7 @@
 }
 
 .project-name {
-  color: var(--text-primary);
+  color: var(--ink);
   font-size: 16px;
   font-weight: 700;
   transition: color 0.2s ease;
@@ -125,7 +131,7 @@
 .project-description {
   min-height: 42px;
   margin: 0 0 22px;
-  color: var(--text-secondary);
+  color: var(--ink-soft);
   font-size: 13px;
   line-height: 1.7;
 
@@ -146,7 +152,7 @@
   flex: 1;
   height: 8px;
   border-radius: 999px;
-  background: var(--border);
+  background: var(--card-border);
   overflow: hidden;
 }
 
@@ -154,7 +160,7 @@
   flex: 1;
   height: 8px;
   border-radius: 999px;
-  background: var(--border);
+  background: var(--card-border);
   overflow: hidden;
 }
 
@@ -166,7 +172,7 @@
 }
 
 .progress-value {
-  color: var(--text-muted);
+  color: var(--ink-muted);
   font-size: 11px;
   font-weight: 600;
   min-width: 30px;
@@ -179,9 +185,9 @@
   justify-content: space-between;
 
   padding-top: 18px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
 
-  color: var(--text-muted);
+  color: var(--ink-muted);
   font-size: 12px;
 }
 
@@ -191,7 +197,7 @@
   gap: 8px;
   margin-top: 16px;
   padding-top: 14px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
   border-radius: 0 0 8px 8px;
 }
 
@@ -210,7 +216,7 @@
 }
 
 .details-btn:hover {
-  background: var(--primary);
+  background: var(--primary-solid);
   color: #ffffff;
   transform: translateY(-1px);
 }
@@ -225,7 +231,7 @@
   border: 1px solid #dce5df;
   border-radius: 8px;
   background: #f8fbf9;
-  color: #315044;
+  color: var(--ink-soft);
   font-family: inherit;
   font-size: 11px;
   font-weight: 700;

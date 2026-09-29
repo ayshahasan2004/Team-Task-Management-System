@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
 }
 
@@ -41,7 +41,7 @@
 }
 
 .subtitle {
-  color: #7b8580;
+  color: var(--ink-muted);
   font-size: 12px;
 }
 
@@ -56,7 +56,7 @@
   scrollbar-width: thin;
 }
 
-/* The board is a flex row of columns — keep its children as flex items so the
+/* The board is a flex row of columns â€” keep its children as flex items so the
    columns sit side by side instead of stacking. */
 .board > app-kanban-column {
   flex: 0 0 auto;

@@ -8,10 +8,10 @@
 .task-summary {
   height: 100%;
   padding: 22px;
-  background: linear-gradient(140deg, #ffffff 0%, #fbfdff 60%, #eef5ff 100%);
-  border: 1px solid #dfe1e6;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 16px;
-  box-shadow: 0 4px 14px rgba(23, 42, 82, 0.06);
+  box-shadow: 0 4px 14px var(--shadow);
   transition: box-shadow 260ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 260ms cubic-bezier(0.22, 1, 0.36, 1), border-color 260ms ease;
 }
@@ -31,13 +31,13 @@
 
 .summary-header h3 {
   margin: 0;
-  color: #172a52;
+  color: var(--ink);
   font-size: 15px;
   font-weight: 700;
 }
 
 .total {
-  color: #42526e;
+  color: var(--ink-soft);
   font-size: 11px;
   font-weight: 500;
 }
@@ -48,9 +48,9 @@
   height: 12px;
   border-radius: 999px;
   overflow: hidden;
-  background: #ebecf0;
+  background: var(--track-bg);
   margin-bottom: 22px;
-  box-shadow: inset 0 1px 2px rgba(23, 42, 82, 0.06);
+  box-shadow: inset 0 1px 2px var(--shadow);
 }
 
 .bar-segment {
@@ -90,7 +90,7 @@
 }
 
 .legend-item:hover {
-  background: #f2f7ff;
+  background: var(--card-hover-bg);
   transform: translateX(4px);
 }
 
@@ -108,13 +108,13 @@
 
 .legend-label {
   flex: 1;
-  color: #42526e;
+  color: var(--ink-soft);
   font-size: 12px;
   font-weight: 500;
 }
 
 .legend-count {
-  color: #172a52;
+  color: var(--ink);
   font-size: 12px;
   font-weight: 700;
 }

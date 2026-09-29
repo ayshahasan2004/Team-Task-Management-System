@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
 }
 
@@ -36,12 +36,12 @@
 
 .search-input input:hover {
   border-color: #2684ff;
-  background: #ffffff;
+  background: var(--card-bg-solid);
 }
 
 .search-input input:focus {
   border-color: var(--primary);
-  background: #ffffff;
+  background: var(--card-bg-solid);
   box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.16);
 }
 

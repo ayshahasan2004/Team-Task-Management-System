@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
 }
 
@@ -16,7 +16,7 @@
   overflow: hidden;
 
   background: linear-gradient(160deg, #ffffff 0%, #fbfdff 60%, #eef5ff 100%);
-  border: 1px solid #edf1ef;
+  border: 1px solid var(--card-border);
   border-radius: 16px;
 
   box-shadow: 0 4px 14px rgba(23, 42, 82, 0.05);
@@ -50,6 +50,12 @@
   box-shadow: 0 20px 44px rgba(23, 42, 82, 0.16);
   border-color: #b9d8f5;
   transform: translateY(-7px) scale(1.012);
+}
+
+.member-card:focus-visible {
+  outline: 3px solid rgba(0, 82, 204, 0.45);
+  outline-offset: 3px;
+  border-color: #b9d8f5;
 }
 
 .member-card:hover .member-name {
@@ -111,14 +117,14 @@
 }
 
 .member-name {
-  color: #17211d;
+  color: var(--ink);
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 3px;
 }
 
 .member-role {
-  color: #7b8580;
+  color: var(--ink-muted);
   font-size: 12px;
   margin-bottom: 16px;
 }
@@ -126,8 +132,8 @@
 .card-footer {
   padding-top: 14px;
   width: 100%;
-  border-top: 1px solid #f4f6f5;
+  border-top: 1px solid var(--line);
 
-  color: #98a19c;
+  color: var(--ink-muted);
   font-size: 11px;
 }
