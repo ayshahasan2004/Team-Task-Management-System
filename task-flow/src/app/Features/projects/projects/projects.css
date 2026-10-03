@@ -1,0 +1,101 @@
+﻿:host {
+  display: block;
+}
+
+* { box-sizing: border-box; }
+
+.projects-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  isolation: isolate;
+}
+
+/* Soft drifting glow behind the whole page. */
+.projects-page::before {
+  position: absolute;
+  z-index: -1;
+  top: -90px;
+  right: -140px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(38, 132, 255, 0.14), transparent 68%);
+  content: '';
+  pointer-events: none;
+  animation: projects-glow 9s ease-in-out infinite alternate;
+}
+
+@keyframes projects-glow {
+  from { transform: translate3d(0, 0, 0) scale(0.92); }
+  to   { transform: translate3d(-26px, 22px, 0) scale(1.1); }
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects-page::before {
+    animation: none;
+  }
+}
+
+.page-header h2 {
+  margin: 0 0 4px;
+  color: var(--ink-strong);
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.new-project-btn {
+  flex-shrink: 0;
+  padding: 11px 18px;
+
+  border: none;
+  border-radius: 10px;
+  background: var(--primary-solid);
+
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 82, 204, 0.18);
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.new-project-btn:hover {
+  background: var(--primary-solid-hover);
+  color: var(--primary);
+  box-shadow: 0 12px 26px rgba(0, 82, 204, 0.2);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.new-project-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 22px;
+  perspective: 1200px;
+}
+
+@media (max-width: 760px) {
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}

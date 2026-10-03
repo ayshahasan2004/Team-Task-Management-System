@@ -1,0 +1,32 @@
+<div class="projects-page">
+
+  <div class="page-header">
+    <div>
+      <h2>Projects</h2>
+      <span class="subtitle">{{ projects().length }} projects</span>
+    </div>
+    <button class="new-project-btn" type="button" (click)="openCreateDialog()">
+      + New Project
+    </button>
+  </div>
+
+  <div class="projects-grid">
+    @for (project of projects(); track project.id) {
+      <app-project-card
+        [project]="project"
+        (detailsClicked)="onCardClicked($event)"
+        (editClicked)="onEditClicked($event)"
+        (deleteClicked)="onDeleteClicked($event)"
+        (statusChanged)="onStatusChanged($event)"
+      ></app-project-card>
+    }
+  </div>
+
+  <app-create-project-dialog
+    [isOpen]="isCreateDialogOpen"
+    [editingProject]="editingProject"
+    (closed)="closeCreateDialog()"
+    (saved)="onProjectSaved()"
+  ></app-create-project-dialog>
+
+</div>

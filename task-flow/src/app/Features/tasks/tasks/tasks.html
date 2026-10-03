@@ -1,0 +1,26 @@
+<!-- tasks.html -->
+<div class="tasks-header">
+  <h2>Tasks</h2>
+  <button class="new-task-btn" (click)="openCreateDialog()">+ New Task</button>
+</div>
+
+<app-task-filters
+  (statusChanged)="onStatusFilterChanged($event)"
+  (priorityChanged)="onPriorityFilterChanged($event)"
+  (searchChanged)="onSearchChanged($event)">
+</app-task-filters>
+
+<div class="tasks-grid">
+  @for (task of filteredTasks(); track task.id) {
+    <app-task-card
+      [task]="task"
+      (detailsClicked)="onCardClicked($event)">
+    </app-task-card>
+  }
+</div>
+
+<app-create-task-dialog
+  [isOpen]="isDialogOpen()"
+  (closed)="onDialogClosed()"
+  (created)="onTaskCreated()">
+</app-create-task-dialog>

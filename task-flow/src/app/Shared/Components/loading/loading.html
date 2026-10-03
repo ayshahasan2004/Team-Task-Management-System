@@ -1,0 +1,6 @@
+<div class="loading-wrap" [class.full-page]="fullPage()">
+  <div class="spinner" [class]="size()"></div>
+  @if (label()) {
+    <span class="label">{{ label() }}</span>
+  }
+</div>

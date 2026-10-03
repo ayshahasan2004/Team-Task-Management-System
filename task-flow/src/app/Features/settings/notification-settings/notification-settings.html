@@ -1,0 +1,23 @@
+<div class="panel">
+  <div class="toggle-row">
+    <div>
+      <span class="toggle-title">Email notifications</span>
+      <span class="toggle-desc">Get notified about task updates via email</span>
+    </div>
+    <label class="switch">
+      <input type="checkbox" [checked]="emailNotifications" (change)="emailNotifications = !emailNotifications" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="toggle-row">
+    <div>
+      <span class="toggle-title">Push notifications</span>
+      <span class="toggle-desc">Receive alerts on your device</span>
+    </div>
+    <label class="switch">
+      <input type="checkbox" [checked]="pushNotifications" (change)="pushNotifications = !pushNotifications" />
+      <span class="slider"></span>
+    </label>
+  </div>
+</div>

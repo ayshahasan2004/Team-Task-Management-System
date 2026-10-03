@@ -1,0 +1,16 @@
+<div class="activity-list">
+  <div class="section-header">
+    <h3>Recent Activity</h3>
+  </div>
+
+  @for (activity of activities(); track activity.id) {
+    <div class="activity-item">
+      <div class="avatar">{{ activity.member?.initial || '?' }}</div>
+
+      <div class="activity-body">
+        <span class="activity-text">{{ activity.member?.name || 'A team member' }} {{ activity.text }}</span>
+        <span class="activity-time">{{ activity.time }}</span>
+      </div>
+    </div>
+  }
+</div>

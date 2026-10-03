@@ -1,0 +1,20 @@
+<div
+  class="kanban-task"
+  role="button"
+  tabindex="0"
+  [attr.aria-label]="task().title"
+  (click)="onCardClick()"
+  (keydown.enter)="onCardClick()"
+  (keydown.space)="onCardClick(); $event.preventDefault()"
+>
+ <div class="task-top">
+    <span class="priority-dot" [class]="priorityClass" [attr.aria-label]="task().priority + ' priority'"></span>
+    <span class="task-id">{{ task().id }}</span>
+ </div>
+
+ <p class="task-title">{{ task().title }}</p>
+
+ <div class="task-footer">
+    <span class="due-date">{{ formatDueDate(task().dueDate) }}</span>
+ </div>
+</div>

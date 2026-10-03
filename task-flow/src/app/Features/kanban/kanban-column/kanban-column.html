@@ -1,0 +1,22 @@
+<div class="kanban-column" [style.--column-accent]="accentColor()">
+  <div class="column-header">
+    <span class="dot" [style.background]="accentColor()"></span>
+    <span class="column-title">{{ title() }}</span>
+    <span class="task-count">{{ tasks().length }}</span>
+  </div>
+
+  <div class="column-body">
+    @for (task of tasks(); track task.id) {
+      <app-kanban-task
+        [task]="task"
+        (cardClicked)="onTaskClick($event)"
+      ></app-kanban-task>
+    }
+
+    @if (tasks().length === 0) {
+      <div class="empty-state">
+        No tasks
+      </div>
+    }
+  </div>
+</div>

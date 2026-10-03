@@ -1,0 +1,135 @@
+﻿:host {
+  display: block;
+}
+
+* { box-sizing: border-box; }
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: transparent;
+}
+
+.avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 4px;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(140deg, #deebff, #e3fcef);
+  color: var(--primary);
+  font-size: 19px;
+  font-weight: 700;
+  box-shadow: 0 0 0 3px #ffffff, 0 0 0 4px rgba(38, 132, 255, 0.3);
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease;
+}
+
+.avatar-row:hover .avatar {
+  box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px rgba(38, 132, 255, 0.45);
+  transform: scale(1.06) rotate(-4deg);
+}
+
+.change-avatar-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: var(--jira-100, #eef3fb);
+  color: var(--primary);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.change-avatar-btn:hover {
+  background: var(--primary-solid-hover);
+  box-shadow: 0 8px 18px rgba(0, 82, 204, 0.14);
+  transform: translateY(-1px);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 520px;
+}
+
+.field label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.field input {
+  height: 46px;
+  padding: 0 15px;
+  border: none;
+  border-radius: 12px;
+  background: var(--field-bg, #f2f5f9);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: background 0.22s ease, box-shadow 0.22s ease;
+}
+
+.field input:hover:not(:disabled) {
+  background: var(--field-bg-hover, #eaf1fb);
+}
+
+.field input:focus {
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.28);
+}
+
+.field input:disabled {
+  background: var(--field-bg-disabled, #f1f3f5);
+  color: var(--ink-muted);
+  cursor: not-allowed;
+}
+
+.save-btn {
+  position: relative;
+  overflow: hidden;
+  align-self: flex-start;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 11px;
+  background: var(--primary-solid);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 82, 204, 0.22);
+  transition: box-shadow 0.22s ease, transform 0.22s ease, filter 0.22s ease;
+}
+
+.save-btn:hover {
+  box-shadow: 0 14px 30px rgba(0, 82, 204, 0.3);
+  filter: brightness(1.06);
+  transform: translateY(-2px);
+}
+
+.save-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-row:hover .avatar,
+  .save-btn:hover,
+  .change-avatar-btn:hover {
+    transform: none;
+  }
+}
