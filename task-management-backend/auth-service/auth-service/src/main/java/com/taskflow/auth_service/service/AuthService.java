@@ -23,13 +23,15 @@ public class AuthService {
   }
 
   public AuthResponse signup(SignupRequest request) {
-    if (userRepository.existsByEmail(request.getEmail())) {
+    String normalizedEmail = request.getEmail().trim().toLowerCase();
+
+    if (userRepository.existsByEmail(normalizedEmail)) {
       throw new IllegalArgumentException("Email already registered");
     }
 
     User user = new User(
       request.getFullName(),
-      request.getEmail(),
+      normalizedEmail,
       passwordEncoder.encode(request.getPassword())
     );
 
@@ -40,7 +42,9 @@ public class AuthService {
   }
 
   public AuthResponse login(LoginRequest request) {
-    User user = userRepository.findByEmail(request.getEmail())
+    String normalizedEmail = request.getEmail().trim().toLowerCase();
+
+    User user = userRepository.findByEmail(normalizedEmail)
       .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
 
     if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
