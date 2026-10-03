@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,9 +9,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './search.html',
 })
 export class Search {
-  @Input() placeholder = 'Search...';
+  readonly placeholder = input('Search...');
 
-  @Output() searchChanged = new EventEmitter<string>();
+  readonly searchChanged = output<string>();
 
   onInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;

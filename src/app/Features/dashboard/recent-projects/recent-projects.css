@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
   height: 100%;
 }
@@ -8,16 +8,18 @@
 .recent-projects {
   height: 100%;
   padding: 22px;
-  background: #ffffff;
-  border: 1px solid #dfe1e6;
-  border-radius: 14px;
-  box-shadow: 0 1px 2px rgba(23, 42, 82, 0.08);
-  transition: transform 220ms ease, box-shadow 220ms ease;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  box-shadow: 0 4px 14px var(--shadow);
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 260ms cubic-bezier(0.22, 1, 0.36, 1), border-color 260ms ease;
 }
 
 .recent-projects:hover {
-  box-shadow: 0 14px 30px rgba(23, 42, 82, 0.11);
-  transform: translateY(-3px);
+  border-color: #b3d4ff;
+  box-shadow: 0 18px 38px rgba(23, 42, 82, 0.13);
+  transform: translateY(-4px);
 }
 
 .section-header {
@@ -29,7 +31,7 @@
 
 .section-header h3 {
   margin: 0;
-  color: #172a52;
+  color: var(--ink);
   font-size: 15px;
   font-weight: 700;
 }
@@ -39,10 +41,24 @@
   font-size: 11px;
   font-weight: 600;
   text-decoration: none;
+  transition: transform 200ms ease, color 200ms ease;
+  display: inline-block;
 }
 
 .view-all:hover {
   text-decoration: underline;
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recent-projects:hover,
+  .project-item:hover,
+  .view-all:hover {
+    transform: none;
+  }
+  .progress-fill {
+    animation: none;
+  }
 }
 
 .project-list {
@@ -57,13 +73,14 @@
   gap: 8px;
   padding: 8px;
   margin: -8px;
-  border-radius: 10px;
-  transition: background 180ms ease, transform 180ms ease;
+  border-radius: 12px;
+  transition: background 200ms ease, transform 200ms ease, box-shadow 200ms ease;
 }
 
 .project-item:hover {
-  background: #f4f7ff;
-  transform: translateX(4px);
+  background: var(--card-hover-bg);
+  box-shadow: 0 8px 20px var(--shadow);
+  transform: translateX(5px);
 }
 
 .project-info {
@@ -73,13 +90,13 @@
 }
 
 .project-name {
-  color: #172a52;
+  color: var(--ink);
   font-size: 13px;
   font-weight: 600;
 }
 
 .project-meta {
-  color: #6b778c;
+  color: var(--ink-muted);
   font-size: 11px;
 }
 
@@ -93,17 +110,24 @@
   flex: 1;
   height: 6px;
   border-radius: 999px;
-  background: #ebecf0;
+  background: var(--track-bg);
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: #0052cc;
+  background: linear-gradient(90deg, #0052cc, #2684ff, #36b37e);
+  background-size: 200% 100%;
   border-radius: 999px;
-  transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
   overflow: hidden;
+  animation: progress-hue 6s linear infinite;
+}
+
+@keyframes progress-hue {
+  from { background-position: 0% 50%; }
+  to   { background-position: 200% 50%; }
 }
 
 .progress-fill::after {
@@ -120,9 +144,34 @@
 }
 
 .progress-value {
-  color: #42526e;
+  color: var(--ink-soft);
   font-size: 11px;
   font-weight: 600;
   min-width: 30px;
   text-align: right;
+}
+
+.details-btn {
+  align-self: flex-start;
+  padding: 6px 10px;
+  border: 1px solid #b9d3f5;
+  border-radius: 7px;
+  background: #f4f8ff;
+  color: #0052cc;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.details-btn:hover {
+  border-color: #0052cc;
+  background: #0052cc;
+  color: #ffffff;
+}
+
+.details-btn:focus-visible {
+  outline: 3px solid rgba(38, 132, 255, 0.2);
+  outline-offset: 2px;
 }

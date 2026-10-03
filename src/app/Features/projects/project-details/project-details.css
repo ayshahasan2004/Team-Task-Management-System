@@ -1,13 +1,48 @@
-:host {
+﻿:host {
   display: block;
 }
 
 * { box-sizing: border-box; }
 
 .project-details {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  position: relative;
+  padding: 30px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff 0%, #fbfdff 62%, #eef5ff 100%);
+  border: 1px solid #dfe6ee;
+  border-radius: 20px;
+  box-shadow: 0 14px 34px rgba(23, 43, 77, 0.08);
+  animation: details-enter 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Decorative corner glow. */
+.project-details::before {
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(38, 132, 255, 0.14), transparent 68%);
+  content: '';
+  pointer-events: none;
+  animation: details-glow 9s ease-in-out infinite alternate;
+}
+
+@keyframes details-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes details-glow {
+  from { transform: translate3d(0, 0, 0) scale(0.9); }
+  to   { transform: translate3d(-24px, 20px, 0) scale(1.1); }
 }
 
 .details-header {
@@ -15,14 +50,30 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e9eef3;
+}
+
+.eyebrow,
+.panel-kicker,
+.meta-label {
+  display: block;
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
 }
 
 .details-header h2 {
-  margin: 0 0 8px;
-  color: #17211d;
-  font-size: 22px;
+  margin: 0 0 10px;
+  color: var(--text-primary);
+  font-size: clamp(24px, 3vw, 34px);
   font-weight: 700;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.03em;
 }
 
 .status-badge {
@@ -39,11 +90,11 @@
 
 .edit-btn {
   flex-shrink: 0;
-  padding: 10px 18px;
+  padding: 11px 18px;
 
   border: 1px solid #dfe5e2;
   border-radius: 9px;
-  background: var(--primary);
+  background: var(--primary-solid);
 
   color: #ffffff;
   font-family: inherit;
@@ -55,59 +106,204 @@
 }
 
 .edit-btn:hover {
-  border-color: var(--primary);
-  background: var(--primary-light);
+  border-color: var(--primary-hover);
+  background: var(--primary-hover);
+  color: #ffffff;
+}
+
+.details-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.42fr);
+  gap: 22px;
+  padding-top: 24px;
+}
+
+.overview-panel {
+  min-width: 0;
+  padding: 26px;
+  border: 1px solid #e2eaf2;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.overview-panel:hover {
+  border-color: #c9ddf5;
+  box-shadow: 0 14px 32px rgba(23, 42, 82, 0.1);
+  transform: translateY(-2px);
+}
+
+.panel-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panel-heading h3 {
+  margin: 6px 0 0;
+  color: var(--text-primary);
+  font-size: 18px;
+}
+
+.progress-value {
   color: var(--primary);
+  font-size: 20px;
+  font-weight: 700;
+  min-width: 42px;
+  text-align: right;
 }
 
 .description {
-  margin: 0;
-  max-width: 640px;
-  color: #7b8580;
+  margin: 22px 0;
+  color: var(--text-secondary);
   font-size: 13px;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .progress-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  max-width: 480px;
+  display: block;
 }
 
 .progress-track {
-  flex: 1;
-  height: 8px;
+  width: 100%;
+  height: 10px;
   border-radius: 999px;
-  background: #eef1ef;
+  background: #e8edf3;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: var(--primary);
+  background: linear-gradient(90deg, #2684ff, #36b37e);
+  background-size: 200% 100%;
   border-radius: 999px;
+  transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: progress-grow 0.9s cubic-bezier(0.22, 1, 0.36, 1) both,
+    progress-hue 6s linear infinite;
 }
 
-.progress-value {
-  color: #303b36;
-  font-size: 12px;
-  font-weight: 700;
-  min-width: 32px;
+@keyframes progress-grow {
+  from { transform: scaleX(0); transform-origin: left center; }
+  to   { transform: scaleX(1); transform-origin: left center; }
 }
 
-.meta-row {
-  display: flex;
-  gap: 20px;
-
-  color: #7b8580;
-  font-size: 12px;
+@keyframes progress-hue {
+  from { background-position: 0% 50%; }
+  to   { background-position: 200% 50%; }
 }
 
-.details-grid {
+.meta-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-  max-width: 400px;
-  margin-top: 4px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.meta-item {
+  min-width: 0;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--card-hover-bg);
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.meta-item:hover {
+  background: var(--primary-solid-hover);
+  box-shadow: 0 8px 18px rgba(23, 42, 82, 0.08);
+  transform: translateY(-3px);
+}
+
+.meta-item strong,
+.meta-item span:last-child {
+  display: block;
+}
+
+.meta-item strong {
+  margin-top: 8px;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta-item span:last-child {
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.details-sidebar {
+  min-width: 0;
+}
+
+.details-sidebar ::ng-deep .project-members {
+  height: 100%;
+  border-color: #dfe6ee;
+  box-shadow: none;
+}
+
+.project-not-found {
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  text-align: center;
+}
+
+.project-not-found h2,
+.project-not-found p {
+  margin: 0;
+}
+
+.project-not-found h2 {
+  color: var(--text-primary);
+  font-size: 18px;
+}
+
+.project-not-found p {
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-details,
+  .project-details::before,
+  .progress-fill {
+    animation: none;
+  }
+  .overview-panel:hover,
+  .meta-item:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .project-details {
+    padding: 20px;
+  }
+
+  .details-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .details-header {
+    flex-direction: column;
+  }
+
+  .edit-btn {
+    width: 100%;
+  }
+
+  .overview-panel {
+    padding: 18px;
+  }
+
+  .meta-grid {
+    grid-template-columns: 1fr;
+  }
 }

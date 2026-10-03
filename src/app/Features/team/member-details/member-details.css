@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
 }
 
@@ -11,8 +11,8 @@
 
   padding: 26px;
 
-  background: #ffffff;
-  border: 1px solid #edf1ef;
+  background: var(--card-bg-solid);
+  border: 1px solid var(--card-border);
   border-radius: 14px;
 }
 
@@ -69,20 +69,20 @@
 
 .header-text h2 {
   margin: 0;
-  color: #17211d;
+  color: var(--ink);
   font-size: 19px;
   font-weight: 700;
   letter-spacing: -0.3px;
 }
 
 .role {
-  color: #4c5650;
+  color: var(--ink-soft);
   font-size: 13px;
   font-weight: 500;
 }
 
 .email {
-  color: #98a19c;
+  color: var(--ink-muted);
   font-size: 12px;
 }
 
@@ -110,12 +110,12 @@
 
 .section {
   padding-top: 20px;
-  border-top: 1px solid #f4f6f5;
+  border-top: 1px solid var(--line);
 }
 
 .section h3 {
   margin: 0 0 16px;
-  color: #17211d;
+  color: var(--ink);
   font-size: 14px;
   font-weight: 700;
 }
@@ -132,7 +132,7 @@
 }
 
 .project-name {
-  color: #303b36;
+  color: var(--ink);
   font-size: 12.5px;
   font-weight: 600;
 }
@@ -158,7 +158,7 @@
 }
 
 .progress-value {
-  color: #7b8580;
+  color: var(--ink-muted);
   font-size: 11px;
   font-weight: 600;
   min-width: 30px;

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type LoadingSize = 'sm' | 'md' | 'lg';
@@ -11,7 +11,7 @@ export type LoadingSize = 'sm' | 'md' | 'lg';
   templateUrl: './loading.html',
 })
 export class Loading {
-  @Input() size: LoadingSize = 'md';
-  @Input() fullPage = false;
-  @Input() label = '';
+  readonly size = input<LoadingSize>('md');
+  readonly fullPage = input(false);
+  readonly label = input('');
 }

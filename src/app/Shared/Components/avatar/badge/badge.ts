@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type BadgeVariant = 'success' | 'warning' | 'danger' | 'info' | 'neutral';
@@ -11,6 +11,6 @@ export type BadgeVariant = 'success' | 'warning' | 'danger' | 'info' | 'neutral'
   templateUrl: './badge.html',
 })
 export class Badge {
-  @Input() text = '';
-  @Input() variant: BadgeVariant = 'neutral';
+  readonly text = input('');
+  readonly variant = input<BadgeVariant>('neutral');
 }

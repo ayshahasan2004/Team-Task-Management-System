@@ -1,16 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Badge, BadgeVariant } from '../../../Shared/Components/avatar/badge/badge';
-
-export interface Member {
-  id: string;
-  name: string;
-  initial: string;
-  role: string;
-  email: string;
-  projectsCount: number;
-  status: 'Online' | 'Offline';
-}
+import { Member } from '../../../Core/models/member.model';
 
 @Component({
   standalone: true,
@@ -20,15 +11,15 @@ export interface Member {
   templateUrl: './member-card.html',
 })
 export class MemberCard {
-  @Input() member!: Member;
+  readonly member = input.required<Member>();
 
-  @Output() cardClicked = new EventEmitter<string>();
+  readonly cardClicked = output<string>();
 
   get statusVariant(): BadgeVariant {
-    return this.member.status === 'Online' ? 'success' : 'neutral';
+    return this.member().status === 'Online' ? 'success' : 'neutral';
   }
 
   onCardClick() {
-    this.cardClicked.emit(this.member.id);
+    this.cardClicked.emit(this.member().id);
   }
 }

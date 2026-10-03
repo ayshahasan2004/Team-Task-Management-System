@@ -1,4 +1,4 @@
-:root {
+﻿:root {
 	--primary: #0052cc;
 	--primary-hover: #0747a6;
 	--primary-light: #deebff;
@@ -8,8 +8,8 @@
 	--text-primary: #172b4d;
 	--text-secondary: #42526e;
 	--text-muted: #6b778c;
-	--status-todo-bg: #dfe1e6;
-	--status-todo-text: #42526e;
+	--status-todo-bg: var(--status-in-progress-bg);
+	--status-todo-text: var(--status-in-progress-text);
 	--status-in-progress-bg: #deebff;
 	--status-in-progress-text: #0052cc;
 	--status-review-bg: #fff0b3;
@@ -54,10 +54,76 @@
 	--ink-strong: var(--text-primary);
 	--green: var(--primary);
 	--shadow: rgba(23, 42, 82, 0.08);
-	--font-family: 'Atlassian Sans', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+	--field-bg: #f2f5f9;
+	--field-bg-hover: #eaf1fb;
+	--field-bg-disabled: #f1f3f5;
+	/* Card surfaces â€” components read these instead of hardcoding white. */
+	--card-bg: linear-gradient(140deg, #ffffff 0%, #fbfdff 60%, #eef5ff 100%);
+	--card-bg-solid: #ffffff;
+	--primary-solid: #0052cc;
+	--primary-solid-hover: #0747a6;
+	--card-border: #dfe1e6;
+	--card-hover-bg: #f2f7ff;
+	--track-bg: #ebecf0;
+	--column-bg: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+	--chip-bg: #e9edeb;
+	--font-family: 'Century Gothic', 'Avenir Next', 'Segoe UI', sans-serif;
 	--heading-weight: 700;
 	--heading-letter-spacing: -0.02em;
 	--ui-letter-spacing: -0.01em;
+}
+
+/* --------------------------------------------------------------------------
+   Dark theme tokens.
+   The rules below force colors with `!important`, so dark mode is achieved by
+   redefining the tokens those rules read rather than by out-specifying them.
+   Everything that consumes var(--surface)/var(--ink)/var(--line) then flips
+   automatically, in both global and component styles.
+   -------------------------------------------------------------------------- */
+.dark-theme {
+	--bg-page: #101827;
+	--bg-surface: #1f2a3a;
+	--surface: #1f2a3a;
+	--canvas: #101827;
+	--line: #35445d;
+	--border: #35445d;
+	--ink: #e5ecf9;
+	--ink-strong: #f4f8ff;
+	--ink-soft: #b8c5db;
+	--ink-muted: #93a3bd;
+	--text-primary: #f4f8ff;
+	--text-secondary: #c3cfe3;
+	--text-muted: #93a3bd;
+	--jira-50: #22304a;
+	--jira-100: #26334a;
+	--jira-800: #8ec1ff;
+	--jira-900: #f4f8ff;
+	/* Brightened brand blue for TEXT/accents on dark surfaces. */
+	--primary: #6cb0ff;
+	--primary-hover: #8ec1ff;
+	--primary-light: #26334a;
+	--jira-700: #6cb0ff;
+	/* Solid fill for primary buttons â€” stays deep enough for white text. */
+	--primary-solid: #1d5fc4;
+	--primary-solid-hover: #2470dd;
+	--success: #4ecf9a;
+	--status-done-text: #6ee7b7;
+	--project-active-text: #6ee7b7;
+	--project-completed-text: #8ec1ff;
+	--slate-100: #1f2a3a;
+	--slate-200: #26334a;
+	--slate-300: #35445d;
+	--shadow: rgba(0, 0, 0, 0.35);
+	--field-bg: #172233;
+	--field-bg-hover: #1b2740;
+	--field-bg-disabled: #141d2c;
+	--card-bg: linear-gradient(140deg, #223047 0%, #1c273a 100%);
+	--card-bg-solid: #1f2a3a;
+	--card-border: #35445d;
+	--card-hover-bg: #26334a;
+	--track-bg: #2b3a52;
+	--column-bg: linear-gradient(180deg, #1f2a3a 0%, #1a2434 100%);
+	--chip-bg: #2b3a52;
 }
 
 html,
@@ -66,11 +132,16 @@ body {
 	margin: 0;
 }
 
+.dark-theme body {
+	background: var(--canvas) !important;
+	color: var(--ink) !important;
+}
+
 body {
 	background: var(--canvas);
 	color: var(--ink);
 	font-family: var(--font-family);
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: 500;
 	line-height: 1.5;
 	letter-spacing: var(--ui-letter-spacing);
@@ -123,7 +194,7 @@ h3,
 .settings-layout,
 .dialog,
 .user-menu {
-	font-size: 13px;
+	font-size: 14px;
 	line-height: 1.4;
 	letter-spacing: var(--ui-letter-spacing);
 }
@@ -210,6 +281,33 @@ select,
 	color: var(--ink);
 }
 
+select {
+	min-height: 40px;
+	padding: 0 36px 0 13px;
+	appearance: auto;
+	font-family: var(--font-family);
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+select:hover {
+	border-color: var(--jira-600);
+}
+
+select:focus {
+	outline: 3px solid rgba(38, 132, 255, 0.16);
+	border-color: var(--jira-600);
+}
+
+option {
+	padding: 10px 12px;
+	background: #ffffff;
+	color: var(--jira-900);
+	font-family: var(--font-family);
+	font-size: 13px;
+}
+
 input:focus,
 textarea:focus,
 select:focus {
@@ -245,8 +343,8 @@ button[type='submit']:hover,
 .chip.active,
 .progress-fill,
 .pagination button.active {
-	background: var(--primary) !important;
-	border-color: var(--primary) !important;
+	background: var(--primary-solid) !important;
+	border-color: var(--primary-solid) !important;
 	color: #ffffff !important;
 }
 
@@ -254,7 +352,7 @@ button[type='submit']:hover,
 .primary-button:hover,
 .btn-primary:hover,
 .pagination button.active:hover {
-	background: var(--primary-hover) !important;
+	background: var(--primary-solid-hover) !important;
 }
 
 .field input:focus,
@@ -262,7 +360,7 @@ button[type='submit']:hover,
 .chip.active,
 .project-members input:focus,
 .settings-layout input:focus {
-	border-color: var(--primary) !important;
+	border-color: var(--primary-solid) !important;
 }
 
 .status-badge.on-track,
@@ -299,8 +397,8 @@ button[type='submit']:hover,
 .projects-page .new-project-btn,
 .create-project-dialog .btn-primary,
 .create-task-dialog .btn-primary {
-	background: var(--primary) !important;
-	border-color: var(--primary) !important;
+	background: var(--primary-solid) !important;
+	border-color: var(--primary-solid) !important;
 	color: #ffffff !important;
 }
 
@@ -313,7 +411,7 @@ button[type='submit']:hover,
 .create-project-dialog .btn-primary:hover,
 .create-task-dialog .btn-primary:hover {
 	background: var(--primary-light) !important;
-	border-color: var(--primary) !important;
+	border-color: var(--primary-solid) !important;
 	color: var(--primary) !important;
 }
 
@@ -336,6 +434,12 @@ button[type='submit']:hover,
 .priority-badge.medium {
 	background: var(--status-in-progress-bg);
 	color: var(--status-in-progress-text);
+}
+
+.status-badge[data-status='Review'],
+.status-badge.review {
+	background: var(--status-review-bg);
+	color: var(--status-review-text);
 }
 
 .status-badge[data-status='Done'],
@@ -380,21 +484,6 @@ button[type='submit']:hover,
 	background: linear-gradient(180deg, #172233 0%, #111b2d 100%) !important;
 }
 
-.dark-theme .nav-item {
-	color: rgba(233, 240, 255, 0.8);
-}
-
-.dark-theme .nav-item:hover {
-	background: rgba(76, 154, 255, 0.12);
-	color: #dfeeff;
-}
-
-.dark-theme .nav-item.active {
-	background: linear-gradient(90deg, rgba(76, 154, 255, 0.2), rgba(76, 154, 255, 0.08));
-	color: #dfeeff;
-	box-shadow: inset 3px 0 0 #5aa9ff;
-}
-
 .dark-theme .page-title,
 .dark-theme h1,
 .dark-theme h2,
@@ -433,9 +522,24 @@ button[type='submit']:hover,
 
 /* Keep the sidebar shell neutral without painting its icon and label spans. */
 .sidebar {
-	background-color: #f8f9fb !important;
+	background-color: var(--jira-50) !important;
+	background-image: linear-gradient(180deg, #f8f9fb 0%, #eef3ff 100%) !important;
 	color: var(--slate-700) !important;
 	border-color: var(--line) !important;
+}
+
+.dark-theme .sidebar {
+	background-color: #172233 !important;
+	background-image: linear-gradient(180deg, #172233 0%, #111b2d 100%) !important;
+	color: #b8c5db !important;
+}
+
+.dark-theme .brand-icon {
+	background: var(--jira-700) !important;
+}
+
+.dark-theme .brand-name {
+	color: #f4f8ff !important;
 }
 
 .brand-icon {
@@ -464,6 +568,48 @@ button[type='submit']:hover,
 	border-color: var(--jira-100) !important;
 	color: var(--jira-700) !important;
 	box-shadow: inset 3px 0 0 var(--jira-700) !important;
+}
+
+/* Sidebar nav needs lighter text once the shell goes dark. */
+.dark-theme .nav-item {
+	color: #c3cfe3 !important;
+}
+
+.dark-theme .nav-item:hover,
+.dark-theme .nav-item.active {
+	background: rgba(76, 154, 255, 0.16) !important;
+	border-color: rgba(76, 154, 255, 0.3) !important;
+	color: #8ec1ff !important;
+}
+
+/* The active item carries an inset bar; give it a background dark enough for
+   the blue label to stay legible. */
+.dark-theme .nav-item.active {
+	background: #26334a !important;
+	box-shadow: inset 3px 0 0 #5aa9ff !important;
+}
+
+.dark-theme .brand-name {
+	color: #f4f8ff !important;
+}
+
+.dark-theme .header,
+.dark-theme .header * {
+	background-color: transparent !important;
+	color: var(--ink) !important;
+}
+
+.dark-theme .header {
+	background-color: rgba(23, 34, 51, 0.92) !important;
+	border-bottom-color: var(--line) !important;
+}
+
+.dark-theme .icon-button,
+.dark-theme .theme-button,
+.dark-theme .user-button,
+.dark-theme .search input {
+	background-color: #1f2a3a !important;
+	border-color: var(--line) !important;
 }
 
 .header,
@@ -498,12 +644,104 @@ button[type='submit']:hover,
 	box-shadow: 0 1px 2px var(--shadow) !important;
 }
 
+/* Let the card components paint their own themed gradient in dark mode,
+   instead of the flat var(--surface) forced above. */
+.dark-theme .stat-card,
+.dark-theme .task-card,
+.dark-theme .project-card,
+.dark-theme .member-card,
+.dark-theme .activity-list,
+.dark-theme .recent-projects,
+.dark-theme .task-summary,
+.dark-theme .kanban-column,
+.dark-theme .team-group,
+.dark-theme .project-details,
+.dark-theme .task-details {
+	background-color: transparent !important;
+	background-image: var(--card-bg) !important;
+}
+
+.dark-theme .kanban-column {
+	background-image: var(--column-bg) !important;
+}
+
 .stat-icon,
 .avatar,
 .task-icon,
 .project-icon {
 	background: var(--jira-100) !important;
 	color: var(--jira-700) !important;
+}
+
+.dark-theme .status-badge,
+.dark-theme .badge,
+.dark-theme .priority-badge {
+	background: #26334a !important;
+	color: #c3cfe3 !important;
+}
+
+.dark-theme .status-badge[data-status='To Do'],
+.dark-theme .status-badge.to-do,
+.dark-theme .priority-badge.low {
+	background: rgba(108, 176, 255, 0.18) !important;
+	color: #8ec1ff !important;
+}
+
+.dark-theme .status-badge[data-status='In Progress'],
+.dark-theme .status-badge.in-progress,
+.dark-theme .priority-badge.medium,
+.dark-theme .status-badge[data-status='Review'],
+.dark-theme .status-badge.review {
+	background: rgba(255, 171, 0, 0.18) !important;
+	color: #ffc95c !important;
+}
+
+.dark-theme .status-badge[data-status='Done'],
+.dark-theme .status-badge.done,
+.dark-theme .priority-badge.high {
+	background: rgba(78, 207, 154, 0.18) !important;
+	color: #6ee7b7 !important;
+}
+
+.dark-theme .details-btn,
+.dark-theme .chip {
+	background: rgba(108, 176, 255, 0.16) !important;
+	color: #8ec1ff !important;
+}
+
+.dark-theme .view-all {
+	color: #8ec1ff !important;
+}
+
+/* Component-scoped styles otherwise win on equal specificity; these live in the
+   global sheet with !important so the dark palette always applies. */
+.dark-theme .header-chip {
+	border-color: #2f5f4d !important;
+	background: #1b2f2a !important;
+	color: #6ee7b7 !important;
+	box-shadow: none !important;
+}
+
+.dark-theme .eyebrow {
+	color: #8ec1ff !important;
+}
+
+.dark-theme .icon-btn {
+	border-color: var(--card-border) !important;
+	background: var(--card-hover-bg) !important;
+	color: var(--ink-soft) !important;
+}
+
+.dark-theme .icon-btn:hover {
+	border-color: #4a7fbe !important;
+	background: #2b3a52 !important;
+	color: #8ec1ff !important;
+}
+
+.dark-theme .delete-btn:hover {
+	border-color: #8c4a45 !important;
+	background: #3a2527 !important;
+	color: #ff9b93 !important;
 }
 
 .status-badge,
@@ -523,6 +761,12 @@ button[type='submit']:hover,
 .status-badge[data-status='In Progress'],
 .status-badge.in-progress,
 .priority-badge.medium {
+	background: #fff0b3 !important;
+	color: #7a4b00 !important;
+}
+
+.status-badge[data-status='Review'],
+.status-badge.review {
 	background: #fff0b3 !important;
 	color: #7a4b00 !important;
 }
@@ -561,9 +805,43 @@ button[type='submit'],
 input,
 textarea,
 select {
-	background: #ffffff !important;
+	background: var(--bg-surface) !important;
 	border: 1px solid var(--line) !important;
 	color: var(--ink) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+	color: var(--ink-muted) !important;
+}
+
+/* Settings inputs are borderless soft fills â€” override the global input border. */
+.settings-page input,
+.settings-page textarea,
+.settings-page select {
+  border: none !important;
+  background: #f2f5f9 !important;
+  box-shadow: none;
+}
+
+.settings-page input:focus,
+.settings-page textarea:focus,
+.settings-page select:focus {
+  background: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.28) !important;
+}
+
+/* The settings tab panels are card-less â€” no outer border. */
+.settings-page .panel,
+.settings-page .tab-content,
+.settings-page .tabs {
+  border: none !important;
+}
+
+/* Keep the shared .panel rule from boxing the settings panels. */
+.settings-page .panel {
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 body,

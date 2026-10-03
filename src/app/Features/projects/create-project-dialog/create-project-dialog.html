@@ -1,32 +1,56 @@
 <app-modal
-  [isOpen]="isOpen"
-  title="New Project"
+  [isOpen]="isOpen()"
+  [title]="isEditMode ? 'Edit Project' : 'New Project'"
   (closed)="onClose()"
 >
-  <app-loading
-    *ngIf="isCreating"
-    size="sm"
-    label="Creating project..."
-  ></app-loading>
+  @if (isCreating) {
+    <app-loading
+      size="sm"
+      label="Creating project..."
+    ></app-loading>
+  }
 
-  <div class="field" *ngIf="!isCreating">
-    <label for="cp-name">Project name</label>
-    <input type="text" id="cp-name" placeholder="e.g. Website Redesign" />
-  </div>
+  @if (!isCreating) {
+    <div class="field">
+      <label for="cp-name">Project name</label>
+      <input type="text" id="cp-name" [(ngModel)]="name" placeholder="e.g. Website Redesign" />
+    </div>
 
-  <div class="field" *ngIf="!isCreating">
-    <label for="cp-description">Description</label>
-    <textarea id="cp-description" rows="3" placeholder="What is this project about?"></textarea>
-  </div>
+    <div class="field">
+      <label for="cp-description">Description</label>
+      <textarea id="cp-description" rows="3" [(ngModel)]="description" placeholder="What is this project about?"></textarea>
+    </div>
 
-  <div class="field" *ngIf="!isCreating">
-    <label for="cp-due-date">Due date</label>
-    <input type="text" id="cp-due-date" placeholder="e.g. Oct 15" />
-  </div>
+    <div class="field">
+      <label for="cp-status">Status</label>
+      <select id="cp-status" [(ngModel)]="status"><!-- two-way Data Binding (if update the html then auto update the ts ) -->
+        <option value="Active">Active</option>
+        <option value="Completed">Completed</option>
+        <option value="Archived">Archived</option>
+      </select>
+    </div>
 
-  <div class="dialog-actions" *ngIf="!isCreating">
-    <button class="btn-secondary" type="button" (click)="onClose()">Cancel</button>
-    <button class="btn-primary" type="button" (click)="onCreate()">Create Project</button>
-  </div>
+    <div class="field">
+      <label for="cp-due-date">Due date</label>
+      <input
+        type="date"
+        id="cp-due-date"
+        [min]="minimumDueDate"
+        [(ngModel)]="dueDate"
+        (input)="dueDateError = ''"
+      />
+      @if (dueDateError) {
+        <span class="field-error">{{ dueDateError }}</span>
+      }
+    </div>
+
+    <div class="dialog-actions">
+      <button class="btn-secondary" type="button" (click)="onClose()">Cancel</button>
+      <button class="btn-primary" type="button" (click)="onSubmit()"><!-- click event binding
+        (if click the button then call the onSubmit function in ts ) -->
+        {{ isEditMode ? 'Save Changes' : 'Create Project' }}
+      </button>
+    </div>
+  }
 
 </app-modal>

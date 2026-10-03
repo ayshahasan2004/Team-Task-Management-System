@@ -4,25 +4,37 @@
 
 .status-badge {
   display: inline-block;
-  padding: 3px 9px;
+  padding: 4px 10px;
   border-radius: 999px;
-
+  border: 1px solid transparent;
   font-size: 10px;
   font-weight: 700;
+  letter-spacing: 0.03em;
   white-space: nowrap;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15);
 }
 
 .status-badge.to-do {
-  background: var(--status-todo-bg);
-  color: var(--status-todo-text);
+  background: linear-gradient(135deg, #dfe9ff 0%, #cfe2ff 100%);
+  color: #0b5ed7;
+  border-color: #b9d3ff;
 }
 
 .status-badge.in-progress {
-  background: var(--status-in-progress-bg);
-  color: var(--status-in-progress-text);
+  background: linear-gradient(135deg, #dfe9ff 0%, #cfe2ff 100%);
+  color: #0b5ed7;
+  border-color: #b9d3ff;
+}
+
+/* Review sits between In Progress and Done — amber reads as "waiting on someone" */
+.status-badge.review {
+  background: linear-gradient(135deg, #fff4d6 0%, #ffe9ad 100%);
+  color: #8a5300;
+  border-color: #f5d98a;
 }
 
 .status-badge.done {
-  background: var(--status-done-bg);
-  color: var(--status-done-text);
+  background: linear-gradient(135deg, #e3fcef 0%, #c9f0d6 100%);
+  color: #0f8a5f;
+  border-color: #b5eac7;
 }

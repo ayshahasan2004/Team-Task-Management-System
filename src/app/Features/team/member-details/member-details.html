@@ -2,14 +2,14 @@
 
   <div class="details-header">
     <div class="avatar-wrap">
-      <div class="avatar">{{ member.initial }}</div>
-      <span class="status-dot" [class.online]="member.status === 'Online'"></span>
+      <div class="avatar">{{ member().initial }}</div>
+      <span class="status-dot" [class.online]="member().status === 'Online'"></span>
     </div>
 
     <div class="header-text">
-      <h2>{{ member.name }}</h2>
-      <span class="role">{{ member.role }}</span>
-      <span class="email">{{ member.email }}</span>
+      <h2>{{ member().name }}</h2>
+      <span class="role">{{ member().role }}</span>
+      <span class="email">{{ member().email }}</span>
     </div>
 
     <button class="message-btn" type="button">Message</button>
@@ -18,15 +18,17 @@
   <div class="section">
     <h3>Assigned Projects ({{ projects.length }})</h3>
 
-    <div class="project-item" *ngFor="let project of projects">
-      <span class="project-name">{{ project.name }}</span>
-      <div class="progress-row">
-        <div class="progress-track">
-          <div class="progress-fill" [style.width.%]="project.progress"></div>
+    @for (project of projects; track project.name) {
+      <div class="project-item">
+        <span class="project-name">{{ project.name }}</span>
+        <div class="progress-row">
+          <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="project.progress"></div>
+          </div>
+          <span class="progress-value">{{ project.progress }}%</span>
         </div>
-        <span class="progress-value">{{ project.progress }}%</span>
       </div>
-    </div>
+    }
   </div>
 
 </div>

@@ -1,13 +1,34 @@
-:host {
+﻿:host {
   display: block;
 }
 
 * { box-sizing: border-box; }
 
 .team-page {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 24px;
+  isolation: isolate;
+}
+
+.team-page::before {
+  position: absolute;
+  z-index: -1;
+  top: -100px;
+  left: -120px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(54, 179, 126, 0.13), transparent 68%);
+  content: '';
+  pointer-events: none;
+  animation: team-glow 10s ease-in-out infinite alternate;
+}
+
+@keyframes team-glow {
+  from { transform: translate3d(0, 0, 0) scale(0.9); }
+  to   { transform: translate3d(28px, 20px, 0) scale(1.12); }
 }
 
 .page-header {
@@ -24,7 +45,7 @@
   border: 0;
   border-radius: 10px;
   padding: 10px 14px;
-  background: var(--primary);
+  background: var(--primary-solid);
   color: #fff;
   cursor: pointer;
   font: inherit;
@@ -39,9 +60,14 @@
 }
 
 .add-team-button:hover {
-  background: var(--primary-light);
+  background: var(--primary-solid-hover);
   color: var(--primary);
-  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(0, 82, 204, 0.2);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.add-team-button:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .add-team-button:focus-visible {
@@ -56,11 +82,32 @@
 }
 
 .team-group {
-  background: rgba(255, 255, 255, 0.55);
+  position: relative;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.85) 0%, rgba(246, 250, 255, 0.7) 100%);
   border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 8px 24px rgba(26, 58, 45, 0.04);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 28px rgba(23, 42, 82, 0.06);
+  transition: box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+}
+
+.team-group::before {
+  position: absolute;
+  top: 0;
+  left: 22px;
+  right: 22px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), #36b37e, transparent);
+  opacity: 0.5;
+  content: '';
+}
+
+.team-group:hover {
+  border-color: #b9d8f5;
+  box-shadow: 0 18px 40px rgba(23, 42, 82, 0.12);
+  transform: translateY(-3px);
 }
 
 .team-group-header {
@@ -91,7 +138,7 @@
 }
 
 .subtitle {
-  color: #7b8580;
+  color: var(--ink-muted);
   font-size: 12px;
 }
 
@@ -99,4 +146,113 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-page::before {
+    animation: none;
+  }
+  .team-group:hover {
+    transform: none;
+  }
+}
+
+.team-dialog-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.team-dialog-field label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.team-dialog-field input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg-solid);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.team-dialog-field input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.12);
+}
+
+.team-dialog-help {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.team-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.team-cancel-button,
+.team-create-button {
+  min-height: 36px;
+  padding: 0 15px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.team-cancel-button {
+  border: 1px solid var(--border);
+  background: var(--card-bg-solid);
+  color: var(--text-secondary);
+}
+
+.team-create-button {
+  border: 1px solid var(--primary);
+  background: var(--primary-solid);
+  color: #ffffff;
+}
+
+.team-create-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.team-members-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.team-members-fields label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.team-members-fields input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg-solid);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.team-members-fields input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.12);
 }

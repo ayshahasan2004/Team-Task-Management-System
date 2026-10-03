@@ -5,18 +5,29 @@
   </div>
 
   <div class="project-list">
-    <div class="project-item" *ngFor="let project of projects">
-      <div class="project-info">
-        <span class="project-name">{{ project.name }}</span>
-        <span class="project-meta">{{ project.membersCount }} members · Due {{ project.dueDate }}</span>
-      </div>
-
-      <div class="project-progress">
-        <div class="progress-track">
-          <div class="progress-fill" [style.width.%]="project.progress"></div>
+    @for (project of projects(); track project.id) {
+      <div class="project-item">
+        <div class="project-info">
+          <span class="project-name">{{ project.name }}</span>
+          <span class="project-meta">{{ project.membersCount }} members · {{ project.dueDate }}</span>
         </div>
-        <span class="progress-value">{{ project.progress }}%</span>
+
+        <div class="project-progress">
+          <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="project.progress"></div>
+          </div>
+          <span class="progress-value">{{ project.progress }}%</span>
+        </div>
+
+        <button
+          class="details-btn"
+          type="button"
+          title="View project details"
+          (click)="onViewDetails(project.id)"
+        >
+          View details
+        </button>
       </div>
-    </div>
+    }
   </div>
 </div>

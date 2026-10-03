@@ -2,28 +2,35 @@
 
   <div class="page-header">
     <h2>Kanban Board</h2>
-    <span class="subtitle">{{ tasks.length }} tasks total</span>
+    <span class="subtitle">{{ todoTasks().length + inProgressTasks().length + reviewTasks().length + doneTasks().length }} tasks total</span>
   </div>
 
   <div class="board">
     <app-kanban-column
-      title="To Do"
+      title="Todo"
       accentColor="#98a19c"
-      [tasks]="todoTasks"
+      [tasks]="todoTasks()"
       (taskClicked)="onTaskClicked($event)"
     ></app-kanban-column>
 
     <app-kanban-column
       title="In Progress"
       accentColor="#48b4ff"
-      [tasks]="inProgressTasks"
+      [tasks]="inProgressTasks()"
+      (taskClicked)="onTaskClicked($event)"
+    ></app-kanban-column>
+
+    <app-kanban-column
+      title="Review"
+      accentColor="#f5a623"
+      [tasks]="reviewTasks()"
       (taskClicked)="onTaskClicked($event)"
     ></app-kanban-column>
 
     <app-kanban-column
       title="Done"
       accentColor="#0052cc"
-      [tasks]="doneTasks"
+      [tasks]="doneTasks()"
       (taskClicked)="onTaskClicked($event)"
     ></app-kanban-column>
   </div>

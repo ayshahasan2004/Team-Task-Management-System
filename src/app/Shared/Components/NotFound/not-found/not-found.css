@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   position: relative;
   overflow: hidden;
   display: flex;
@@ -82,7 +82,7 @@
   padding: 13px 20px;
   border: 1px solid var(--primary);
   border-radius: 10px;
-  background: var(--primary);
+  background: var(--primary-solid);
   color: #ffffff;
   font-size: 13px;
   font-weight: 700;
@@ -92,7 +92,7 @@
 }
 
 .home-link::before {
-  content: '←';
+  content: 'â†';
   font-size: 17px;
   line-height: 1;
 }

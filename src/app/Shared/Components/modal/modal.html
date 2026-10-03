@@ -1,14 +1,30 @@
-<div class="overlay" *ngIf="isOpen" (click)="onClose()">
-  <div class="dialog" [style.max-width]="maxWidth" (click)="$event.stopPropagation()">
+@if (isOpen()) {
+  <div class="overlay" (click)="onClose()">
+    <div
+      #dialog
+      class="dialog"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="title() ? titleId : null"
+      [attr.aria-label]="title() ? null : 'Dialog'"
+      tabindex="-1"
+      [style.max-width]="maxWidth()"
+      (click)="$event.stopPropagation()"
+    >
 
-    <div class="dialog-header" *ngIf="title">
-      <h3>{{ title }}</h3>
-      <button class="close-btn" type="button" (click)="onClose()">✕</button>
+      @if (title()) {
+        <div class="dialog-header">
+          <h3 [id]="titleId">{{ title() }}</h3>
+          <button class="close-btn" type="button" aria-label="Close dialog" (click)="onClose()">
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+      }
+
+      <div class="dialog-body">
+        <ng-content></ng-content>
+      </div>
+
     </div>
-
-    <div class="dialog-body">
-      <ng-content></ng-content>
-    </div>
-
   </div>
-</div>
+}

@@ -1,24 +1,61 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { TaskService } from '../../../Core/services/task.service';
+import { TaskStatus, TaskPriority } from '../../../Core/models/task.model';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule],
   selector: 'app-create-task-dialog',
-  styleUrl: './create-task-dialog.css',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './create-task-dialog.html',
+  styleUrl: './create-task-dialog.css',
 })
 export class CreateTaskDialog {
-  @Input() isOpen = false;
+  readonly isOpen = input(false);
+  readonly closed = output<void>();
+  readonly created = output<void>();
 
-  @Output() closed = new EventEmitter<void>();
-  @Output() created = new EventEmitter<void>();
+  private taskService = inject(TaskService);
 
-  onClose() {
+  // form fields — plain properties + ngModel, since Reactive Forms
+  // is a later phase (per your original roadmap, Sprint 3/Phase 5)
+  title = '';
+  description = '';
+  status: TaskStatus = 'Todo';
+  priority: TaskPriority = 'Medium';
+  dueDate = '';
+
+  submit(): void {
+    if (!this.title.trim()) return; // minimal guard for now
+
+    const dueDate = this.dueDate ? new Date(`${this.dueDate}T00:00:00`) : null;
+
+    this.taskService.create({
+      projectId: 'p1', // hardcoded until a project-picker exists
+      title: this.title,
+      description: this.description,
+      status: this.status,
+      priority: this.priority,
+      assigneeId: null,
+      dueDate,
+      tags: [],
+    });
+
+    this.resetForm();
+    this.created.emit();
+  }
+
+  cancel(): void {
+    this.resetForm();
     this.closed.emit();
   }
 
-  onCreate() {
-    this.created.emit();
+  private resetForm(): void {
+    this.title = '';
+    this.description = '';
+    this.status = 'Todo';
+    this.priority = 'Medium';
+    this.dueDate = '';
   }
 }

@@ -1,14 +1,27 @@
 <div class="dashboard">
 
+  <div class="page-header">
+    <div>
+      <span class="eyebrow">Overview</span>
+      <h2>Dashboard</h2>
+      <span class="subtitle">Here is what is happening across your workspace today.</span>
+    </div>
+    <span class="header-chip">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      Live
+    </span>
+  </div>
+
   <div class="stats-grid">
-    <app-stat-card
-      *ngFor="let stat of stats"
-      [label]="stat.label"
-      [value]="stat.value"
-      [icon]="stat.icon"
-      [trend]="stat.trend"
-      [trendPositive]="stat.trendPositive"
-    ></app-stat-card>
+    @for (stat of stats(); track stat.label) {
+      <app-stat-card
+        [label]="stat.label"
+        [value]="stat.value"
+        [icon]="stat.icon"
+        [trend]="stat.trend"
+        [trendPositive]="stat.trendPositive"
+      ></app-stat-card>
+    }
   </div>
 
   <div class="middle-grid">

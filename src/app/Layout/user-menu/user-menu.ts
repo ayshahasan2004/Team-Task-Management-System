@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -19,16 +19,16 @@ export class UserMenu {
   constructor(private router: Router) {}
 
   // Passed down from Header (parent -> child communication)
-  @Input() user: MockUser = {
+  readonly user = input<MockUser>({
     name: 'Aysha',
     email: 'aysha@taskflow.dev',
     avatarInitial: 'A',
-  };
+  });
 
-  @Input() isOpen = false;
+  readonly isOpen = input(false);
 
   // Bubbled up to Header (child -> parent communication)
-  @Output() logoutClicked = new EventEmitter<void>();
+  readonly logoutClicked = output<void>();
 
   onSettings() {
     this.router.navigate(['/settings']);

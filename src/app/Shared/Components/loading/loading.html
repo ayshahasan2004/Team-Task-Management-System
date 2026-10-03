@@ -1,4 +1,6 @@
-<div class="loading-wrap" [class.full-page]="fullPage">
-  <div class="spinner" [class]="size"></div>
-  <span class="label" *ngIf="label">{{ label }}</span>
+<div class="loading-wrap" [class.full-page]="fullPage()">
+  <div class="spinner" [class]="size()"></div>
+  @if (label()) {
+    <span class="label">{{ label() }}</span>
+  }
 </div>
