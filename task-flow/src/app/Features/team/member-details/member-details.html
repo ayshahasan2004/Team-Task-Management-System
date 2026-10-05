@@ -1,24 +1,24 @@
+@if (member(); as memberInfo) {
 <div class="member-details">
 
   <div class="details-header">
     <div class="avatar-wrap">
-      <div class="avatar">{{ member().initial }}</div>
-      <span class="status-dot" [class.online]="member().status === 'Online'"></span>
+      <div class="avatar">{{ memberInfo.initial }}</div>
+      <span class="status-dot" [class.online]="memberInfo.status === 'Online'"></span>
     </div>
 
     <div class="header-text">
-      <h2>{{ member().name }}</h2>
-      <span class="role">{{ member().role }}</span>
-      <span class="email">{{ member().email }}</span>
+      <h2>{{ memberInfo.name }}</h2>
+      <span class="role">{{ memberInfo.role }}</span>
+      <span class="email">{{ memberInfo.email }}</span>
     </div>
 
-    <button class="message-btn" type="button">Message</button>
   </div>
 
   <div class="section">
-    <h3>Assigned Projects ({{ projects.length }})</h3>
+    <h3>Assigned Projects ({{ projects().length }})</h3>
 
-    @for (project of projects; track project.name) {
+    @for (project of projects(); track project.name) {
       <div class="project-item">
         <span class="project-name">{{ project.name }}</span>
         <div class="progress-row">
@@ -32,3 +32,9 @@
   </div>
 
 </div>
+} @else {
+  <div class="member-details">
+    <h2>Member not found</h2>
+    <p>This member may have been removed or the link is invalid.</p>
+  </div>
+}

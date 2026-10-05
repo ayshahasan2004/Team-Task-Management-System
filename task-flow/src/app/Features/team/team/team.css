@@ -192,6 +192,12 @@
   font-size: 11px;
 }
 
+.team-dialog-error {
+  margin: 10px 0 0;
+  color: #b42318;
+  font-size: 12px;
+}
+
 .team-dialog-actions {
   display: flex;
   justify-content: flex-end;
@@ -225,6 +231,11 @@
 .team-create-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.team-cancel-button:disabled {
+  opacity: 0.5;
+  cursor: wait;
 }
 
 .team-members-fields {

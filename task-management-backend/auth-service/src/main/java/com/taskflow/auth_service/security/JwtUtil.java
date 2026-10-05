@@ -1,6 +1,8 @@
 package com.taskflow.auth_service.security;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -9,12 +11,13 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-  // بمشروع حقيقي، هاد السر لازم يكون بـ application.properties أو environment variable، مش مكتوب هون مباشرة
-  private static final String SECRET = "ChangeThisToALongRandomSecretKeyAtLeast256BitsForHS256!!";
-  private static final long EXPIRATION_MS = 1000 * 60 * 60 * 24; // 24 ساعة
+  @Value("${jwt.secret}")
+  private String secret;
+
+  private static final long EXPIRATION_MS = 1000 * 60 * 60 * 24;
 
   private SecretKey getSigningKey() {
-    return Keys.hmacShaKeyFor(SECRET.getBytes());
+    return Keys.hmacShaKeyFor(secret.getBytes());
   }
 
   public String generateToken(String userId, String email) {

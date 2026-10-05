@@ -8,9 +8,18 @@
       <app-task-status-badge [status]="taskItem.status"></app-task-status-badge>
     </div>
     @if (!isEditing) {
-      <button class="edit-btn" type="button" (click)="startEditing()">Edit Task</button>
+      <div class="header-actions">
+        <button class="edit-btn" type="button" (click)="startEditing()">Edit Task</button>
+        <button class="delete-btn" type="button" [disabled]="isDeleting" (click)="deleteTask(taskItem.id)">
+          {{ isDeleting ? 'Deleting...' : 'Delete Task' }}
+        </button>
+      </div>
     }
   </div>
+
+  @if (deleteError) {
+    <p class="delete-error" role="alert">{{ deleteError }}</p>
+  }
 
   @if (isEditing) {
   <form class="edit-form" (ngSubmit)="saveChanges()">

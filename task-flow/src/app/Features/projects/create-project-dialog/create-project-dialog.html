@@ -44,6 +44,10 @@
       }
     </div>
 
+    @if (saveError) {
+      <span class="field-error" role="alert">{{ saveError }}</span>
+    }
+
     <div class="dialog-actions">
       <button class="btn-secondary" type="button" (click)="onClose()">Cancel</button>
       <button class="btn-primary" type="button" (click)="onSubmit()"><!-- click event binding

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TeamFlow — Connecting Backend to Frontend</title>
+<style>
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 11pt; line-height: 1.5; color: #1a1a2e; margin: 40px; }
+  h1 { font-size: 22pt; color: #4f46e5; border-bottom: 3px solid #4f46e5; padding-bottom: 8px; }
+  h2 { font-size: 15pt; color: #312e81; margin-top: 28px; border-bottom: 1px solid #c7d2fe; padding-bottom: 4px; }
+  h3 { font-size: 12pt; color: #4338ca; margin-top: 20px; }
+  code { font-family: Consolas, "Courier New", monospace; background: #eef2ff; padding: 1px 4px; border-radius: 3px; font-size: 9.5pt; }
+  pre { background: #0f172a; color: #e2e8f0; padding: 12px; border-radius: 6px; font-size: 9pt; overflow-x: auto; font-family: Consolas, monospace; }
+  pre code { background: none; color: inherit; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 9.5pt; }
+  th, td { border: 1px solid #a5b4fc; padding: 6px 8px; text-align: left; }
+  th { background: #e0e7ff; color: #312e81; }
+  .file { font-family: Consolas, monospace; font-size: 9pt; color: #6d28d9; }
+  .note { background: #fef9c3; border-left: 4px solid #eab308; padding: 8px 12px; margin: 12px 0; }
+  .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<h1>TeamFlow — How the Backend Is Connected to the Frontend</h1>
+<p><b>Project:</b> Team Task Management System &nbsp;|&nbsp; <b>Frontend:</b> Angular 20 (<span class="file">task-flow</span>) &nbsp;|&nbsp; <b>Backend:</b> Spring Boot microservices (<span class="file">task-management-backend</span>)</p>
+
+<h2>1. System Overview</h2>
+<table>
+<tr><th>Component</th><th>Technology</th><th>Port</th><th>Role</th></tr>
+<tr><td>auth-service</td><td>Spring Boot, PostgreSQL (<code>auth_db</code>)</td><td>8081</td><td>Signup / login, issues JWT tokens</td></tr>
+<tr><td>core-service</td><td>Spring Boot, PostgreSQL (<code>core_db</code>)</td><td>8082</td><td>Projects, tasks, members, activity</td></tr>
+<tr><td>task-flow</td><td>Angular (signals, HttpInterceptor)</td><td>4200</td><td>Web UI, calls both services via HTTP</td></tr>
+</table>
+
+<h3>Request flow</h3>
+<pre><code>Browser (Angular, :4200)
+   │  1. POST /api/auth/login            ──►  auth-service (:8081)  → returns JWT
+   │  2. Angular stores token in localStorage
+   │  3. Every /api/* request ─ authInterceptor adds  Authorization: Bearer &lt;token&gt;
+   ▼
+core-service (:8082) ─ JwtAuthFilter validates the JWT ─► Controller ─► Service ─► Repository ─► PostgreSQL
+</code></pre>
+
+<h2>2. Step-by-step files used to make the connection</h2>
+
+<h3>Step 1 — Define the backend URLs in the Angular environment</h3>
+<p><span class="file">task-flow/src/environments/environment.ts</span> — single place where all API base URLs live.</p>
+<pre><code>export const environment = {
+  production: false,
+  authApiUrl: 'http://localhost:8081/api/auth',
+  coreApiUrl: 'http://localhost:8082/api',
+};</code></pre>
+
+<h3>Step 2 — Configure the HttpClient + interceptor in Angular</h3>
+<p><span class="file">task-flow/src/app/app.config.ts</span> — registers the HTTP client and attaches <code>authInterceptor</code> globally.</p>
+<pre><code>providers: [
+  provideRouter(routes),
+  provideHttpClient(withInterceptors([authInterceptor])),
+],</code></pre>
+
+<h3>Step 3 — Attach the JWT to every outgoing request</h3>
+<p><span class="file">task-flow/src/app/Core/interceptors/auth.interceptor.ts</span> — clones the request and adds the <code>Authorization: Bearer</code> header for all core-service calls.</p>
+<pre><code>export const authInterceptor: HttpInterceptorFn = (req, next) =&gt; {
+  const authService = inject(AuthService);
+  if (req.url.startsWith(environment.coreApiUrl)) {
+    const token = authService.token();
+    if (token) {
+      return next(req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }));
+    }
+  }
+  return next(req);
+};</code></pre>
+
+<h3>Step 4 — Login / signup and store the session (frontend)</h3>
+<p><span class="file">task-flow/src/app/Core/services/auth.service.ts</span> — POSTs to the auth-service and saves the returned JWT in <code>localStorage</code> (keys <code>token</code> and <code>user</code>), exposed through Angular signals.</p>
+<ul>
+  <li><code>login()</code> → <code>POST {authApiUrl}/login</code> with <code>{ email, password }</code></li>
+  <li><code>signup()</code> → <code>POST {authApiUrl}/signup</code> with <code>{ fullName, email, password }</code></li>
+  <li><code>saveSession()</code> stores token + user; <code>logout()</code> clears them and redirects to <code>/login</code></li>
+</ul>
+<p><span class="file">task-flow/src/app/Core/guards/auth.guard.ts</span> — blocks protected routes when there is no token, redirecting to <code>/login</code>. Wired in <span class="file">task-flow/src/app/app.routes.ts</span>.</p>
+
+<h3>Step 5 — Backend auth endpoints + JWT generation</h3>
+<p><span class="file">task-management-backend/auth-service/.../security/SecurityConfig.java</span></p>
+<pre><code>.sessionManagement(sm -&gt; sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+.authorizeHttpRequests(auth -&gt; auth
+  .requestMatchers("/api/auth/**").permitAll()   // login/signup are public
+  .anyRequest().authenticated())
+.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);</code></pre>
+<p><span class="file">task-management-backend/auth-service/.../service/AuthService.java</span> — hashes passwords with BCrypt, validates login, and calls <code>jwtUtil.generateToken(userId, email)</code>. Returns <code>AuthResponse { token, userId, fullName, email }</code> — exactly the shape the Angular <code>AuthService</code> expects.</p>
+<p><span class="file">task-management-backend/auth-service/.../security/JwtUtil.java</span> — signs an HS256 token (24 h expiry) with <code>${JWT_SECRET}</code> from <span class="file">application.properties</span>.</p>
+
+<h3>Step 6 — Validate the JWT on the core-service</h3>
+<p><span class="file">task-management-backend/core-service/.../security/JwtAuthFilter.java</span> — reads the <code>Authorization: Bearer</code> header sent by the Angular interceptor, verifies it with the same <code>${JWT_SECRET}</code>, and puts the userId into the Spring Security context.</p>
+<p><span class="file">task-management-backend/core-service/.../security/SecurityConfig.java</span> — stateless sessions; <b>every</b> request to core-service must be authenticated.</p>
+<div class="note"><b>Key point:</b> both services must use the same <code>jwt.secret</code> environment variable, otherwise core-service rejects tokens issued by auth-service.</div>
+
+<h3>Step 7 — Allow the browser to call another port (CORS)</h3>
+<p><span class="file">task-management-backend/auth-service/.../security/CorsConfig.java</span> and <span class="file">task-management-backend/core-service/.../security/CorsConfig.java</span> — both allow the Angular dev server origin:</p>
+<pre><code>registry.addMapping("/api/**")
+  .allowedOrigins("http://localhost:4200")   // Angular port
+  .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE")
+  .allowedHeaders("*");</code></pre>
+
+<h3>Step 8 — Expose the REST API in the backend</h3>
+<p>Controllers under <span class="file">task-management-backend/core-service/.../</span>:</p>
+<table>
+<tr><th>Endpoint</th><th>File</th></tr>
+<tr><td><code>GET/POST /api/projects</code>, <code>PUT/DELETE /api/projects/{id}</code>, <code>POST/DELETE /api/projects/{id}/members/{memberId}</code></td><td class="file">project/ProjectController.java</td></tr>
+<tr><td><code>GET/POST /api/tasks</code>, <code>PUT/DELETE /api/tasks/{id}</code>, <code>PATCH /api/tasks/{id}/status</code></td><td class="file">task/TaskController.java</td></tr>
+<tr><td><code>GET/POST /api/members</code>, <code>PUT/DELETE /api/members/{id}</code></td><td class="file">member/MemberController.java</td></tr>
+<tr><td><code>GET/POST /api/activity</code></td><td class="file">activity/ActivityController.java</td></tr>
+</table>
+<p>Business logic lives in the matching <code>*Service.java</code>, persistence in the <code>*Repository.java</code> (Spring Data JPA) and entities like <span class="file">Task.java</span>, <span class="file">Project.java</span>, <span class="file">Member.java</span>, <span class="file">Activity.java</span>. Errors are handled by <span class="file">exception/GlobalExceptionHandler.java</span>, which returns <code>400 { "error": "..." }</code> for <code>IllegalArgumentException</code> (e.g. duplicate email).</p>
+
+<h3>Step 9 — Call the API from Angular services (frontend)</h3>
+<p>Each Angular service in <span class="file">task-flow/src/app/Core/services/</span> maps its local model to the backend JSON shape (enum values differ: backend uses <code>TODO/IN_PROGRESS/REVIEW/DONE</code>, frontend uses <code>Todo/In Progress/Review/Done</code>):</p>
+<table>
+<tr><th>Angular service</th><th>Backend endpoint</th><th>Notes</th></tr>
+<tr><td class="file">project.service.ts</td><td><code>/api/projects</code></td><td>Optimistic create with rollback on error; maps ACTIVE/COMPLETED/ARCHIVED ↔ Active/Completed/Archived</td></tr>
+<tr><td class="file">task.service.ts</td><td><code>/api/tasks</code></td><td>Optimistic create/update; <code>mapTaskStatus()</code> / <code>mapPriority()</code> convert enums; due dates sent as <code>yyyy-MM-dd</code></td></tr>
+<tr><td class="file">member.service.ts</td><td><code>/api/members</code></td><td>Groups members by <code>teamName</code>; maps ONLINE/OFFLINE ↔ Online/Offline</td></tr>
+<tr><td class="file">activity.service.ts</td><td><code>/api/activity</code></td><td>Optimistic add, replaced by server copy on success</td></tr>
+</table>
+<p>Each service also contains an <code>effect()</code> that re-fetches data automatically when the auth token changes (login → load, logout → clear).</p>
+
+<h2>3. How to run everything</h2>
+<pre><code># 1. PostgreSQL must be running with databases auth_db and core_db
+
+# 2. Set environment variables (PowerShell):
+$env:DB_PASSWORD = "your-postgres-password"
+$env:JWT_SECRET  = "a-long-secret-key-at-least-32-chars"
+
+# 3. Start the backends:
+cd task-management-backend\auth-service ; .\mvnw spring-boot:run   # port 8081
+cd task-management-backend\core-service ; .\mvnw spring-boot:run   # port 8082
+
+# 4. Start the frontend:
+cd task-flow ; npm install ; npm start    # http://localhost:4200</code></pre>
+
+<h2>4. Verification checklist</h2>
+<ul>
+<li>Signup at <code>http://localhost:4200/signup</code> → user saved in <code>auth_db</code>, JWT returned.</li>
+<li>Login redirects to dashboard; <code>localStorage.token</code> contains the JWT.</li>
+<li>Dashboard/tasks pages show data from <code>core_db</code> (Authorization header present in DevTools → Network).</li>
+<li>Creating a task/project persists after page refresh (data comes from PostgreSQL, not local mocks).</li>
+<li>Calling core-service without a token returns <code>401/403</code>.</li>
+</ul>
+
+</body>
+</html>

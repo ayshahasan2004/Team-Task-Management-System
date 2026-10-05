@@ -9,7 +9,40 @@
         <circle cx="11" cy="11" r="7" />
         <path d="M20 20l-3.5-3.5" />
       </svg>
-      <input type="text" placeholder="Search projects, tasks, people" aria-label="Search" />
+      <input
+        type="search"
+        placeholder="Search projects, tasks, people"
+        aria-label="Search projects, tasks, people"
+        autocomplete="off"
+        [value]="searchQuery()"
+        [attr.aria-expanded]="showSearchResults()"
+        [attr.aria-controls]="showSearchResults() ? 'global-search-results' : null"
+        (input)="onSearchInput($event)"
+        (focus)="isSearchFocused.set(true)"
+        (blur)="isSearchFocused.set(false)"
+        (keydown)="onSearchKeydown($event)"
+      />
+      @if (showSearchResults()) {
+        <div id="global-search-results" class="search-results" role="listbox" aria-label="Search results">
+          @for (result of searchResults(); track result.type + result.id) {
+            <button
+              class="search-result"
+              type="button"
+              role="option"
+              (mousedown)="$event.preventDefault()"
+              (click)="openSearchResult(result)"
+            >
+              <span class="search-result-type">{{ result.type }}</span>
+              <span class="search-result-content">
+                <span class="search-result-title">{{ result.title }}</span>
+                <span class="search-result-detail">{{ result.detail }}</span>
+              </span>
+            </button>
+          } @empty {
+            <div class="search-empty" role="status">No matching projects, tasks, or people.</div>
+          }
+        </div>
+      }
     </div>
 
     <button class="icon-button" type="button" aria-label="Notifications">

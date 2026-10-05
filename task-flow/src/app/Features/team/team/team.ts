@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MemberCard } from '../member-card/member-card';
 import { Member, TeamGroup } from '../../../Core/models/member.model';
 import { MemberService } from '../../../Core/services/member.service';
+import { ActivityService } from '../../../Core/services/activity.service';
+import { AuthService } from '../../../Core/services/auth.service';
 import { Search } from '../../../Shared/Components/search/search';
 import { Pagination } from '../../../Shared/Components/pagination/pagination';
 import { EmptyState } from '../../../Shared/Components/empty-state/empty-state';
@@ -19,16 +21,27 @@ import { Modal } from '../../../Shared/Components/modal/modal';
 })
 export class Team {
   private memberService = inject(MemberService);
+  private activityService = inject(ActivityService);
+  private authService = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   searchTerm = '';
   currentPage = 1;
   readonly pageSize = 4;
   isAddTeamOpen = false;
+  isCreatingTeam = false;
+  teamCreateError = '';
   newTeamName = '';
   newMemberNames = ['', '', ''];
 
   teamGroups = this.memberService.teamGroups;
+
+  constructor() {
+    this.route.queryParamMap.subscribe(params => {
+      this.onSearchChanged(params.get('search') ?? '');
+    });
+  }
 
   get members(): Member[] {
     return this.memberService.members();
@@ -86,11 +99,14 @@ export class Team {
   openAddTeam(): void {
     this.newTeamName = '';
     this.newMemberNames = ['', '', ''];
+    this.teamCreateError = '';
     this.isAddTeamOpen = true;
   }
 
   closeAddTeam(): void {
     this.isAddTeamOpen = false;
+    this.isCreatingTeam = false;
+    this.teamCreateError = '';
     this.newTeamName = '';
     this.newMemberNames = ['', '', ''];
   }
@@ -103,15 +119,30 @@ export class Team {
       return;
     }
 
-    this.memberService.addTeam(name, memberNames.map((memberName, index) => ({
+    this.isCreatingTeam = true;
+    this.teamCreateError = '';
+    this.memberService.addTeam(name, memberNames.map(memberName => ({
       name: memberName,
-      initial: memberName.charAt(0).toUpperCase(),
+      initial: memberName.split(/\s+/).slice(0, 2).map(part => part.charAt(0)).join('').toUpperCase(),
       role: 'Team member',
       email: `${memberName.toLowerCase().replace(/\s+/g, '.')}@taskflow.dev`,
+      teamName: name,
       projectsCount: 0,
       status: 'Online',
-    })));
-    this.closeAddTeam();
+    }))).subscribe({
+      next: () => {
+        const userId = this.authService.currentUser()?.userId;
+        if (userId) {
+          this.activityService.add(userId, `created team "${name}"`);
+        }
+        this.currentPage = 1;
+        this.closeAddTeam();
+      },
+      error: () => {
+        this.isCreatingTeam = false;
+        this.teamCreateError = 'Could not create the team. Check that member emails are unique, then try again.';
+      },
+    });
   }
 
   get canCreateTeam(): boolean {
