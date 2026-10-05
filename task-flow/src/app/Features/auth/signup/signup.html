@@ -2,25 +2,28 @@
   <div class="card">
     <h2>Create account</h2>
 
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+
+    <div class="field">
+      <label for="su-name">Full name</label>
+      <input type="text" id="su-name" placeholder="Your name" [(ngModel)]="fullName" />
+    </div>
+
     <div class="field">
       <label for="su-email">Email</label>
-      <input type="email" id="su-email" placeholder="you@example.com" />
+      <input type="email" id="su-email" placeholder="you@example.com" [(ngModel)]="email" />
     </div>
 
     <div class="field">
       <label for="su-password">Password</label>
-      <input type="password" id="su-password" placeholder="Create a password" />
+      <input type="password" id="su-password" placeholder="Create a password" [(ngModel)]="password" />
     </div>
 
-    <button class="btn-primary" type="button">Sign up</button>
-
-    <div class="divider">OR</div>
-
-    <div class="socials">
-      <a href="#" aria-label="Continue with Google">G</a>
-      <a href="#" aria-label="Continue with Facebook">f</a>
-      <a href="#" aria-label="Continue with LinkedIn">in</a>
-    </div>
+    <button class="btn-primary" type="button" [disabled]="loading()" (click)="onSubmit()">
+      {{ loading() ? 'Creating account...' : 'Sign up' }}
+    </button>
 
     <p class="switch">Already a user?<a routerLink="/login">Log in</a></p>
   </div>

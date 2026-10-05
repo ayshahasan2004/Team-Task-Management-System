@@ -19,6 +19,10 @@ public class ActivityService {
   }
 
   public Activity log(String memberId, String text) {
-    return activityRepository.save(new Activity(memberId, text));
+    return log(memberId, text, null);
+  }
+
+  public Activity log(String memberId, String text, String memberName) {
+    return activityRepository.save(new Activity(memberId, text, memberName));
   }
 }

@@ -1,6 +1,9 @@
-import { Component, input } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Member } from '../../../Core/models/member.model';
+import { ActivatedRoute } from '@angular/router';
+import { MemberService } from '../../../Core/services/member.service';
+import { ProjectService } from '../../../Core/services/project.service';
+import { TaskService } from '../../../Core/services/task.service';
 
 interface MemberProject {
   name: string;
@@ -14,22 +17,37 @@ interface MemberProject {
   styleUrl: './member-details.css',
   templateUrl: './member-details.html',
 })
-export class MemberDetails {
-  // Phase 1 — mock fallback, real wiring (route param / service) comes later
-  readonly member = input<Member>({
-    id: 'member-1',
-    name: 'Aysha',
-    initial: 'A',
-    role: 'Frontend Developer',
-    email: 'aysha@taskflow.dev',
-    projectsCount: 3,
-    status: 'Online',
+export class MemberDetails implements OnInit {
+  private route = inject(ActivatedRoute);
+  private memberService = inject(MemberService);
+  private projectService = inject(ProjectService);
+  private taskService = inject(TaskService);
+  private memberId = signal<string | null>(null);
+
+  readonly member = computed(() => {
+    const id = this.memberId();
+    return id ? this.memberService.getById(id) ?? null : null;
   });
 
-  // Phase 1 — static mock data
-  projects: MemberProject[] = [
-    { name: 'Website Redesign', progress: 72 },
-    { name: 'Mobile App Launch', progress: 45 },
-    { name: 'API Migration', progress: 90 },
-  ];
+  readonly projects = computed<MemberProject[]>(() => {
+    const memberId = this.memberId();
+    if (!memberId) {
+      return [];
+    }
+
+    return this.projectService.projects()
+      .filter(project => project.memberIds.includes(memberId))
+      .map(project => {
+        const tasks = this.taskService.getByProject(project.id);
+        const completedTasks = tasks.filter(task => task.status === 'Done').length;
+        return {
+          name: project.name,
+          progress: tasks.length ? Math.round((completedTasks / tasks.length) * 100) : 0,
+        };
+      });
+  });
+
+  ngOnInit(): void {
+    this.memberId.set(this.route.snapshot.paramMap.get('id'));
+  }
 }

@@ -100,6 +100,40 @@
   transform: translateY(-1px);
 }
 
+.header-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.delete-btn {
+  min-height: 38px;
+  padding: 0 16px;
+  border: 1px solid #f1b8b4;
+  border-radius: 9px;
+  background: #fff8f7;
+  color: #b42318;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delete-btn:hover:not(:disabled) {
+  background: #fef0ee;
+}
+
+.delete-btn:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.delete-error {
+  margin: 0;
+  color: #b42318;
+  font-size: 13px;
+}
+
 .description {
   margin: 0;
   color: var(--ink-muted);
@@ -311,8 +345,14 @@
     flex-direction: column;
   }
 
-  .edit-btn {
+  .header-actions,
+  .edit-btn,
+  .delete-btn {
     width: 100%;
+  }
+
+  .header-actions {
+    flex-direction: column;
   }
 
   .edit-form,

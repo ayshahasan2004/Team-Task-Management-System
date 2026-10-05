@@ -6,6 +6,7 @@ export interface Member {
   initial: string;
   role: string;
   email: string;
+  teamName?: string;
   projectsCount: number;
   status: MemberStatus;
 }

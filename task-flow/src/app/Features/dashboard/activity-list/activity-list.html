@@ -5,10 +5,10 @@
 
   @for (activity of activities(); track activity.id) {
     <div class="activity-item">
-      <div class="avatar">{{ activity.member?.initial || '?' }}</div>
+      <div class="avatar">{{ activity.memberInitial }}</div>
 
       <div class="activity-body">
-        <span class="activity-text">{{ activity.member?.name || 'A team member' }} {{ activity.text }}</span>
+        <span class="activity-text">{{ activity.memberName }} {{ activity.text }}</span>
         <span class="activity-time">{{ activity.time }}</span>
       </div>
     </div>

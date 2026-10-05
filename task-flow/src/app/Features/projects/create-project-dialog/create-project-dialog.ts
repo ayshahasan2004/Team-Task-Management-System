@@ -27,6 +27,7 @@ export class CreateProjectDialog implements OnChanges {
   status: ProjectStatus = 'Active';
   dueDate = '';
   dueDateError = '';
+  saveError = '';
   isCreating = false;
 
   get minimumDueDate(): string {
@@ -44,6 +45,7 @@ export class CreateProjectDialog implements OnChanges {
         this.status = editingProject.status;
         this.dueDate = editingProject.dueDate ? this.toDateInputValue(editingProject.dueDate) : '';
         this.dueDateError = '';
+        this.saveError = '';
       } else if (this.isOpen()) {
         this.resetForm();// If the dialog is opened for creating a new project, reset the form fields
       }
@@ -60,7 +62,7 @@ export class CreateProjectDialog implements OnChanges {
   }
 
   onSubmit() {
-    if (!this.name.trim()) {// Validate that the name field is not empty
+    if (!this.name.trim()) {
       return;
     }
 
@@ -70,30 +72,40 @@ export class CreateProjectDialog implements OnChanges {
     }
 
     this.dueDateError = '';
-
+    this.saveError = '';
     this.isCreating = true;
 
-    if (this.editingProject()) {// If editingProject is provided, update the existing project
-      this.projectService.update(this.editingProject()!.id, {// Update the project using the ProjectService
+    const dueDate = this.dueDate ? new Date(`${this.dueDate}T00:00:00`) : null;
+    if (this.editingProject()) {
+      this.projectService.update(this.editingProject()!.id, {
         name: this.name.trim(),
         description: this.description.trim(),
         status: this.status,
-        dueDate: this.dueDate ? new Date(`${this.dueDate}T00:00:00`) : null,
+        dueDate,
       });
-    } else {
-      this.projectService.create({// If no editingProject is provided, create a new project
-        name: this.name.trim(),
-        description: this.description.trim(),
-        status: this.status,
-        memberIds: [],
-        dueDate: this.dueDate ? new Date(`${this.dueDate}T00:00:00`) : null,
-      });
+      this.completeSave();
+      return;
     }
 
-    this.resetForm();// Reset form fields after submission
+    this.projectService.create({
+      name: this.name.trim(),
+      description: this.description.trim(),
+      status: this.status,
+      memberIds: [],
+      dueDate,
+    }).subscribe({
+      next: () => this.completeSave(),
+      error: () => {
+        this.isCreating = false;
+        this.saveError = 'Project could not be saved. Please try again.';
+      },
+    });
+  }
+
+  private completeSave(): void {
+    this.resetForm();
     this.isCreating = false;
-    this.saved.emit();// Emit the saved event to notify the parent
-    //// component that a project has been created or updated
+    this.saved.emit();
   }
 
   private resetForm(): void {
@@ -102,6 +114,7 @@ export class CreateProjectDialog implements OnChanges {
     this.status = 'Active';
     this.dueDate = '';
     this.dueDateError = '';
+    this.saveError = '';
   }
 
   private toDateInputValue(date: Date): string {

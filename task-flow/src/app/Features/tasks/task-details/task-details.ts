@@ -1,7 +1,7 @@
 import { Component, OnInit, computed, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TaskStatusBadge } from '../task-status-badge/task-status-badge';
 import { Task, TaskPriority, TaskStatus } from '../../../Core/models/task.model';
 import { TaskService } from '../../../Core/services/task.service';
@@ -18,6 +18,7 @@ export class TaskDetails implements OnInit {
 
   readonly taskService = inject(TaskService);
   private route = inject(ActivatedRoute, { optional: true });
+  private router = inject(Router);
 
   // The route's task id, as a signal so the view stays reactive to edits.
   private readonly routeTaskId = signal<string | null>(null);
@@ -37,6 +38,8 @@ export class TaskDetails implements OnInit {
   status: TaskStatus = 'Todo';
   priority: TaskPriority = 'Medium';
   dueDate = '';
+  isDeleting = false;
+  deleteError = '';
 
   readonly statuses: TaskStatus[] = ['Todo', 'In Progress', 'Review', 'Done'];
   readonly priorities: TaskPriority[] = ['Low', 'Medium', 'High'];
@@ -80,6 +83,22 @@ export class TaskDetails implements OnInit {
 
   cancelEditing(): void {
     this.isEditing = false;
+  }
+
+  deleteTask(taskId: string): void {
+    if (!confirm('Delete this task? This cannot be undone.')) {
+      return;
+    }
+
+    this.isDeleting = true;
+    this.deleteError = '';
+    this.taskService.delete(taskId).subscribe({
+      next: () => this.router.navigate(['/tasks']),
+      error: () => {
+        this.isDeleting = false;
+        this.deleteError = 'Task could not be deleted. Please try again.';
+      },
+    });
   }
 
   private toDateInputValue(date: Date): string {

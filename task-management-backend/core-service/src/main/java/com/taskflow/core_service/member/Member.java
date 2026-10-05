@@ -17,6 +17,8 @@ public class Member {
 
   private String role;
 
+  private String teamName;
+
   @Column(unique = true)
   private String email;
 
@@ -39,6 +41,8 @@ public class Member {
   public void setInitial(String initial) { this.initial = initial; }
   public String getRole() { return role; }
   public void setRole(String role) { this.role = role; }
+  public String getTeamName() { return teamName; }
+  public void setTeamName(String teamName) { this.teamName = teamName; }
   public String getEmail() { return email; }
   public void setEmail(String email) { this.email = email; }
   public MemberStatus getStatus() { return status; }

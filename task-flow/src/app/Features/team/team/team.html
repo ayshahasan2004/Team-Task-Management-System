@@ -66,6 +66,7 @@
         type="text"
         [(ngModel)]="newTeamName"
         placeholder="e.g. Design Team"
+        [disabled]="isCreatingTeam"
         (keyup.enter)="addTeam()"
       />
     </div>
@@ -77,16 +78,21 @@
           type="text"
           [(ngModel)]="newMemberNames[$index]"
           [placeholder]="'Member ' + ($index + 1) + ' name'"
+          [disabled]="isCreatingTeam"
         />
       }
     </div>
 
     <p class="team-dialog-help">Enter three members for this team.</p>
 
+    @if (teamCreateError) {
+      <p class="team-dialog-error" role="alert">{{ teamCreateError }}</p>
+    }
+
     <div class="team-dialog-actions">
-      <button class="team-cancel-button" type="button" (click)="closeAddTeam()">Cancel</button>
-      <button class="team-create-button" type="button" [disabled]="!canCreateTeam" (click)="addTeam()">
-        Create team
+      <button class="team-cancel-button" type="button" [disabled]="isCreatingTeam" (click)="closeAddTeam()">Cancel</button>
+      <button class="team-create-button" type="button" [disabled]="!canCreateTeam || isCreatingTeam" (click)="addTeam()">
+        {{ isCreatingTeam ? 'Creating...' : 'Create team' }}
       </button>
     </div>
   </app-modal>

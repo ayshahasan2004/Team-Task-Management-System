@@ -8,8 +8,18 @@
 
       <div class="field-group">
         <label class="field">
+          <span>Project</span>
+          <select [(ngModel)]="projectId" [disabled]="isCreating">
+            <option value="">Choose a project</option>
+            @for (project of projects(); track project.id) {
+              <option [value]="project.id">{{ project.name }}</option>
+            }
+          </select>
+        </label>
+
+        <label class="field">
           <span>Task title</span>
-          <input [(ngModel)]="title" placeholder="Task title" />
+          <input [(ngModel)]="title" placeholder="Task title" [disabled]="isCreating" />
         </label>
 
         <label class="field">
@@ -44,9 +54,15 @@
         </label>
       </div>
 
+      @if (saveError) {
+        <p class="form-error" role="alert">{{ saveError }}</p>
+      }
+
       <div class="dialog-actions">
-        <button type="button" class="btn-secondary" (click)="cancel()">Cancel</button>
-        <button type="button" class="btn-primary" (click)="submit()">Create</button>
+        <button type="button" class="btn-secondary" (click)="cancel()" [disabled]="isCreating">Cancel</button>
+        <button type="button" class="btn-primary" (click)="submit()" [disabled]="isCreating">
+          {{ isCreating ? 'Creating...' : 'Create' }}
+        </button>
       </div>
     </div>
   </div>

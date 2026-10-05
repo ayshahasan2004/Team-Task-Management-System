@@ -15,9 +15,14 @@ export class ActivityList {
   private activityService = inject(ActivityService);
 
   activities = computed(() =>
-    this.activityService.activitiesWithTime().map(activity => ({
-      ...activity,
-      member: this.memberService.getById(activity.memberId),
-    })),
+    this.activityService.activitiesWithTime().map(activity => {
+      const member = this.memberService.getById(activity.memberId);
+      const memberName = activity.memberName?.trim() || member?.name || 'A team member';
+      const memberInitial = member?.initial ?? (activity.memberName
+        ? activity.memberName.trim().split(/\s+/).slice(0, 2).map(part => part.charAt(0)).join('').toUpperCase()
+        : '?');
+
+      return { ...activity, memberName, memberInitial };
+    }),
   );
 }

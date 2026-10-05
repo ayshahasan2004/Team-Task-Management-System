@@ -5,6 +5,18 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, startWith } from 'rxjs/operators';
 import { UserMenu } from '../user-menu/user-menu';
 import { MemberService } from '../../Core/services/member.service';
+import { AuthService } from '../../Core/services/auth.service';
+import { ProjectService } from '../../Core/services/project.service';
+import { TaskService } from '../../Core/services/task.service';
+
+interface SearchResult {
+  type: 'Project' | 'Task' | 'Person';
+  id: string;
+  title: string;
+  detail: string;
+  route: string[];
+  searchTerm?: string;
+}
 
 export type Theme = 'light' | 'dark';
 const THEME_STORAGE_KEY = 'taskflow-theme';
@@ -18,15 +30,70 @@ const THEME_STORAGE_KEY = 'taskflow-theme';
 })
 export class Header {
   private memberService = inject(MemberService);
+  private authService = inject(AuthService);
+  private projectService = inject(ProjectService);
+  private taskService = inject(TaskService);
   private router = inject(Router);
   private document = inject(DOCUMENT);
 
+  readonly searchQuery = signal('');
+  readonly isSearchFocused = signal(false);
+  readonly showSearchResults = computed(() =>
+    this.isSearchFocused() && this.searchQuery().trim().length >= 2
+  );
+  readonly searchResults = computed<SearchResult[]>(() => {
+    const query = this.searchQuery().trim().toLowerCase();
+    if (query.length < 2) {
+      return [];
+    }
+
+    const projects: SearchResult[] = this.projectService.projects()
+      .filter(project => `${project.name} ${project.description} ${project.status}`.toLowerCase().includes(query))
+      .map(project => ({
+        type: 'Project',
+        id: project.id,
+        title: project.name,
+        detail: project.description || project.status,
+        route: ['/projects', project.id],
+      }));
+    const tasks: SearchResult[] = this.taskService.tasks()
+      .filter(task => `${task.title} ${task.description} ${task.status}`.toLowerCase().includes(query))
+      .map(task => ({
+        type: 'Task',
+        id: task.id,
+        title: task.title,
+        detail: task.description || task.status,
+        route: ['/tasks', task.id],
+      }));
+    const people: SearchResult[] = this.memberService.members()
+      .filter(member => `${member.name} ${member.email} ${member.role}`.toLowerCase().includes(query))
+      .map(member => ({
+        type: 'Person',
+        id: member.id,
+        title: member.name,
+        detail: `${member.role} · ${member.email}`,
+        route: ['/team'],
+        searchTerm: member.name,
+      }));
+
+    return [...projects, ...tasks, ...people].slice(0, 8);
+  });
+
   user = computed(() => {
     const member = this.memberService.getById('m1');
+    const account = this.authService.currentUser();
+    const name = account?.fullName?.trim() || member?.name || 'Team member';
+    const avatarInitial = name
+      .split(/\s+/)
+      .slice(0, 2)
+      .map(part => part.charAt(0))
+      .join('')
+      .toUpperCase();
+
     return {
-      name: member?.name ?? 'Team member',
-      email: member?.email ?? '',
-      avatarInitial: member?.initial ?? '?',
+      name,
+      email: account?.email ?? member?.email ?? '',
+      avatarInitial: avatarInitial || member?.initial || '?',
     };
   });
 
@@ -51,6 +118,32 @@ export class Header {
       settings: 'Settings',
     };
     return titles[segment] ?? 'Dashboard';
+  }
+
+  onSearchInput(event: Event): void {
+    this.isSearchFocused.set(true);
+    this.searchQuery.set((event.target as HTMLInputElement).value);
+  }
+
+  onSearchKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      this.clearSearch();
+    } else if (event.key === 'Enter') {
+      const firstResult = this.searchResults()[0];
+      if (firstResult) {
+        this.openSearchResult(firstResult);
+      }
+    }
+  }
+
+  openSearchResult(result: SearchResult): void {
+    this.clearSearch();
+    this.router.navigate(result.route, result.searchTerm ? { queryParams: { search: result.searchTerm } } : undefined);
+  }
+
+  clearSearch(): void {
+    this.searchQuery.set('');
+    this.isSearchFocused.set(false);
   }
 
   isUserMenuOpen = false;
@@ -102,7 +195,7 @@ export class Header {
   }
 
   onLogout() {
-    // Phase 1 — no real logout logic yet, just close the menu
     this.isUserMenuOpen = false;
+    this.authService.logout();
   }
 }
