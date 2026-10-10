@@ -7,30 +7,47 @@
       </div>
 
       <div class="field-group">
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <label class="field">
           <span>Project</span>
-          <select [(ngModel)]="projectId" [disabled]="isCreating">
+          <select formControlName="projectId" [disabled]="isCreating"
+            [class.invalid-input]="showError(projectId)">
             <option value="">Choose a project</option>
             @for (project of projects(); track project.id) {
               <option [value]="project.id">{{ project.name }}</option>
             }
           </select>
+          @if (showError(projectId)) {
+            <span class="field-error">Choose a project for this task.</span>
+          }
         </label>
 
         <label class="field">
           <span>Task title</span>
-          <input [(ngModel)]="title" placeholder="Task title" [disabled]="isCreating" />
+          <input formControlName="title" placeholder="Task title" [disabled]="isCreating"
+            [class.invalid-input]="showError(title)" />
+          @if (showError(title)) {
+            <span class="field-error">
+              @if (title.errors?.['required']) { Task title is required. }
+              @else if (title.errors?.['minlength']) { Title must be at least 3 characters. }
+              @else if (title.errors?.['maxlength']) { Title must be 100 characters or fewer. }
+            </span>
+          }
         </label>
 
         <label class="field">
           <span>Description</span>
-          <textarea [(ngModel)]="description" rows="4" placeholder="Description"></textarea>
+          <textarea formControlName="description" rows="4" placeholder="Description"
+            [class.invalid-input]="showError(description)"></textarea>
+          @if (showError(description)) {
+            <span class="field-error">Description must be 500 characters or fewer.</span>
+          }
         </label>
 
         <div class="field-row">
           <label class="field half">
             <span>Status</span>
-            <select [(ngModel)]="status">
+            <select formControlName="status">
               <option value="Todo">Todo</option>
               <option value="In Progress">In Progress</option>
               <option value="Review">Review</option>
@@ -40,7 +57,7 @@
 
           <label class="field half">
             <span>Priority</span>
-            <select [(ngModel)]="priority">
+            <select formControlName="priority">
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>
@@ -50,8 +67,9 @@
 
         <label class="field">
           <span>Due date</span>
-          <input type="date" [(ngModel)]="dueDate" />
+          <input type="date" formControlName="dueDate" />
         </label>
+        </form>
       </div>
 
       @if (saveError) {
