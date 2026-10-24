@@ -1,4 +1,11 @@
-<div class="kanban-column" [style.--column-accent]="accentColor()">
+<div
+  class="kanban-column"
+  [class.drag-over]="dragOver()"
+  [style.--column-accent]="accentColor()"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave()"
+  (drop)="onDrop($event)"
+>
   <div class="column-header">
     <span class="dot" [style.background]="accentColor()"></span>
     <span class="column-title">{{ title() }}</span>

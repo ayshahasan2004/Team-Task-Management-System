@@ -42,8 +42,21 @@
 }
 
 .kanban-column:hover::before {
-  opacity: 1;
-  transform: scaleY(1.4);
+   opacity: 1;
+   transform: scaleY(1.4);
+}
+
+/* Phase 7: highlight the column while a card hovers over it */
+.kanban-column.drag-over {
+   border-color: var(--column-accent, var(--primary));
+   border-style: dashed;
+   box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.18), 0 16px 36px rgba(23, 42, 82, 0.12);
+   transform: scale(1.01);
+}
+
+.kanban-column.drag-over::before {
+   opacity: 1;
+   transform: scaleY(2);
 }
 
 .column-header {
