@@ -7,31 +7,39 @@
 
   <div class="board">
     <app-kanban-column
-      title="Todo"
+      [title]="'Todo'"
+      [status]="'TODO'"
       accentColor="#98a19c"
       [tasks]="todoTasks()"
       (taskClicked)="onTaskClicked($event)"
+      (taskDropped)="onTaskDropped($event)"
     ></app-kanban-column>
 
     <app-kanban-column
-      title="In Progress"
+      [title]="'In Progress'"
+      [status]="'IN_PROGRESS'"
       accentColor="#48b4ff"
       [tasks]="inProgressTasks()"
       (taskClicked)="onTaskClicked($event)"
+      (taskDropped)="onTaskDropped($event)"
     ></app-kanban-column>
 
     <app-kanban-column
-      title="Review"
+      [title]="'Review'"
+      [status]="'REVIEW'"
       accentColor="#f5a623"
       [tasks]="reviewTasks()"
       (taskClicked)="onTaskClicked($event)"
+      (taskDropped)="onTaskDropped($event)"
     ></app-kanban-column>
 
     <app-kanban-column
-      title="Done"
+      [title]="'Done'"
+      [status]="'DONE'"
       accentColor="#0052cc"
       [tasks]="doneTasks()"
       (taskClicked)="onTaskClicked($event)"
+      (taskDropped)="onTaskDropped($event)"
     ></app-kanban-column>
   </div>
 

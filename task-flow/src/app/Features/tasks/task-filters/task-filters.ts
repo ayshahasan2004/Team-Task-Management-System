@@ -22,11 +22,16 @@ export class TaskFilters {
   priorityOptions = ['All Priorities', 'Low', 'Medium', 'High'];
   activePriority = 'All Priorities';
 
+  // Phase 6: sort options for the task list
+  sortOptions = ['Due date', 'Priority', 'Newest', 'Oldest'];
+  activeSort = 'Due date';
+
   searchText = '';
 
   readonly statusChanged = output<string>();
   readonly priorityChanged = output<string>();
   readonly searchChanged = output<string>();
+  readonly sortChanged = output<string>();
 
   selectStatus(status: string) {
     this.activeStatus = status;
@@ -41,6 +46,11 @@ export class TaskFilters {
   selectPriority(priority: string) {
     this.activePriority = priority;
     this.priorityChanged.emit(priority === 'All Priorities' ? 'All' : priority);
+  }
+
+  selectSort(sort: string) {
+    this.activeSort = sort;
+    this.sortChanged.emit(sort);
   }
 
   onSearchInput(value: string) {

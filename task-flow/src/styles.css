@@ -868,3 +868,16 @@ h3 {
 .project-meta {
 	color: var(--ink-muted) !important;
 }
+
+/* ---- Phase 5: Reactive Forms validation styles ---- */
+.field-error {
+	display: block;
+	margin-top: 4px;
+	font-size: 0.78rem;
+	color: #dc2626;
+}
+
+.invalid-input {
+	border-color: #dc2626 !important;
+	box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.12);
+}

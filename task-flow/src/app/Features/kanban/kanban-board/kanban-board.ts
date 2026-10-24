@@ -2,6 +2,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TaskService } from '../../../Core/services/task.service';
+import { TaskStatus } from '../../../Core/models/task.model';
 import { KanbanColumn } from '../kanban-column/kanban-column';
 
 @Component({
@@ -25,5 +26,22 @@ export class KanbanBoard {
 
   onTaskClicked(taskId: string): void {
     this.router.navigate(['/tasks', taskId]);
+  }
+
+  // Phase 7: drag & drop — move a task to the column it was dropped on.
+  // The column carries the backend enum ('TODO'…); the service works with
+  // frontend statuses ('Todo'…), so map before calling moveToStatus.
+  onTaskDropped(event: { taskId: string; status: string }): void {
+    const statusMap: Record<string, TaskStatus> = {
+      'TODO': 'Todo',
+      'IN_PROGRESS': 'In Progress',
+      'REVIEW': 'Review',
+      'DONE': 'Done',
+    };
+
+    const status = statusMap[event.status];
+    if (status) {
+      this.taskService.moveToStatus(event.taskId, status);
+    }
   }
 }

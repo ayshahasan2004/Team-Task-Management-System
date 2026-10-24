@@ -5,10 +5,10 @@
 * { box-sizing: border-box; }
 
 .kanban-task {
-  position: relative;
-  padding: 14px 13px;
-  cursor: pointer;
-  overflow: hidden;
+   position: relative;
+   padding: 14px 13px;
+   cursor: grab;
+   overflow: hidden;
 
   background: var(--card-bg);
   border: 1px solid var(--card-border);
@@ -27,9 +27,16 @@
 }
 
 .kanban-task:focus-visible {
-  outline: 3px solid rgba(0, 82, 204, 0.45);
-  outline-offset: 2px;
-  border-color: #c9ddf5;
+   outline: 3px solid rgba(0, 82, 204, 0.45);
+   outline-offset: 2px;
+   border-color: #c9ddf5;
+}
+
+/* Phase 7: while being dragged, fade the source card out */
+.kanban-task.dragging {
+   opacity: 0.4;
+   transform: scale(0.98);
+   cursor: grabbing;
 }
 
 .kanban-task:hover .task-title {
