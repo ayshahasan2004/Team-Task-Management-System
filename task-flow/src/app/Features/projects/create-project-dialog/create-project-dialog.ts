@@ -1,6 +1,6 @@
 import { Component, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, ValidatorFn, AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { Modal } from '../../../Shared/Components/modal/modal';
 import { Loading } from '../../../Shared/Components/loading/loading';
 import { ProjectService } from '../../../Core/services/project.service';
@@ -8,7 +8,7 @@ import { Project, ProjectStatus } from '../../../Core/models/project.model';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, Modal, Loading],
+  imports: [CommonModule, ReactiveFormsModule, Modal, Loading],
   selector: 'app-create-project-dialog',
   styleUrl: './create-project-dialog.css',
   templateUrl: './create-project-dialog.html',
@@ -21,14 +21,47 @@ export class CreateProjectDialog implements OnChanges {
   readonly saved = output<void>();
 
   private projectService = inject(ProjectService);
-// Inject ProjectService to handle project creation and updates
-  name = '';
-  description = '';
-  status: ProjectStatus = 'Active';
-  dueDate = '';
+  private fb = inject(FormBuilder);
+  // Inject ProjectService to handle project creation and updates
+
   dueDateError = '';
   saveError = '';
   isCreating = false;
+  submitted = false;
+
+  // Phase 5: Reactive Forms — name is required; due date must be in the future
+  form = this.fb.nonNullable.group({
+    name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
+    description: ['', Validators.maxLength(500)],
+    status: this.fb.nonNullable.control<ProjectStatus>('Active'),
+    dueDate: ['', this.dueDateInFuture()],
+  });
+
+  get name() {
+    return this.form.controls.name;
+  }
+
+  get description() {
+    return this.form.controls.description;
+  }
+
+  get dueDate() {
+    return this.form.controls.dueDate;
+  }
+
+  // Custom validator: if set, the due date must be after today
+  private dueDateInFuture(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value as string;
+      if (!value) {
+        return null; // due date is optional
+      }
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const chosen = new Date(`${value}T00:00:00`);
+      return chosen >= tomorrow ? null : { dueDateInPast: true };
+    };
+  }
 
   get minimumDueDate(): string {
     const tomorrow = new Date();
@@ -39,15 +72,17 @@ export class CreateProjectDialog implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['editingProject'] || changes['isOpen']) {// Check if the editingProject or isOpen input has changed
       const editingProject = this.editingProject();
-      if (editingProject) {// If editingProject is provided, populate the form fields with its data
-        this.name = editingProject.name;// Set the name field to the editing project's name
-        this.description = editingProject.description;
-        this.status = editingProject.status;
-        this.dueDate = editingProject.dueDate ? this.toDateInputValue(editingProject.dueDate) : '';
+      if (editingProject) {// If editingProject is provided, populate the form with its data
+        this.form.patchValue({
+          name: editingProject.name,
+          description: editingProject.description,
+          status: editingProject.status,
+          dueDate: editingProject.dueDate ? this.toDateInputValue(editingProject.dueDate) : '',
+        });
         this.dueDateError = '';
         this.saveError = '';
       } else if (this.isOpen()) {
-        this.resetForm();// If the dialog is opened for creating a new project, reset the form fields
+        this.resetForm();// If the dialog is opened for creating a new project, reset the form
       }
     }
   }
@@ -61,26 +96,30 @@ export class CreateProjectDialog implements OnChanges {
     this.closed.emit();// Emit the closed event to notify the parent component that the dialog has been closed
   }
 
+  // Shows a field error only after the user touched it or tried to submit
+  showError(control: { invalid: boolean; touched: boolean }): boolean {
+    return control.invalid && (control.touched || this.submitted);
+  }
+
   onSubmit() {
-    if (!this.name.trim()) {
-      return;
-    }
-
-    if (this.dueDate && this.dueDate < this.minimumDueDate) {
-      this.dueDateError = 'Due date must be later than today.';
-      return;
-    }
-
+    this.submitted = true;
     this.dueDateError = '';
     this.saveError = '';
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const value = this.form.getRawValue();
     this.isCreating = true;
 
-    const dueDate = this.dueDate ? new Date(`${this.dueDate}T00:00:00`) : null;
+    const dueDate = value.dueDate ? new Date(`${value.dueDate}T00:00:00`) : null;
     if (this.editingProject()) {
       this.projectService.update(this.editingProject()!.id, {
-        name: this.name.trim(),
-        description: this.description.trim(),
-        status: this.status,
+        name: value.name.trim(),
+        description: value.description.trim(),
+        status: value.status,
         dueDate,
       });
       this.completeSave();
@@ -88,9 +127,9 @@ export class CreateProjectDialog implements OnChanges {
     }
 
     this.projectService.create({
-      name: this.name.trim(),
-      description: this.description.trim(),
-      status: this.status,
+      name: value.name.trim(),
+      description: value.description.trim(),
+      status: value.status,
       memberIds: [],
       dueDate,
     }).subscribe({
@@ -109,12 +148,10 @@ export class CreateProjectDialog implements OnChanges {
   }
 
   private resetForm(): void {
-    this.name = '';
-    this.description = '';
-    this.status = 'Active';
-    this.dueDate = '';
+    this.form.reset({ name: '', description: '', status: 'Active' as ProjectStatus, dueDate: '' });
     this.dueDateError = '';
     this.saveError = '';
+    this.submitted = false;
   }
 
   private toDateInputValue(date: Date): string {

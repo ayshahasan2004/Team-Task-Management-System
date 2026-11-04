@@ -18,6 +18,10 @@ export class KanbanTask {
     this.cardClicked.emit(this.task().id);
   }
 
+  // Phase 7: native dragstart/dragend removed — the card is now dragged by
+  // CDK (cdkDrag is applied by the parent column). The parent exposes drag
+  // state on its own card wrapper, so the visual feedback moved there.
+
   get priorityClass(): string {
     return this.task().priority.toLowerCase();
   }

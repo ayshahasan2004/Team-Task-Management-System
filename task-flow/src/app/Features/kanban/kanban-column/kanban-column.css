@@ -42,8 +42,44 @@
 }
 
 .kanban-column:hover::before {
-  opacity: 1;
-  transform: scaleY(1.4);
+   opacity: 1;
+   transform: scaleY(1.4);
+}
+
+/* Phase 7: highlight the column while a card hovers over it */
+.kanban-column.drag-over {
+   border-color: var(--column-accent, var(--primary));
+   border-style: dashed;
+   box-shadow: 0 0 0 3px rgba(38, 132, 255, 0.18), 0 16px 36px rgba(23, 42, 82, 0.12);
+   transform: scale(1.01);
+}
+
+.kanban-column.drag-over::before {
+   opacity: 1;
+   transform: scaleY(2);
+}
+
+/* CDK drop list: insertion placeholder between cards while dragging */
+.cdk-drag-placeholder {
+  opacity: 0.35;
+  filter: saturate(0.6);
+}
+
+/* CDK: the free-floating drag preview follows the cursor */
+.cdk-drag-preview {
+  opacity: 0.9;
+  border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(23, 42, 82, 0.28);
+  transform: rotate(2deg);
+}
+
+/* CDK: card lift while actively dragging */
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.column-body.cdk-drop-list-dragging :not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .column-header {

@@ -11,19 +11,32 @@
   }
 
   @if (!isCreating) {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
     <div class="field">
       <label for="cp-name">Project name</label>
-      <input type="text" id="cp-name" [(ngModel)]="name" placeholder="e.g. Website Redesign" />
+      <input type="text" id="cp-name" formControlName="name" placeholder="e.g. Website Redesign"
+        [class.invalid-input]="showError(name)" />
+      @if (showError(name)) {
+        <span class="field-error">
+          @if (name.errors?.['required']) { Project name is required. }
+          @else if (name.errors?.['minlength']) { Name must be at least 3 characters. }
+          @else if (name.errors?.['maxlength']) { Name must be 80 characters or fewer. }
+        </span>
+      }
     </div>
 
     <div class="field">
       <label for="cp-description">Description</label>
-      <textarea id="cp-description" rows="3" [(ngModel)]="description" placeholder="What is this project about?"></textarea>
+      <textarea id="cp-description" rows="3" formControlName="description" placeholder="What is this project about?"
+        [class.invalid-input]="showError(description)"></textarea>
+      @if (showError(description)) {
+        <span class="field-error">Description must be 500 characters or fewer.</span>
+      }
     </div>
 
     <div class="field">
       <label for="cp-status">Status</label>
-      <select id="cp-status" [(ngModel)]="status"><!-- two-way Data Binding (if update the html then auto update the ts ) -->
+      <select id="cp-status" formControlName="status"><!-- Reactive Forms control (state lives in the FormGroup in ts) -->
         <option value="Active">Active</option>
         <option value="Completed">Completed</option>
         <option value="Archived">Archived</option>
@@ -35,12 +48,12 @@
       <input
         type="date"
         id="cp-due-date"
+        formControlName="dueDate"
         [min]="minimumDueDate"
-        [(ngModel)]="dueDate"
-        (input)="dueDateError = ''"
+        [class.invalid-input]="showError(dueDate)"
       />
-      @if (dueDateError) {
-        <span class="field-error">{{ dueDateError }}</span>
+      @if (showError(dueDate)) {
+        <span class="field-error">Due date must be later than today.</span>
       }
     </div>
 
@@ -50,11 +63,11 @@
 
     <div class="dialog-actions">
       <button class="btn-secondary" type="button" (click)="onClose()">Cancel</button>
-      <button class="btn-primary" type="button" (click)="onSubmit()"><!-- click event binding
-        (if click the button then call the onSubmit function in ts ) -->
+      <button class="btn-primary" type="submit" [disabled]="isCreating"><!-- ngSubmit calls onSubmit in ts -->
         {{ isEditMode ? 'Save Changes' : 'Create Project' }}
       </button>
     </div>
+    </form>
   }
 
 </app-modal>

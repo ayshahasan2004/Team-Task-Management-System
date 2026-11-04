@@ -36,4 +36,17 @@
       </option>
     }
   </select>
+
+  <!-- Phase 6: sort control -->
+  <select
+    class="sort-select"
+    [value]="activeSort"
+    (change)="selectSort($any($event.target).value)"
+  >
+    @for (sort of sortOptions; track sort) {
+      <option [value]="sort">
+        Sort: {{ sort }}
+      </option>
+    }
+  </select>
 </div>
