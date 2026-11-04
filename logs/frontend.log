@@ -1,0 +1,39 @@
+
+> task-flow@0.0.0 start
+> ng serve
+
+> Building...
+√ Building...
+Initial chunk files | Names           |  Raw size
+main.js             | main            |  66.85 kB | 
+styles.css          | styles          |  28.89 kB | 
+chunk-5SZARRKE.js   | -               |  12.04 kB | 
+chunk-EIPVPJ7Q.js   | -               |   7.88 kB | 
+chunk-UB34Z5C5.js   | -               |   7.18 kB | 
+chunk-7BYPKMS5.js   | -               |   2.48 kB | 
+chunk-VUJOFXKG.js   | -               | 987 bytes | 
+
+                    | Initial total   | 126.31 kB
+
+Lazy chunk files    | Names           |  Raw size
+chunk-SY6UCZBS.js   | tasks           |  70.87 kB | 
+chunk-EG37RWMT.js   | projects        |  69.76 kB | 
+chunk-AYR7DCJE.js   | team            |  69.64 kB | 
+chunk-RAA36GJY.js   | dashboard       |  65.26 kB | 
+chunk-66FA5CXE.js   | project-details |  45.89 kB | 
+chunk-3EUD77XX.js   | settings        |  45.30 kB | 
+chunk-J3GYR76G.js   | task-details    |  37.26 kB | 
+chunk-GGLMSBUS.js   | kanban-board    |  35.55 kB | 
+chunk-C4Q7YL6S.js   | signup          |  23.81 kB | 
+chunk-KEIJYJDA.js   | login           |  18.72 kB | 
+chunk-WZ53CUXC.js   | member-details  |  14.12 kB | 
+chunk-7IRI45BZ.js   | -               |  12.73 kB | 
+chunk-6MZ2L5TP.js   | not-found       |   8.36 kB | 
+chunk-LBY3KN5N.js   | -               |   5.45 kB | 
+
+Application bundle generation complete. [14.634 seconds] - 2026-10-19T09:01:14.228Z
+
+Watch mode enabled. Watching for file changes...
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m4200[22m/[39m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m

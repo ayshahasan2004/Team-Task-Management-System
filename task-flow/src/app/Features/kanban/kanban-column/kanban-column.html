@@ -2,9 +2,6 @@
   class="kanban-column"
   [class.drag-over]="dragOver()"
   [style.--column-accent]="accentColor()"
-  (dragover)="onDragOver($event)"
-  (dragleave)="onDragLeave()"
-  (drop)="onDrop($event)"
 >
   <div class="column-header">
     <span class="dot" [style.background]="accentColor()"></span>
@@ -12,9 +9,22 @@
     <span class="task-count">{{ tasks().length }}</span>
   </div>
 
-  <div class="column-body">
+  <!-- Phase 7: CDK drop list — this column is a drop target for kanban cards.
+       All four columns are connected to each other so cards can move between them. -->
+  <div
+    class="column-body"
+    cdkDropList
+    [cdkDropListData]="tasks()"
+    [cdkDropListConnectedTo]="connectedIds()"
+    [id]="status()"
+    (cdkDropListEntered)="onDragEnter()"
+    (cdkDropListExited)="onDragLeave()"
+    (cdkDropListDropped)="onDrop($event)"
+  >
     @for (task of tasks(); track task.id) {
       <app-kanban-task
+        cdkDrag
+        [cdkDragData]="task.id"
         [task]="task"
         (cardClicked)="onTaskClick($event)"
       ></app-kanban-task>

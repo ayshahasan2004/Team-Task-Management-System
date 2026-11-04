@@ -32,10 +32,10 @@
    border-color: #c9ddf5;
 }
 
-/* Phase 7: while being dragged, fade the source card out */
-.kanban-task.dragging {
-   opacity: 0.4;
-   transform: scale(0.98);
+/* Phase 7: while being dragged, fade the source card out.
+   CDK applies cdk-drag-disabled to disabled cards; the dragging look now
+   comes from the global .cdk-drag-preview / placeholder rules in the column. */
+.kanban-task:active {
    cursor: grabbing;
 }
 

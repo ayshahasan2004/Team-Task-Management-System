@@ -152,6 +152,58 @@ export class TaskService {
     return this.update(id, { status });
   }
 
+  /**
+   * Phase 7: Kanban drag & drop. Optimistically moves/reorders a task,
+   * then persists it. On API failure the board is rolled back to the
+   * previous snapshot so the card visually snaps back to its column.
+   *
+   * @param targetIndex position within the destination column (null = drop at the end)
+   */
+  moveTask(id: string, status: TaskStatus, targetIndex: number | null): Observable<Task> | null {
+    const task = this.getById(id);
+    if (!task) {
+      return null;
+    }
+
+    const snapshot = this._tasks();
+    const moved: Task = { ...task, status, updatedAt: new Date() };
+    const others = snapshot.filter(t => t.id !== id);
+    const sameStatus = others.filter(t => t.status === status);
+
+    // Rebuild the full list: the moved task is inserted before the
+    // (targetIndex)-th task of its new column, or at the end of that column.
+    const next: Task[] = [];
+    let inserted = false;
+    let indexInColumn = 0;
+    for (const t of others) {
+      if (!inserted && t.status === status) {
+        if (targetIndex !== null && indexInColumn === targetIndex) {
+          next.push(moved);
+          inserted = true;
+        }
+        indexInColumn++;
+      }
+      next.push(t);
+    }
+    if (!inserted) {
+      next.push(moved);
+    }
+
+    this._tasks.set(next);
+
+    return this.http.put<BackendTask>(`${environment.coreApiUrl}/tasks/${id}`, this.toBackendTask(moved)).pipe(
+      map(saved => this.toTask(saved)),
+      tap(saved => {
+        this._tasks.update(items => items.map(item => (item.id === id ? saved : item)));
+      }),
+      catchError(error => {
+        // Roll back to the pre-drag snapshot on failure.
+        this._tasks.set(snapshot);
+        return throwError(() => error);
+      })
+    );
+  }
+
   delete(id: string): Observable<void> {
     const task = this.getById(id);
 

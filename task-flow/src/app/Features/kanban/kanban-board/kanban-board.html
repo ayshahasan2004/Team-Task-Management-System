@@ -11,6 +11,7 @@
       [status]="'TODO'"
       accentColor="#98a19c"
       [tasks]="todoTasks()"
+      [connectedIds]="dropListIds"
       (taskClicked)="onTaskClicked($event)"
       (taskDropped)="onTaskDropped($event)"
     ></app-kanban-column>
@@ -20,6 +21,7 @@
       [status]="'IN_PROGRESS'"
       accentColor="#48b4ff"
       [tasks]="inProgressTasks()"
+      [connectedIds]="dropListIds"
       (taskClicked)="onTaskClicked($event)"
       (taskDropped)="onTaskDropped($event)"
     ></app-kanban-column>
@@ -29,6 +31,7 @@
       [status]="'REVIEW'"
       accentColor="#f5a623"
       [tasks]="reviewTasks()"
+      [connectedIds]="dropListIds"
       (taskClicked)="onTaskClicked($event)"
       (taskDropped)="onTaskDropped($event)"
     ></app-kanban-column>
@@ -38,6 +41,7 @@
       [status]="'DONE'"
       accentColor="#0052cc"
       [tasks]="doneTasks()"
+      [connectedIds]="dropListIds"
       (taskClicked)="onTaskClicked($event)"
       (taskDropped)="onTaskDropped($event)"
     ></app-kanban-column>
